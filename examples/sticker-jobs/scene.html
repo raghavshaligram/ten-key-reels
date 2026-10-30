@@ -1,0 +1,152 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-800-normal.woff2)}
+@font-face{font-family:Serif;font-style:italic;src:url(../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#F3F0EA;--ink:#191714;--grey:#CDC6BB;--red:#E0342C;--green:#2F7A4F;--muted:#8D867B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 40%,#f8f6f1 0%,#f3f0ea 55%,#ece7df 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--red);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:600 78px/1.1 Inter;letter-spacing:-.025em}
+#cap span{display:inline-block;margin-right:.24em;transition:none}
+#cap .acc{font-family:Serif;font-style:italic;font-weight:400;color:var(--red);font-size:1.12em;letter-spacing:-.01em}
+.stk{background:#fff;border-radius:34px;padding:14px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.win{background:#16181a;border-radius:24px;overflow:hidden}
+.bar{height:58px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#202326;color:#9aa19c;font:600 24px Mono}
+.bar i{width:16px;height:16px;border-radius:50%;background:#3b3f43;display:inline-block}
+.bar .t{margin-left:14px}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:#111;color:#fff;font:800 66px/104px Inter;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25);border:5px solid #fff}
+.stamp{font:800 64px/1 Inter;letter-spacing:.06em;color:var(--red);border:8px solid var(--red);border-radius:18px;padding:14px 26px 12px;background:rgba(255,255,255,.88);text-transform:uppercase;white-space:nowrap}
+.key{width:250px;height:230px;border-radius:40px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 14px 0 #cfc8bd,0 30px 50px rgba(40,30,20,.2);font:800 92px/210px Inter;text-align:center;color:#2a2622}
+.row{display:flex;align-items:center;gap:26px;font:600 50px/1 Inter;padding:30px 40px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14)}
+.row .v{margin-left:auto;font:800 84px/1 Inter;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.row .n{width:64px;height:64px;border-radius:50%;background:#111;color:#fff;font:800 36px/64px Inter;text-align:center}
+.ck{display:flex;align-items:center;gap:24px;font:600 56px/1 Inter;padding:20px 0}
+.ck .b{width:62px;height:62px;border-radius:16px;border:5px solid #2F7A4F;display:flex;align-items:center;justify-content:center;color:#fff;font:800 40px Inter}
+.ck .b.on{background:#2F7A4F}
+.chip{font:600 64px/1 Inter;padding:34px 46px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14);white-space:nowrap}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+</style></head><body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .55 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: the application checklist -->
+  <div class="el stk" id="p0" style="left:110px;top:620px;width:860px;padding:46px 56px 40px">
+    <div class="lab" style="font-size:30px">data entry clerk · application</div>
+    <div class="ck" style="margin-top:20px"><span class="b on">✓</span>Resume</div>
+    <div class="ck"><span class="b on">✓</span>Cover letter</div>
+    <div class="ck" id="ck3"><span class="b" id="b3"></span>10-key test</div>
+  </div>
+  <svg class="el draw" id="c0" width="560" height="200" style="left:110px;top:880px"><ellipse cx="280" cy="100" rx="250" ry="72" stroke="#E0342C" stroke-width="11" pathLength="1" stroke-dasharray="1" transform="rotate(-3 280 100)"/></svg>
+  <div class="el stamp" id="s0" style="left:560px;top:1080px">prepare</div>
+
+  <!-- b1: the test, live -->
+  <div class="el stk" id="p1" style="left:100px;top:630px;width:880px"><div class="win"><div class="bar"><i style="background:#E0342C"></i><span class="t">10-key test · live</span></div><canvas id="k1" width="852" height="440"></canvas></div></div>
+  <!-- b2: the number pad -->
+  <div class="el stk" id="p2" style="left:220px;top:590px;width:640px"><div class="win"><canvas id="k2" width="612" height="640"></canvas></div></div>
+
+  <!-- b3: speed vs accuracy -->
+  <div class="el chip" id="p3a" style="left:110px;top:640px;color:#a39b8f;font-size:84px">speed</div>
+  <div class="el" id="p3p" style="left:480px;top:660px;font:800 110px/1 Inter;color:#b4ab9e">+</div>
+  <div class="el chip" id="p3b" style="left:300px;top:850px;color:var(--green);font-size:96px">accuracy ✓</div>
+  <div class="el stamp" id="s3" style="left:520px;top:740px">both count</div>
+
+  <!-- b4: all three, from one real run -->
+  <div class="el row" id="r1" style="left:100px;top:600px;width:880px"><span class="n">1</span>Net KPH<span class="v" id="v1" style="color:var(--green)">0</span></div>
+  <div class="el row" id="r2" style="left:100px;top:780px;width:880px"><span class="n">2</span>Gross KPH<span class="v" id="v2">0</span></div>
+  <div class="el row" id="r3" style="left:100px;top:960px;width:880px"><span class="n">3</span>Accuracy<span class="v" id="v3" style="color:var(--red)">0%</span></div>
+  <svg class="el draw" id="c4" width="420" height="200" style="left:590px;top:938px"><ellipse cx="210" cy="100" rx="190" ry="78" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+
+  <!-- b5: the site -->
+  <div class="el stk" id="p5" style="left:90px;top:610px;width:900px"><div class="win" style="background:#fff">
+    <div class="bar" style="background:#efebe4;color:#3a3631;height:76px;font-size:30px"><i style="background:#e0a39e"></i><i style="background:#e8cf8c"></i><i style="background:#9fcfa8"></i>
+      <span class="t" style="flex:1;background:#fff;border-radius:16px;padding:10px 20px;margin-left:16px"><span id="url"></span><span id="caret" style="color:var(--red)">|</span></span></div>
+    <canvas id="k5" width="872" height="470"></canvas></div></div>
+  <div class="el stamp" id="s5a" style="left:650px;top:1000px">free</div>
+  <div class="el stamp" id="s5b" style="left:130px;top:1060px;color:var(--green);border-color:var(--green)">no sign-up</div>
+
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="tara" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../engine/lib.js"></script>
+<script src="../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end, R = TL.result;
+const book = frameBook(RUN); const tara = Tara("tara");
+const POSES = [[0, "wave"], [W.test - .2, "present"], [W.prepare, "point"], [S[1] + .1, "rest"], [W.quickly - .2, "point"], [W.numpad - .2, "thumbs"],
+  [S[2] + .1, "think"], [W.speed - .3, "present"], [W.accuracy - .1, "thumbs"], [S[3] + .1, "point"], [W.three - .1, "present"],
+  [S[4] + .1, "rest"], [W.at - .2, "point"], [W.free, "wave"], [W.nosignup + .1, "thumbs"], [W.nosignup + 1.1, "rest"]];
+const CH = [["// 01 · the job", "checklist <b>2/3</b>"], ["// 02 · the 10-key test", "time <b>60 sec</b>"], ["// 03 · what matters", "speed <b>+</b> accuracy"],
+  ["// 04 · one real minute", `accuracy <b>${R.acc}%</b>`], ["// 05 · practice", "cost <b>$0</b>"]];
+const IDS = ["p0","c0","s0","p1","p2","p3a","p3p","p3b","s3","r1","r2","r3","c4","p5","s5a","s5b","badge"];
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#111"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // b0: the application, with the test still unchecked
+  if (t < S[1] + .3) { pop("p0", t, .05, { r: -1.5, y: fl(t) }); draw("c0", t, W.test - .05, .5); slam("s0", t, W.prepare, { r: -8 });
+    for (const id of ["p0", "c0", "s0"]) out(id, t, S[1] - .15); }
+  // b1, b2: what the test measures, on the real test
+  if (inWin(t, S[1], W.numpad - .3)) { W8("k1", book.at(1.6 + (t - S[1]) * 1.0), .02, .16, .62, .42); pop("p1", t, S[1] + .2, { r: -1, y: fl(t, 1) }); badge(t, 1, S[1] + .4, 905, 570);
+    for (const id of ["p1", "badge"]) out(id, t, W.numpad - .55); }
+  if (inWin(t, W.numpad - .55, S[2])) { W8("k2", book.at(2.5 + (t - W.numpad)), .765, .13, .235, .575); pop("p2", t, W.numpad - .5, { r: 2, y: fl(t, 2) }); badge(t, 1, W.numpad - .35, 800, 540);
+    for (const id of ["p2", "badge"]) out(id, t, S[2] - .2); }
+  // b3: speed and accuracy
+  if (inWin(t, S[2] - .05, S[3])) { badge(t, 2, S[2] + .2, 905, 560); pop("p3a", t, S[2] + .3, { r: -3, y: fl(t, 3) }); pop("p3p", t, W.speed + .3); if (t > W.speed - .2) $("p3a").style.color = "var(--ink)";
+    pop("p3b", t, W.accuracy - .1, { r: 2, y: fl(t, 4) }); slam("s3", t, W.accuracy + .7, { r: 7 });
+    for (const id of ["p3a", "p3p", "p3b", "s3", "badge"]) out(id, t, S[3] - .2); }
+  // b4: all three, from the real run
+  if (inWin(t, S[3] - .05, S[4])) { const a1 = S[3] + .1, a2 = W.track - .1, a3 = W.three - .2;
+    pop("r1", t, a1, { y: fl(t, 5) * .5 }); count("v1", t, a1 + .1, .9, R.net);
+    pop("r2", t, a2, { y: fl(t, 6) * .5 }); count("v2", t, a2 + .1, .9, R.gross);
+    pop("r3", t, a3, { y: fl(t, 7) * .5 }); { const v = t < a3 ? 0 : R.acc * easeOut((t - a3 - .1) / .9); $("v3").textContent = (Number.isInteger(R.acc) ? Math.round(v) : v.toFixed(1)) + "%"; }
+    draw("c4", t, a3 + .9, .45);
+    for (const id of ["r1", "r2", "r3", "c4"]) out(id, t, S[4] - .15); }
+  // b5: the site
+  if (t >= S[4] - .05) { W8("k5", book.at(.2), 0, 0, .75, .62, "#fff"); pop("p5", t, S[4], { r: -1, y: fl(t, 9) });
+    const u = "10keytypingtest.com", n = Math.round(clamp((t - W.at + .1) / .8) * u.length); $("url").textContent = u.slice(0, n);
+    $("caret").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0; slam("s5a", t, W.free, { r: -8 }); slam("s5b", t, W.nosignup, { r: 6 }); }
+  chapter(t); caption2(t); tara.render(t, POSES, TL.amp); wipe(t, S[1] - .45);
+};
+window.ready = Promise.all(book.imgs.map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

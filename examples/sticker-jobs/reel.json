@@ -1,0 +1,185 @@
+{
+ "title": "Prepare for the 10-key test (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Applying for data entry jobs? There's a test you should probably prepare for.",
+   0.6
+  ],
+  [
+   "It's called a ten-key test, and it measures how quickly you can enter numbers using your keyboard's number pad.",
+   0.6
+  ],
+  [
+   "But here's what matters.",
+   0.5
+  ],
+  [
+   "Employers don't just care about speed. Accuracy counts, too.",
+   0.5
+  ],
+  [
+   "That's why you need to track all three.",
+   0.6
+  ],
+  [
+   "Practice before your next application with free tests at ten key typing test dot com.",
+   0.5
+  ],
+  [
+   "No sign-up needed.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Applying for [data entry] jobs?",
+  "There's a [test] you should probably prepare for.",
+  "It's called a [10-key] test,",
+  "and it measures how [quickly] you can enter numbers",
+  "using your keyboard's [number pad.]",
+  "But here's what [matters.]",
+  "Employers don't just care about [speed.]",
+  "[Accuracy] counts too.",
+  "That's why you need to track [all three.]",
+  "Practice before your next application",
+  "with [free tests] at [10keytypingtest.com.]",
+  "[No sign-up] needed."
+ ],
+ "scenes": [
+  0,
+  13,
+  32,
+  45,
+  53
+ ],
+ "marks": {
+  "test": 7,
+  "prepare": 11,
+  "tenkey": 16,
+  "quickly": 22,
+  "numpad": 30,
+  "matters": 35,
+  "speed": 41,
+  "accuracy": 42,
+  "track": 50,
+  "three": 52,
+  "at": 61,
+  "free": 59,
+  "nosignup": 63
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slipEvery": 3,
+  "frames": 12
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "test-0.05",
+   "scribble",
+   0.5
+  ],
+  [
+   "prepare",
+   "pop",
+   300
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.2",
+   "pop",
+   700
+  ],
+  [
+   "S1+0.4",
+   "pop",
+   300
+  ],
+  [
+   "S1+0.5",
+   "clicks",
+   4
+  ],
+  [
+   "numpad-0.5",
+   "pop",
+   800
+  ],
+  [
+   "S2+0.2",
+   "pop",
+   300
+  ],
+  [
+   "speed-0.2",
+   "pop",
+   700
+  ],
+  [
+   "accuracy-0.1",
+   "pop",
+   900
+  ],
+  [
+   "accuracy+0.7",
+   "pop",
+   300
+  ],
+  [
+   "S3+0.1",
+   "pop",
+   700
+  ],
+  [
+   "S3+0.2",
+   "ticks",
+   0.9
+  ],
+  [
+   "track-0.1",
+   "pop",
+   750
+  ],
+  [
+   "three-0.2",
+   "pop",
+   800
+  ],
+  [
+   "three+0.7",
+   "scribble",
+   0.45
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "nosignup",
+   "pop",
+   300
+  ]
+ ]
+}
