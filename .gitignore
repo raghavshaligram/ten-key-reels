@@ -1,0 +1,14 @@
+node_modules/
+cache/
+__pycache__/
+# everything a build makes inside a reel folder (keep reel.json, scene.html, caption.txt, out.mp4 is shared, not committed)
+reels/*/*
+!reels/*/reel.json
+!reels/*/scene.html
+!reels/*/caption.txt
+!reels/*/sheet.jpg
+examples/*/*
+!examples/*/reel.json
+!examples/*/scene.html
+!examples/*/caption.txt
+library/pointer/history.json.bak

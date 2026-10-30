@@ -1,0 +1,153 @@
+{
+ "title": "Prepare for the 10-key test",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Applying for data entry jobs? There's a test you should probably prepare for.",
+   0.6
+  ],
+  [
+   "It's called a ten-key test, and it measures how quickly you can enter numbers using your keyboard's number pad.",
+   0.6
+  ],
+  [
+   "But here's what matters.",
+   0.5
+  ],
+  [
+   "Employers don't just care about speed. Accuracy counts, too.",
+   0.5
+  ],
+  [
+   "That's why you need to track all three.",
+   0.6
+  ],
+  [
+   "Practice before your next application with free tests at ten key typing test dot com.",
+   0.5
+  ],
+  [
+   "No sign-up needed.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Applying for",
+  "[data entry] jobs?",
+  "There's a [test]",
+  "you should probably",
+  "prepare for",
+  "It's called a",
+  "[10-key] test",
+  "and it measures",
+  "how [quickly]",
+  "you can enter",
+  "numbers using",
+  "your keyboard's",
+  "[number pad]",
+  "But here's what [matters]",
+  "Employers don't just",
+  "care about [speed]",
+  "[Accuracy] counts too",
+  "That's why you need",
+  "to track [all three]",
+  "Practice before your",
+  "next application",
+  "with [free tests]",
+  "at [10keytypingtest.com]",
+  "[No sign-up] needed"
+ ],
+ "scenes": [
+  0,
+  12,
+  32,
+  45,
+  53
+ ],
+ "marks": {
+  "test": 7,
+  "numbers": 26,
+  "numpad": 30,
+  "speed": 41,
+  "accuracy": 42,
+  "track": 50,
+  "three": 52,
+  "free": 59,
+  "nosignup": 63
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slipEvery": 3,
+  "frames": 12
+ },
+ "pointer": [
+  [
+   "S0+0.6",
+   "S1-0.3"
+  ],
+  [
+   "S2+0.2",
+   "S3-0.1"
+  ],
+  [
+   "S4+0.1",
+   "S4+4.2"
+  ]
+ ],
+ "sfx": [
+  [
+   "0.05",
+   "whoosh"
+  ],
+  [
+   "test",
+   "pop"
+  ],
+  [
+   "S1",
+   "whoosh"
+  ],
+  [
+   "S1+0.3",
+   "clicks",
+   4
+  ],
+  [
+   "S2",
+   "whoosh"
+  ],
+  [
+   "speed-0.1",
+   "pop",
+   900
+  ],
+  [
+   "accuracy-0.1",
+   "pop",
+   1000
+  ],
+  [
+   "S3",
+   "whoosh"
+  ],
+  [
+   "track",
+   "tick"
+  ],
+  [
+   "three",
+   "tick"
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "free",
+   "pop-small"
+  ]
+ ]
+}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Plex;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2)}
+@font-face{font-family:Plex;font-weight:700;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2)}
+@font-face{font-family:Hand;font-weight:700;src:url(../../node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+:root{--ink:#1b1d1a;--red:#d23b2a;--mark:#F4DC4B;--green:#1f5135;--paper:#fbfaf4}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Plex,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:
+  linear-gradient(rgba(70,110,160,.13) 2px,transparent 2px) 0 0/60px 60px,
+  linear-gradient(90deg,rgba(70,110,160,.13) 2px,transparent 2px) 0 0/60px 60px,
+  radial-gradient(1200px 1400px at 50% 45%,#fdfcf7 40%,#efece2 100%)}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.hand{font-family:Hand;font-weight:700}
+.big{font:700 230px/1 Plex;letter-spacing:-.04em}
+.photo{background:#fff;padding:18px;box-shadow:0 18px 40px rgba(40,30,10,.18),0 3px 8px rgba(40,30,10,.12)}
+.photo canvas{display:block}
+.tape{position:absolute;width:190px;height:58px;background:rgba(240,226,170,.78);box-shadow:0 2px 4px rgba(0,0,0,.08)}
+.sticky{background:#f9e27a;box-shadow:0 22px 40px rgba(60,50,10,.22);padding:70px 50px}
+svg.draw path,svg.draw ellipse,svg.draw line{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cap{font:700 80px/1.1 Plex;white-space:nowrap;left:540px!important;background:#fff;padding:14px 30px 20px;box-shadow:0 8px 18px rgba(40,30,10,.15);border-radius:6px}
+.mk{background:linear-gradient(180deg,transparent 18%,var(--mark) 18%,var(--mark) 88%,transparent 88%);padding:0 6px}
+.mkn{color:var(--red)}
+</style></head><body>
+<div id="stage">
+  <!-- 0 -->
+  <svg class="el draw" id="hl0" width="900" height="230" style="left:90px;top:440px"><path d="M10 150 Q 450 120 890 150" stroke="#F4DC4B" stroke-width="120" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="opacity:.9"/></svg>
+  <div class="el big" id="n0" style="width:1080px;top:400px;text-align:center">10,000</div>
+  <div class="el hand" id="k0" style="width:1080px;top:770px;text-align:center;font-size:84px">keystrokes / hour</div>
+  <svg class="el draw" id="c0" width="1000" height="420" style="left:40px;top:320px"><ellipse cx="500" cy="210" rx="470" ry="180" stroke="#d23b2a" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-3 500 210)"/></svg>
+  <div class="el hand" id="q0" style="left:560px;top:900px;font-size:96px;color:var(--red)">can you? ↗</div>
+
+  <!-- 1: taped test, clock circled -->
+  <div class="el photo" id="ph1" style="left:70px;top:330px"><canvas id="c1" width="904" height="636"></canvas>
+    <div class="tape" style="left:-40px;top:-22px;transform:rotate(-24deg)"></div><div class="tape" style="right:-40px;top:-22px;transform:rotate(22deg)"></div></div>
+  <svg class="el draw" id="r1" width="320" height="200" style="left:669px;top:290px"><ellipse cx="160" cy="100" rx="150" ry="78" stroke="#d23b2a" stroke-width="9" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <div class="el hand" id="t1" style="left:120px;top:1050px;font-size:88px;color:var(--red)">60 seconds. go!</div>
+
+  <!-- 2: taped keypad, live -->
+  <div class="el photo" id="ph2" style="left:190px;top:300px"><canvas id="c2" width="660" height="720"></canvas>
+    <div class="tape" style="left:230px;top:-30px;transform:rotate(-4deg)"></div></div>
+  <div class="el hand" id="t2a" style="left:90px;top:1110px;font-size:80px">Ctrl+V</div>
+  <svg class="el draw" id="x2" width="300" height="120" style="left:70px;top:1110px"><line x1="10" y1="90" x2="290" y2="20" stroke="#d23b2a" stroke-width="12" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <div class="el hand" id="t2b" style="left:560px;top:1100px;font-size:80px;color:var(--green)">just this ↑</div>
+
+  <!-- 3: accuracy over a higher score -->
+  <div class="el hand" id="t3a" style="width:1080px;top:380px;text-align:center;font-size:150px">accuracy</div>
+  <svg class="el draw" id="u3" width="700" height="80" style="left:190px;top:540px"><path d="M10 40 Q 350 10 690 40 M30 64 Q 360 38 670 62" stroke="#d23b2a" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <div class="el" id="t3b" style="width:1080px;top:650px;text-align:center;font:700 120px/1 Plex">&gt;</div>
+  <div class="el hand" id="t3c" style="width:1080px;top:790px;text-align:center;font-size:120px;color:#8a8a80">a higher score</div>
+  <div class="el hand" id="t3d" style="left:560px;top:1000px;font-size:72px;color:var(--red)">don't trade it</div>
+
+  <!-- 4: taped result, circled -->
+  <div class="el photo" id="ph4" style="left:70px;top:330px"><canvas id="c4" width="904" height="620"></canvas>
+    <div class="tape" style="left:-40px;top:-22px;transform:rotate(-24deg)"></div><div class="tape" style="right:-40px;top:-22px;transform:rotate(22deg)"></div></div>
+  <svg class="el draw" id="o4a" width="560" height="220" style="left:250px;top:480px"><ellipse cx="280" cy="110" rx="260" ry="90" stroke="#d23b2a" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-2 280 110)"/></svg>
+  <svg class="el draw" id="o4b" width="300" height="200" style="left:259px;top:636px"><ellipse cx="150" cy="100" rx="130" ry="80" stroke="#d23b2a" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <div class="el hand" id="t4" style="left:140px;top:1050px;font-size:90px;color:var(--red)">your challenge ↑</div>
+
+  <!-- 5: sticky note -->
+  <div class="el sticky" id="st" style="left:120px;top:380px;width:840px;text-align:center">
+    <div class="hand" style="font-size:80px">try it yourself:</div>
+    <div style="font:700 84px/1.1 Plex;letter-spacing:-.02em;margin-top:30px">10keytypingtest.com</div>
+    <div class="hand" style="font-size:96px;color:var(--red);margin-top:30px" id="fr">it's free :)</div>
+  </div>
+
+  <canvas class="el" id="pres" width="720" height="1280" style="left:600px;top:1100px;width:480px;height:853px"></canvas>
+  <div class="el cap" id="cap" style="top:1300px"></div>
+</div>
+<script src="../../engine/lib.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const book = frameBook(RUN); const pres = presenterFrames(TL); const res = new Image(); res.src = "assets/result.jpg";
+const IDS = ["hl0","n0","k0","c0","q0","ph1","r1","t1","ph2","t2a","x2","t2b","t3a","u3","t3b","t3c","t3d","ph4","o4a","o4b","t4","st"];
+const draw = (id, t, t0, dur = .6) => { $(id).querySelectorAll("path,ellipse,line").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const wob = (t, k = 1) => Math.sin(t * 1.3 + k) * .6;
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  if (t < S[1] + .4) {   // 0
+    pop("n0", t, .05); draw("hl0", t, .35, .55); $("hl0").style.opacity = 1;
+    pop("k0", t, .6, { r: -2 }); draw("c0", t, W.can - .2, .7); pop("q0", t, W.can + .25, { r: -6 });
+    for (const id of ["hl0","n0","k0","c0","q0"]) out(id, t, S[1] - .05);
+  }
+  if (inWin(t, S[1] - .05, S[2] + .4)) {   // 1
+    drawCrop("c1", book.at(Math.max(0, t - S[1]) * 0.9), 0.55, 0, 0.45, 0.6, "#121714");
+    pop("ph1", t, S[1], { r: -2 + wob(t) }); draw("r1", t, S[1] + .5, .5); pop("t1", t, W.go, { r: -3 });
+    for (const id of ["ph1","r1","t1"]) out(id, t, S[2] - .05);
+  }
+  if (inWin(t, S[2] - .05, S[3] + .4)) {   // 2
+    drawCrop("c2", book.at(1.6 + (t - S[2])), 0.765, 0.13, 0.235, 0.575, "#121714");
+    pop("ph2", t, S[2], { r: 2 + wob(t, 2) }); pop("t2a", t, W.shortcuts - .15, { r: -4 }); draw("x2", t, W.shortcuts + .15, .3);
+    pop("t2b", t, W.numpad, { r: -3 });
+    for (const id of ["ph2","t2a","x2","t2b"]) out(id, t, S[3] - .05);
+  }
+  if (inWin(t, S[3] - .05, S[4] + .4)) {   // 3
+    pop("t3a", t, W.accuracy - .2); draw("u3", t, W.accuracy + .2, .5);
+    pop("t3b", t, W.accuracy + .7); pop("t3c", t, W.score - .6); pop("t3d", t, W.score + .2, { r: -5 });
+    for (const id of ["t3a","u3","t3b","t3c","t3d"]) out(id, t, S[4] - .05);
+  }
+  if (inWin(t, S[4] - .05, S[5] + .4)) {   // 4
+    const c = $("c4"), g = c.getContext("2d"); g.fillStyle = "#121714"; g.fillRect(0, 0, c.width, c.height);
+    if (res.naturalWidth) { const W0 = res.naturalWidth, H0 = res.naturalHeight, sw = W0, sh = H0 * .36, k = Math.min(c.width / sw, c.height / sh);
+      g.drawImage(res, 0, H0 * .03, sw, sh, (c.width - sw * k) / 2, (c.height - sh * k) / 2, sw * k, sh * k); }
+    pop("ph4", t, S[4], { r: 1.5 + wob(t, 3) }); draw("o4a", t, S[4] + .45, .5); draw("o4b", t, S[4] + .9, .45); pop("t4", t, S[4] + 1.2, { r: -3 });
+    for (const id of ["ph4","o4a","o4b","t4"]) out(id, t, S[5] - .05);
+  }
+  if (t >= S[5] - .05) {   // 5
+    pop("st", t, S[5], { r: 2.5 + wob(t, 4) * .5 });
+    $("fr").style.opacity = t >= W.free - .05 ? easeOut((t - W.free + .05) / .3) : 0;
+  }
+  caption(t, TL.caps, END, "mk", "mk mkn");
+  const on = presenter(t, TL, pres); moveCaption(on, 1300); if (on) hide("t4");
+};
+window.ready = Promise.all([...book.imgs, res, ...pres].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

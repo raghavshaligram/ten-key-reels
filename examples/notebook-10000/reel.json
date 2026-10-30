@@ -1,0 +1,145 @@
+{
+ "title": "The 10,000 KPH challenge",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Ten thousand keystrokes per hour.",
+   0.35
+  ],
+  [
+   "Can you hit that number?",
+   0.6
+  ],
+  [
+   "You've got one minute to enter as many numbers as you can.",
+   0.6
+  ],
+  [
+   "No typing shortcuts, just your number pad and your fingers.",
+   0.6
+  ],
+  [
+   "But don't sacrifice accuracy just to chase a higher score.",
+   0.6
+  ],
+  [
+   "There's your challenge.",
+   0.45
+  ],
+  [
+   "Take the test yourself at ten key typing test dot com.",
+   0.4
+  ],
+  [
+   "It's free.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "[10,000] keystrokes",
+  "per hour",
+  "Can you hit",
+  "that [number?]",
+  "You've got [one minute]",
+  "to enter as many",
+  "numbers as you can",
+  "No typing [shortcuts]",
+  "just your [number pad]",
+  "and your fingers",
+  "But don't [sacrifice accuracy]",
+  "just to chase",
+  "a higher score",
+  "There's your [challenge]",
+  "Take the test yourself",
+  "at [10keytypingtest.com]",
+  "It's [free]"
+ ],
+ "scenes": [
+  0,
+  9,
+  21,
+  31,
+  41,
+  44
+ ],
+ "marks": {
+  "can": 4,
+  "go": 13,
+  "shortcuts": 23,
+  "numpad": 26,
+  "accuracy": 34,
+  "score": 40,
+  "free": 51
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slipEvery": 30,
+  "frames": 12
+ },
+ "pointer": [
+  [
+   "S0+0.9",
+   "S1+0.65"
+  ],
+  [
+   "S2+0.2",
+   "S3-0.25"
+  ],
+  [
+   "S4-0.3",
+   "S5+1.9"
+  ]
+ ],
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "S1-0.05",
+   "tape"
+  ],
+  [
+   "S1+0.5",
+   "scribble"
+  ],
+  [
+   "S2-0.05",
+   "tape"
+  ],
+  [
+   "S2+0.25",
+   "clicks",
+   3.5
+  ],
+  [
+   "S3-0.05",
+   "whoosh"
+  ],
+  [
+   "accuracy+0.2",
+   "scribble"
+  ],
+  [
+   "S4-0.05",
+   "tape"
+  ],
+  [
+   "S4+0.45",
+   "scribble"
+  ],
+  [
+   "S5",
+   "pop",
+   700
+  ],
+  [
+   "free",
+   "pop-small"
+  ]
+ ]
+}

@@ -1,0 +1,198 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Plex;font-weight:500;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2)}
+@font-face{font-family:Plex;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2)}
+@font-face{font-family:Plex;font-weight:700;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2)}
+@font-face{font-family:PlexMono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+@font-face{font-family:Hand;font-weight:700;src:url(../../node_modules/@fontsource/caveat/files/caveat-latin-700-normal.woff2)}
+:root{--ink:#141711;--green:#1f5135;--leaf:#2f7a4f;--yellow:#F0D642;--cream:#FBF6EF;--peach:#F4E2D2;--muted:#6b6f68;--red:#c2412d}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream);font-family:Plex,sans-serif;color:var(--ink)}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;
+  background:radial-gradient(900px 700px at 20% 18%,#fff9f2 0%,transparent 60%),radial-gradient(800px 900px at 85% 70%,#f2dccb 0%,transparent 65%),linear-gradient(180deg,#fbf3ea,#f5e6d9)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55}
+.el{position:absolute;left:0;top:0;will-change:transform,opacity;transform-origin:50% 50%}
+.card{background:#fff;border-radius:34px;box-shadow:0 30px 60px rgba(60,40,20,.16),0 6px 16px rgba(60,40,20,.08);overflow:hidden}
+.shot{border-radius:26px;overflow:hidden;box-shadow:0 34px 70px rgba(40,30,20,.22),0 8px 20px rgba(40,30,20,.12);background:#131714}
+.shot img{display:block;width:100%;height:auto}
+.kicker{font:600 40px/1 Plex;letter-spacing:.22em;color:var(--leaf);text-transform:uppercase}
+.head{font:700 140px/1.0 Plex;letter-spacing:-.025em;text-align:center}
+.cap{font:700 86px/1.1 Plex;letter-spacing:-.02em;text-align:center;white-space:nowrap;width:auto!important;left:50%!important;translate:-50% 0;transform-origin:50% 50%}
+.pill{display:inline-block;background:var(--green);color:#fff;border-radius:20px;padding:2px 22px 8px;margin:0 2px}
+.pill.y{background:var(--yellow);color:var(--ink)}
+.note{font:700 78px/1 Hand;color:var(--green)}
+.stat .lab{font:600 42px/1 Plex;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.stat .num{font:700 196px/1 Plex;letter-spacing:-.03em;margin-top:18px;font-variant-numeric:tabular-nums}
+.stat .sub{font:500 44px/1.3 Plex;color:var(--muted);margin-top:14px}
+.chip{font:700 58px/1 Plex;border-radius:999px;padding:24px 42px;background:#fff;box-shadow:0 14px 30px rgba(60,40,20,.14)}
+.bar{height:130px;border-radius:26px}
+.mascot{width:150px;height:150px;border-radius:36px;background:#fff;box-shadow:0 12px 26px rgba(60,40,20,.16);display:flex;align-items:center;justify-content:center}
+.mascot img{width:104px}
+.ring{position:absolute;border:9px solid var(--yellow);border-radius:18px;box-shadow:0 0 0 6px rgba(240,214,66,.25)}
+</style><style>
+.row{font:600 64px/1 Plex;margin-top:38px;display:flex;align-items:center;gap:22px;color:var(--ink)}
+#r1,#r2{color:var(--leaf)}
+.box{display:inline-block;width:58px;height:58px;border:6px solid var(--ink);border-radius:14px}
+#r3{background:var(--yellow);margin-left:-24px;margin-right:-24px;padding:18px 24px;border-radius:20px}
+.big{padding:56px 64px;display:flex;justify-content:space-between;align-items:center}
+.big .lbl{font:700 110px/1 Plex;letter-spacing:-.03em}.big .tick{font:700 100px/1 Plex;color:var(--leaf)}
+.trio{padding:44px 56px;display:flex;align-items:center;gap:34px}
+.trio .n{width:96px;height:96px;border-radius:50%;background:var(--green);color:#fff;font:700 54px/96px Plex;text-align:center;flex:none}
+.trio .lab{font:600 52px/1 Plex;color:var(--muted);flex:1}.trio .v{font:700 108px/1 Plex;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+</style></head><body><div id="stage">
+  <div class="blob" id="b1" style="width:520px;height:520px;background:#f7d9c2;left:-120px;top:1100px"></div>
+  <div class="blob" id="b2" style="width:600px;height:600px;background:#e8efe2;left:620px;top:120px"></div>
+
+  <!-- 0: hook, the application checklist -->
+  <div class="el" id="kick" style="width:1080px;top:250px;text-align:center"><span class="kicker">● Data entry jobs</span></div>
+  <div class="el head" id="head" style="width:1080px;top:320px">There's a<br>test first</div>
+  <div class="el card" id="list" style="width:900px;left:90px;top:660px;padding:46px 56px">
+    <div class="kicker" style="color:var(--muted);font-size:34px">Your application</div>
+    <div class="row" id="r1">✓ Resume</div><div class="row" id="r2">✓ Cover letter</div><div class="row" id="r3"><span class="box"></span>10-key test</div>
+  </div>
+  <div class="el mascot" id="m0" style="left:860px;top:590px"><img src="../../engine/brand/logo.png"></div>
+
+  <!-- 1: the real test -->
+  <div class="el note" id="note1" style="left:70px;top:450px">the real test ↓</div>
+  <div class="el shot" id="run" style="width:1000px;left:40px;top:560px"><canvas id="runc" width="1000" height="471"></canvas></div>
+  <div class="el shot" id="pad" style="width:760px;left:160px;top:330px"><canvas id="padc" width="760" height="820"></canvas></div>
+  <div class="el note" id="note1b" style="left:620px;top:1150px;font-size:66px">number pad only</div>
+
+  <!-- 2: speed and accuracy -->
+  <div class="el head" id="what" style="width:1080px;top:300px;font-size:120px">What<br>matters</div>
+  <div class="el card big" id="cSpeed" style="width:900px;left:90px;top:640px"><span class="lbl">Speed</span><span class="tick">✓</span></div>
+  <div class="el card big" id="cAcc" style="width:900px;left:90px;top:900px"><span class="lbl">Accuracy</span><span class="tick">✓</span></div>
+
+  <!-- 3: track all three -->
+  <div class="el kicker" id="same" style="width:1080px;top:250px;text-align:center;color:var(--muted)">One 1-minute run</div>
+  <div class="el card trio" id="t1" style="width:960px;left:60px;top:320px"><span class="n">1</span><span class="lab">Net KPH</span><span class="v" id="v1" style="color:var(--green)">0</span></div>
+  <div class="el card trio" id="t2" style="width:960px;left:60px;top:600px"><span class="n">2</span><span class="lab">Gross KPH</span><span class="v" id="v2">0</span></div>
+  <div class="el card trio" id="t3" style="width:960px;left:60px;top:880px"><span class="n">3</span><span class="lab">Accuracy</span><span class="v" id="v3" style="color:var(--red)">0%</span></div>
+  <div class="el note" id="note3" style="left:560px;top:1150px;font-size:64px">aim for 95%+</div>
+
+  <!-- 4: calm close -->
+  <div class="el card" id="cta" style="width:980px;left:50px;top:340px;padding:110px 50px 120px;text-align:center">
+    <div style="display:flex;justify-content:center"><div class="mascot" style="width:230px;height:230px;border-radius:54px;box-shadow:none;background:#f3f1ec"><img src="../../engine/brand/logo.png" style="width:160px"></div></div>
+    <div style="font:700 92px/1.05 Plex;letter-spacing:-.03em;margin-top:56px">10keytypingtest.com</div>
+    <div style="font:500 52px/1.3 Plex;color:var(--muted);margin-top:22px">Free 10-key and data entry tests</div>
+    <div style="display:flex;gap:26px;justify-content:center;margin-top:64px">
+      <div class="chip" id="ck1" style="box-shadow:none;background:#eef4ee;color:var(--green)">✓ Free</div>
+      <div class="chip" id="ck2" style="box-shadow:none;background:#eef4ee;color:var(--green)">✓ No sign-up</div>
+    </div>
+  </div>
+  <div class="el mascot" id="m4" style="left:840px;top:250px"><img src="../../engine/brand/logo.png"></div>
+
+  <canvas class="el" id="pres" width="720" height="1280" style="left:600px;top:1100px;width:480px;height:853px"></canvas>
+  <div class="el cap" id="cap" style="width:1080px;top:1290px"></div>
+</div><script>
+const TL = __TIMELINE__, RUN = __RUN__;
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const easeOut = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const easeInOut = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const spring = (x) => { x = clamp(x); return 1 - Math.exp(-6 * x) * Math.cos(9 * x); };   // overshoots a little, settles
+const S = TL.scenes; const END = TL.end;
+const sceneOf = (t) => { let k = 0; for (let i = 0; i < S.length; i++) if (t >= S[i]) k = i; return k; };
+function set(id, o) { const e = $(id); const s = o.s ?? 1, x = o.x ?? 0, y = o.y ?? 0, r = o.r ?? 0, rx = o.rx ?? 0, ry = o.ry ?? 0;
+  e.style.opacity = o.o ?? 1; e.style.transform = `perspective(1600px) translate(${x}px,${y}px) rotate(${r}deg) rotateX(${rx}deg) rotateY(${ry}deg) scale(${s})`; }
+function pop(id, t, t0, extra = {}) { const p = spring((t - t0) / .55), a = easeOut((t - t0) / .25);
+  set(id, { o: t < t0 ? 0 : a, s: (t < t0 ? .6 : .6 + .4 * p) * (extra.s ?? 1), x: extra.x, y: (extra.y ?? 0) + (1 - a) * 40, r: extra.r }); }
+function out(id, t, t1, base = {}) { const a = easeInOut((t - t1) / .35); if (t > t1) set(id, { ...base, o: (base.o ?? 1) * (1 - a), s: (base.s ?? 1) * (1 - .08 * a), y: (base.y ?? 0) - 30 * a }); }
+const hide = (id) => { $(id).style.opacity = 0; };
+
+// image flipbooks drawn to canvases (real captured frames)
+const imgs = RUN.frames.map((f) => { const i = new Image(); i.src = "assets/" + f.f; return i; });
+function runFrame(sec) { let best = 0; for (let i = 0; i < RUN.frames.length; i++) if (RUN.frames[i].t <= sec) best = i; return imgs[best]; }
+function drawCrop(id, im, fx, fy, fw, fh, bg) { const c = $(id), g = c.getContext("2d"), W = im.naturalWidth, H = im.naturalHeight;
+  g.fillStyle = bg; g.fillRect(0, 0, c.width, c.height);
+  const sw = W * fw, sh = H * fh, k = Math.min(c.width / sw, c.height / sh), dw = sw * k, dh = sh * k;
+  g.drawImage(im, W * fx, H * fy, sw, sh, (c.width - dw) / 2, (c.height - dh) / 2, dw, dh); }
+function drawRun(sec) { const im = runFrame(sec);
+  drawCrop("runc", im, 0.187, 0.205, 0.37, 0.33, "#131714");          // the number being typed and the input
+  drawCrop("runNc", im, 0.004, 0.835, 0.236, 0.155, "#ffffff");      // Net KPH cell
+  drawCrop("runGc", im, 0.256, 0.835, 0.236, 0.155, "#ffffff"); }    // Gross KPH cell
+function drawPad(sec) { // keypad region of the captured test, cropped square
+  const c = $("padc"), g = c.getContext("2d"), im = runFrame(sec), W = im.naturalWidth, H = im.naturalHeight;
+  const sx = W * 0.765, sy = H * 0.135, sw = W * 0.235, sh = H * 0.57;
+  g.fillStyle = "#131714"; g.fillRect(0, 0, c.width, c.height);
+  const k = Math.min(c.width / sw, c.height / sh) * 0.92; const dw = sw * k, dh = sh * k;
+  g.drawImage(im, sx, sy, sw, sh, (c.width - dw) / 2, (c.height - dh) / 2, dw, dh); }
+
+
+function drawCrop(id, im, fx, fy, fw, fh, bg) { const c = $(id), g = c.getContext("2d"), W = im.naturalWidth, H = im.naturalHeight;
+  g.fillStyle = bg; g.fillRect(0, 0, c.width, c.height);
+  const sw = W * fw, sh = H * fh, k = Math.min(c.width / sw, c.height / sh), dw = sw * k, dh = sh * k;
+  g.drawImage(im, W * fx, H * fy, sw, sh, (c.width - dw) / 2, (c.height - dh) / 2, dw, dh); }
+function caption(t) {
+  let cur = null; for (const c of TL.caps) if (t >= c.t - 0.02) cur = c;
+  const el = $("cap"); if (!cur || t > END - 0.6) { el.style.opacity = 0; return; }
+  const html = cur.text.replace(/\[(.+?)\]/g, (_, w) => `<span class="pill${/\d/.test(w) && !w.includes(".com") ? " y" : ""}">${w}</span>`);
+  if (el.dataset.h !== html) { el.innerHTML = html; el.dataset.h = html; }
+  const fit = Math.min(1, 960 / Math.max(1, el.scrollWidth));   // long captions shrink to stay inside the frame
+  const a = easeOut((t - cur.t) / 0.16); el.style.opacity = a; el.style.transform = `translateY(${(1 - a) * 18}px) scale(${(0.96 + 0.04 * a) * fit})`;
+}
+function count(id, t, t0, dur, to) { const v = Math.round(to * easeOut((t - t0) / dur)); $(id).textContent = t < t0 ? "0" : v.toLocaleString("en-US"); }
+
+
+// presenter (same as engine/lib.js presenter(), inlined because this page carries its own helpers)
+const PRES = Array.from({ length: TL.presFrames || 0 }, (_, i) => { const im = new Image(); im.src = `assets/pres/p${String(i + 1).padStart(3, "0")}.png`; return im; });
+function presenter(t) { hide("pres"); if (!PRES.length) return false; let on = null;
+  for (const [a, b] of TL.pointer || []) if (t >= a && t < b + .35) on = [a, b];
+  if (!on) return false; const [a, b] = on, lt = t - a, last = PRES.length - 1;
+  const y = (1 - spring(lt / .6)) * 760 + (t > b ? easeInOut((t - b) / .35) * 900 : 0);
+  const fi = 30 + Math.floor(lt * 34), pp = fi <= last ? fi : (() => { const k = (fi - last) % 80; return k < 40 ? last - k : last - 40 + (k - 40); })();
+  const c = $("pres"), g = c.getContext("2d"), im = PRES[Math.max(0, Math.min(last, pp))];
+  g.clearRect(0, 0, c.width, c.height); if (im && im.naturalWidth) g.drawImage(im, 0, 0);
+  c.style.opacity = 1; c.style.transform = `translateY(${y}px)`; return true; }
+function moveCaption(on) { const el = $("cap");
+  if (on) { el.style.setProperty("left", "320px", "important"); el.style.setProperty("width", "540px", "important"); el.style.whiteSpace = "normal"; }
+  else { el.style.removeProperty("left"); el.style.setProperty("width", "auto", "important"); el.style.whiteSpace = ""; } }
+const IDS = ["kick","head","list","m0","note1","run","pad","note1b","what","cSpeed","cAcc","same","t1","t2","t3","note3","cta","m4"];
+window.render = function (t) {
+  $("b1").style.transform = `translate(${Math.sin(t * .35) * 40}px,${Math.cos(t * .3) * 30}px)`;
+  $("b2").style.transform = `translate(${Math.cos(t * .28) * 50}px,${Math.sin(t * .33) * 30}px)`;
+  for (const id of IDS) hide(id);
+  const w = TL.words;
+  // 0: hook
+  if (t < S[1] + .4) {
+    pop("kick", t, .05); pop("head", t, .12); pop("list", t, .45); pop("m0", t, 1.1, { r: 8 });
+    $("r1").style.opacity = easeOut((t - .8) / .25); $("r2").style.opacity = easeOut((t - 1.15) / .25);
+    const r3 = $("r3"); const a3 = easeOut((t - w.test + .1) / .25); r3.style.opacity = t < w.test - .1 ? 0 : a3;
+    r3.style.transform = `scale(${t < w.test - .1 ? .8 : .8 + .2 * spring((t - w.test + .1) / .5)})`;
+    for (const id of ["kick","head","list","m0"]) out(id, t, S[1] - .05);
+  }
+  // 1: real test close-up, then the keypad
+  if (t >= S[1] - .1 && t < S[2] + .4) {
+    const sw = w.numbers - .2, im = runFrame(3.2 + (t - S[1]) * 1.3);
+    if (t < sw + .4) { drawCrop("runc", im, 0.187, 0.205, 0.37, 0.33, "#131714");
+      const a = spring((t - S[1]) / .7), f = easeOut((t - S[1]) / .3);
+      set("run", { o: f, s: .88 + .12 * a, y: (1 - a) * 160, rx: (1 - easeOut((t - S[1]) / 1.0)) * 16 });
+      pop("note1", t, S[1] + .45, { r: -3 }); out("run", t, sw); out("note1", t, sw); }
+    if (t >= sw) { drawCrop("padc", im, 0.765, 0.13, 0.235, 0.575, "#131714"); pop("pad", t, sw + .1, { r: -2 }); pop("note1b", t, w.numpad, { r: -4 });
+      out("pad", t, S[2] - .05); out("note1b", t, S[2] - .05); }
+  }
+  // 2: what matters
+  if (t >= S[2] - .05 && t < S[3] + .4) {
+    pop("what", t, S[2]); pop("cSpeed", t, w.speed - .1); pop("cAcc", t, w.accuracy - .1);
+    for (const id of ["what","cSpeed","cAcc"]) out(id, t, S[3] - .05);
+  }
+  // 3: track all three
+  if (t >= S[3] - .05 && t < S[4] + .4) {
+    pop("same", t, S[3]);
+    const a1 = S[3] + .15, a2 = w.track - .05, a3 = w.three - .25;
+    pop("t1", t, a1); count("v1", t, a1 + .1, 1.0, TL.result.net);
+    pop("t2", t, a2); count("v2", t, a2 + .1, 1.0, TL.result.gross);
+    pop("t3", t, a3); { const v = TL.result.acc * easeOut((t - a3 - .1) / 1.0); $("v3").textContent = (t < a3 ? 0 : v).toFixed(1) + "%"; }
+    pop("note3", t, a3 + .9, { r: -4 });
+    for (const id of ["same","t1","t2","t3","note3"]) out(id, t, S[4] - .05);
+  }
+  // 4: calm close
+  if (t >= S[4] - .05) {
+    const a = easeOut((t - S[4]) / .6); set("cta", { o: a, y: (1 - a) * 50, s: .97 + .03 * a });
+    $("ck1").style.opacity = t >= w.free ? easeOut((t - w.free) / .25) : .25;
+    $("ck2").style.opacity = t >= w.nosignup ? easeOut((t - w.nosignup) / .25) : .25;
+    pop("m4", t, S[4] + 1.6, { r: -8 }); $("m4").style.transform += ` translateY(${Math.sin(t * 1.6) * 8}px)`;
+  }
+  caption(t); moveCaption(presenter(t));
+};
+window.ready = Promise.all([...imgs, ...PRES].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

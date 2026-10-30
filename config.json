@@ -1,0 +1,12 @@
+{
+ "about": "Defaults for the daily reel. Change styles to a single name once the user picks one.",
+ "styles": ["cream", "notebook", "arcade"],
+ "style_examples": {"cream": "examples/cream-prepare", "notebook": "examples/notebook-10000", "arcade": "examples/arcade-10000"},
+ "rotation": "next style after the one in the newest log line",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "length_seconds": [18, 28],
+ "presenter": {"on": true, "share_of_screen_time": 0.5, "windows": 3, "window_seconds": 4},
+ "ready_by": "18:00 Asia/Kolkata",
+ "send_to_user": ["reels/<folder>/out.mp4", "reels/<folder>/caption.txt"]
+}

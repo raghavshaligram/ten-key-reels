@@ -1,0 +1,127 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Plex;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-600-normal.woff2)}
+@font-face{font-family:Plex;font-weight:700;src:url(../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--bg:#06100b;--neon:#3BE48A;--yellow:#F0D642;--red:#ff5a4e;--dim:#7d8f84}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:#fff;font-family:Plex,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(900px 900px at 50% 40%,#0f2a1b 0%,#06100b 70%)}
+#grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(59,228,138,.07) 2px,transparent 2px),linear-gradient(90deg,rgba(59,228,138,.07) 2px,transparent 2px);background-size:90px 90px}
+#scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 5px);pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.mono{font-family:Mono,monospace;font-variant-numeric:tabular-nums}
+.glow{text-shadow:0 0 18px rgba(59,228,138,.55),0 0 46px rgba(59,228,138,.25)}
+.yglow{color:var(--yellow);text-shadow:0 0 22px rgba(240,214,66,.55),0 0 60px rgba(240,214,66,.25)}
+.lab{font:600 44px/1 Mono;letter-spacing:.24em;color:var(--neon);text-transform:uppercase}
+.panel{border:3px solid rgba(59,228,138,.55);border-radius:28px;background:rgba(6,20,13,.85);box-shadow:0 0 40px rgba(59,228,138,.18),inset 0 0 30px rgba(59,228,138,.08);overflow:hidden}
+.badge{font:700 60px/1 Plex;letter-spacing:.06em;padding:22px 40px;border-radius:18px;background:var(--yellow);color:#111;box-shadow:0 0 40px rgba(240,214,66,.45)}
+.cap{font:700 84px/1.1 Plex;letter-spacing:-.01em;white-space:nowrap;left:540px!important;text-shadow:0 4px 18px rgba(0,0,0,.6)}
+.hl{color:var(--neon);text-shadow:0 0 22px rgba(59,228,138,.6)}
+.hn{color:var(--yellow);text-shadow:0 0 22px rgba(240,214,66,.6)}
+</style></head><body>
+<div id="stage">
+  <div id="grid"></div>
+  <!-- 0: the number -->
+  <div class="el lab" id="l0" style="width:1080px;top:330px;text-align:center">Target score</div>
+  <div class="el mono yglow" id="big" style="width:1080px;top:420px;text-align:center;font-size:250px;line-height:1">0</div>
+  <div class="el lab" id="l0b" style="width:1080px;top:700px;text-align:center;color:#fff;opacity:.85">Keystrokes / hour</div>
+  <div class="el badge" id="q" style="left:330px;top:860px">CAN YOU?</div>
+
+  <!-- 1: countdown -->
+  <svg class="el" id="ring" width="760" height="760" style="left:160px;top:280px"><circle cx="380" cy="380" r="330" fill="none" stroke="rgba(59,228,138,.15)" stroke-width="34"/>
+    <circle id="arc" cx="380" cy="380" r="330" fill="none" stroke="#3BE48A" stroke-width="34" stroke-linecap="round" transform="rotate(-90 380 380)" stroke-dasharray="2073.45" stroke-dashoffset="0" style="filter:drop-shadow(0 0 14px rgba(59,228,138,.7))"/></svg>
+  <div class="el mono glow" id="clock" style="width:1080px;top:540px;text-align:center;font-size:230px;line-height:1;color:var(--neon)">1:00</div>
+  <div class="el badge" id="go" style="left:420px;top:1070px;background:var(--neon);box-shadow:0 0 50px rgba(59,228,138,.6)">GO</div>
+
+  <!-- 2: the keypad, live -->
+  <div class="el panel" id="padP" style="left:150px;top:300px;width:780px"><canvas id="padc" width="780" height="840"></canvas></div>
+  <div class="el mono" id="noC" style="left:170px;top:1160px;font-size:70px;color:var(--red)"><s>Ctrl+V</s></div>
+  <div class="el mono" id="kph" style="left:560px;top:1160px;font-size:70px;color:var(--neon)">0 KPH</div>
+
+  <!-- 3: accuracy -->
+  <div class="el lab" id="l3" style="width:1080px;top:300px;text-align:center">Don't trade this</div>
+  <svg class="el" id="gauge" width="760" height="760" style="left:160px;top:380px"><circle cx="380" cy="380" r="320" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="44"/>
+    <circle id="garc" cx="380" cy="380" r="320" fill="none" stroke="#3BE48A" stroke-width="44" stroke-linecap="round" transform="rotate(-90 380 380)" stroke-dasharray="2010.6" stroke-dashoffset="2010.6"/></svg>
+  <div class="el mono glow" id="accv" style="width:1080px;top:640px;text-align:center;font-size:190px;line-height:1;color:var(--neon)">0%</div>
+  <div class="el lab" id="accl" style="width:1080px;top:860px;text-align:center;color:#fff">Accuracy</div>
+
+  <!-- 4: the result -->
+  <div class="el lab" id="l4" style="width:1080px;top:280px;text-align:center;color:var(--yellow)">Challenge cleared</div>
+  <div class="el panel" id="resP" style="left:60px;top:360px;width:960px"><canvas id="resc" width="960" height="520"></canvas></div>
+  <div class="el" id="r1" style="left:60px;top:930px;width:460px;text-align:center"><div class="mono yglow" style="font-size:120px" id="rn">0</div><div class="lab" style="color:#fff;font-size:34px;margin-top:12px">Net KPH</div></div>
+  <div class="el" id="r2" style="left:560px;top:930px;width:460px;text-align:center"><div class="mono glow" style="font-size:120px;color:var(--neon)" id="ra">0%</div><div class="lab" style="color:#fff;font-size:34px;margin-top:12px">Accuracy</div></div>
+
+  <!-- 5: close -->
+  <div class="el lab" id="l5" style="width:1080px;top:420px;text-align:center">Player 1 ready?</div>
+  <div class="el" id="url" style="width:1080px;top:530px;text-align:center;font:700 96px/1.05 Plex;letter-spacing:-.02em">10keytypingtest<span style="color:var(--neon)">.com</span></div>
+  <div class="el badge" id="free" style="left:410px;top:740px">FREE</div>
+  <div class="el" id="press" style="width:1080px;top:960px;text-align:center;font:600 48px/1 Mono;color:var(--dim)">PRESS ANY KEY TO START</div>
+
+  <canvas class="el" id="pres" width="720" height="1280" style="left:600px;top:1100px;width:480px;height:853px"></canvas>
+  <div class="el cap" id="cap" style="top:1290px"></div>
+  <div id="scan"></div>
+</div>
+<script src="../../engine/lib.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const book = frameBook(RUN);
+document.addEventListener("DOMContentLoaded", () => { $("l4").textContent = TL.result.net >= 10000 ? "Challenge cleared" : "Your score"; }); const pres = presenterFrames(TL); const res = new Image(); res.src = "assets/result.jpg";
+const IDS = ["l0","big","l0b","q","ring","clock","go","padP","noC","kph","l3","gauge","accv","accl","l4","resP","r1","r2","l5","url","free","press"];
+window.render = function (t) {
+  $("grid").style.transform = `translateY(${(t * 40) % 90}px)`;
+  for (const id of IDS) hide(id);
+  // 0: count to 10,000
+  if (t < S[1] + .4) {
+    pop("l0", t, .05); slam("big", t, .1); count("big", t, .15, 1.6, 10000);
+    $("big").style.transform += ` scale(${1 + .015 * Math.sin(t * 9) * (t > 1.8 ? 1 : 0)})`;
+    pop("l0b", t, .4); slam("q", t, W.can - .1, { r: -4 });
+    for (const id of ["l0","big","l0b","q"]) out(id, t, S[1] - .05);
+  }
+  // 1: the clock
+  if (inWin(t, S[1] - .05, S[2] + .4)) {
+    const run = Math.max(0, t - W.go);                         // clock starts on "minute"-ish
+    const left = 60 - run; const mm = Math.floor(left / 60), ss = Math.ceil(left % 60) % 60;
+    $("clock").textContent = left >= 60 ? "1:00" : `0:${String(Math.floor(left)).padStart(2, "0")}`;
+    $("arc").setAttribute("stroke-dashoffset", (2073.45 * clamp(run / 60)).toFixed(1));
+    pop("ring", t, S[1]); pop("clock", t, S[1] + .1); slam("go", t, W.go);
+    $("ring").style.transform += ` rotate(${-run * 6}deg)`;
+    for (const id of ["ring","clock","go"]) out(id, t, S[2] - .05);
+  }
+  // 2: the keypad, live, with a speed counter
+  if (inWin(t, S[2] - .05, S[3] + .4)) {
+    drawCrop("padc", book.at(1.6 + (t - S[2]) * 1.0), 0.765, 0.13, 0.235, 0.575, "#0b130e");
+    pop("padP", t, S[2]); slam("noC", t, W.shortcuts - .1, { r: -6 });
+    pop("kph", t, W.numpad); count("kph", t, W.numpad, 1.6, 10800, (v) => v.toLocaleString("en-US") + " KPH");
+    for (const id of ["padP","noC","kph"]) out(id, t, S[3] - .05);
+  }
+  // 3: accuracy gauge: dips red when chasing speed, holds green
+  if (inWin(t, S[3] - .05, S[4] + .4)) {
+    pop("l3", t, S[3]); pop("gauge", t, S[3] + .1); pop("accv", t, S[3] + .1); pop("accl", t, S[3] + .2);
+    const rise = easeOut((t - S[3] - .2) / .8) * TL.result.acc, dip = t > W.score - .9 ? Math.sin(clamp((t - W.score + .9) / 1.4) * Math.PI) * 22 : 0;
+    const v = Math.max(0, rise - dip); $("accv").textContent = Math.round(v) + "%";
+    $("garc").setAttribute("stroke-dashoffset", (2010.6 * (1 - v / 100)).toFixed(1));
+    const red = dip > 4; $("garc").setAttribute("stroke", red ? "#ff5a4e" : "#3BE48A"); $("accv").style.color = red ? "#ff5a4e" : "";
+    for (const id of ["l3","gauge","accv","accl"]) out(id, t, S[4] - .05);
+  }
+  // 4: real result
+  if (inWin(t, S[4] - .05, S[5] + .4)) {
+    const c = $("resc"), g = c.getContext("2d"); g.fillStyle = "#121714"; g.fillRect(0, 0, c.width, c.height);
+    if (res.naturalWidth) { const W0 = res.naturalWidth, H0 = res.naturalHeight, sx = 0, sy = H0 * .03, sw = W0, sh = H0 * .36, k = Math.min(c.width / sw, c.height / sh);
+      g.drawImage(res, sx, sy, sw, sh, (c.width - sw * k) / 2, (c.height - sh * k) / 2, sw * k, sh * k); }
+    slam("l4", t, S[4]); pop("resP", t, S[4] + .05);
+    pop("r1", t, S[4] + .3); count("rn", t, S[4] + .35, .9, TL.result.net);
+    pop("r2", t, S[4] + .5); count("ra", t, S[4] + .55, .9, TL.result.acc * 10, (v) => (v / 10).toFixed(Number.isInteger(TL.result.acc) ? 0 : 1) + "%");
+    for (const id of ["l4","resP","r1","r2"]) out(id, t, S[5] - .05);
+  }
+  // 5: calm close
+  if (t >= S[5] - .05) {
+    pop("l5", t, S[5]); pop("url", t, S[5] + .15); pop("free", t, W.free - .05);
+    $("press").style.opacity = t > S[5] + 1.2 ? (Math.sin(t * 5) > 0 ? .9 : .25) : 0; $("press").style.transform = "";
+  }
+  caption(t, TL.caps, END, "hl", "hn");
+  moveCaption(presenter(t, TL, pres), 1290);
+};
+window.ready = Promise.all([...book.imgs, res, ...pres].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>
