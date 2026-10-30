@@ -1,9 +1,9 @@
 # Daily reel runbook
 
 This repo makes one Instagram reel a day for **10keytypingtest.com**: a faceless motion-graphics reel built in code
-(real screenshots of the live test, animated text, a synthetic voice, captions) with a presenter cut-out who pops up
-and points at the screen. No paid video or image generation runs day to day; the presenter clips are already in
-`library/pointer/`.
+(real screenshots of the live test, animated text, a synthetic voice, captions) in the **sticker style**: the caption is the
+headline at the top, one sticker prop per beat, and Tara, an illustrated presenter drawn in code (`engine/character.js`),
+on screen the whole time and changing pose with the script. No paid video or image generation runs.
 
 The user approves every script and every finished reel. Nothing gets posted to Instagram from here.
 
@@ -12,8 +12,8 @@ The user approves every script and every finished reel. Nothing gets posted to I
 1. **Set up** (fresh clone): `./setup.sh`. It installs fonts, Kokoro voice, Whisper, and downloads the voice model into `cache/`.
 2. **Pick the topic.** Read `content/log.md` and `content/topics.md`. Take the topic used least recently, unless the user
    asked for a specific one. Open the site page listed for it (WebFetch https://10keytypingtest.com/...) and note the facts you will use.
-3. **Pick the style.** `config.json` → `styles`. Rotate: use the style after the one in the newest log line. If the user has
-   picked a single style, `styles` has one entry; use it.
+3. **Style: sticker.** The user picked it on 2026-10-30. Start from `examples/sticker-jobs` or `examples/sticker-10000`
+   (whichever is closer to today's beats). The other styles are kept in `examples/` only for reference.
 4. **Write the script** with `tools/ig/ig-reel/SKILL.md`:
    - Draft 5 hooks from `tools/ig/ig-reel/hooks.json`, score them with `python3 tools/ig/ig-reel/hookscore.py hooks.txt`, take the best.
      Skip formulas that need a personal past (the presenter is invented, she has no story): #1, 5, 6, 8, 13, 15, 25.
@@ -21,8 +21,10 @@ The user approves every script and every finished reel. Nothing gets posted to I
    - Run it through `python3 tools/ig/ig-human/humanize.py script.txt --report` and `detect.py`. Fix what they flag.
 5. **Read the script against the user's rules** (below). Then build the reel folder:
    - `reels/YYYY-MM-DD-short-name/`, copy `reel.json` and `scene.html` from the style's example in `examples/`.
-   - Edit `reel.json`: `lines` (spoken), `phrases` (captions), `scenes`, `marks`, `pointer`, `sfx`, `run`.
-   - Edit `scene.html`: change the on-screen words and which crops of the test each scene shows. Keep the structure.
+   - Edit `reel.json`: `lines` (spoken), `phrases` (captions as sentence chunks, `[accent]` words go red serif), `scenes`, `marks`, `sfx`, `run`. Leave `pointer` null.
+   - Edit `scene.html`: one sticker prop per beat (real test crops, cards, chips, stamps), the chapter labels and counters (`CH`),
+     and Tara's `POSES` keyed to the words (rest, wave, point, present, think, thumbs, oops, cheer). Keep the structure.
+     New props should fill y 560 to 1180; Tara sits below.
 6. **Build stills first**: `python3 engine/build.py reels/<folder> --stills 1.5,6,10,14,18,22`, then look at `sheet.jpg`.
    The build prints the words Whisper heard; read them against the script. If it prints CAPTION COUNT MISMATCH, it also prints
    every word with its index: fix `phrases`, `scenes` and `marks` from that list and run again (the voice is cached).
@@ -46,15 +48,14 @@ When the user replies with changes, edit the folder, rebuild, send again, update
 - The last line goes **down** in tone, a calm statement, never a rising question or an exclamation.
 - When the user supplies their own script, use their exact words. Don't "improve" them.
 - Fill the phone screen: big type, close crops, no large empty areas. Reels are watched on phones.
-- Her screen time is about half the reel, in three windows of about 4 seconds, not a one-second flash.
+- Tara stays on screen the whole reel and changes pose with what's being said; the end pose is calm (rest), matching the falling last line.
 
 ## Honesty rules (never break)
 
 - Numbers on screen come from the real run `record.cjs` makes on the live site. Never type a number into a scene by hand.
   If the script says a target (10,000 KPH) and the run misses it, the scene must not say it was hit (see arcade `l4`).
 - Accuracy is per entry. A 1-minute test has about 30 entries, so one slip is about 3%; 98% in one minute is not possible. Don't script it.
-- The presenter is an invented person. She never tells a personal story ("when I applied..."), never claims a score, never reviews the site.
-  When posting, the user should turn on Instagram's AI label.
+- Tara is an invented character. She never tells a personal story ("when I applied..."), never claims a score, never reviews the site.
 - No invented users, reviews, testimonials or employer quotes. No competitor names or links.
 - No real people's photos or GIFs, no song lyrics, no copyrighted music. Sound effects come from `engine/sfx.py`.
 - Facts about tests and employers come from the site's own guides. If a guide doesn't say it, don't say it.

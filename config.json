@@ -1,16 +1,16 @@
 {
- "about": "Defaults for the daily reel. Change styles to a single name once the user picks one.",
+ "about": "Defaults for the daily reel. The user picked the sticker style (2026-10-30); the other styles stay in examples/ for reference.",
  "styles": [
-  "cream",
-  "notebook",
-  "arcade",
   "sticker"
  ],
  "style_examples": {
   "cream": "examples/cream-prepare",
   "notebook": "examples/notebook-10000",
   "arcade": "examples/arcade-10000",
-  "sticker": "examples/sticker-10000"
+  "sticker": [
+   "examples/sticker-10000",
+   "examples/sticker-jobs"
+  ]
  },
  "rotation": "next style after the one in the newest log line",
  "voice": "af_heart",
@@ -20,11 +20,9 @@
   28
  ],
  "presenter": {
-  "on": true,
-  "share_of_screen_time": 0.5,
-  "windows": 3,
-  "window_seconds": 4,
-  "note": "sticker style uses Tara (engine/character.js, drawn in code, on screen the whole reel); the other styles use the pointer clips"
+  "who": "Tara, engine/character.js, drawn in code",
+  "on_screen": "the whole reel",
+  "poses": "change with the script, a new pose every 1.5 to 3 seconds"
  },
  "ready_by": "18:00 Asia/Kolkata",
  "send_to_user": [
