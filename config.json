@@ -1,12 +1,34 @@
 {
  "about": "Defaults for the daily reel. Change styles to a single name once the user picks one.",
- "styles": ["cream", "notebook", "arcade"],
- "style_examples": {"cream": "examples/cream-prepare", "notebook": "examples/notebook-10000", "arcade": "examples/arcade-10000"},
+ "styles": [
+  "cream",
+  "notebook",
+  "arcade",
+  "sticker"
+ ],
+ "style_examples": {
+  "cream": "examples/cream-prepare",
+  "notebook": "examples/notebook-10000",
+  "arcade": "examples/arcade-10000",
+  "sticker": "examples/sticker-10000"
+ },
  "rotation": "next style after the one in the newest log line",
  "voice": "af_heart",
  "speed": 0.97,
- "length_seconds": [18, 28],
- "presenter": {"on": true, "share_of_screen_time": 0.5, "windows": 3, "window_seconds": 4},
+ "length_seconds": [
+  18,
+  28
+ ],
+ "presenter": {
+  "on": true,
+  "share_of_screen_time": 0.5,
+  "windows": 3,
+  "window_seconds": 4,
+  "note": "sticker style uses Tara (engine/character.js, drawn in code, on screen the whole reel); the other styles use the pointer clips"
+ },
  "ready_by": "18:00 Asia/Kolkata",
- "send_to_user": ["reels/<folder>/out.mp4", "reels/<folder>/caption.txt"]
+ "send_to_user": [
+  "reels/<folder>/out.mp4",
+  "reels/<folder>/caption.txt"
+ ]
 }

@@ -79,6 +79,15 @@ def phrases(R):
     return [(p[0], p[1]) if isinstance(p, list) else (len(p.split()), p) for p in R["phrases"]]
 
 
+def amplitude(d, end):
+    """Voice loudness per video frame (0..1), for lip sync."""
+    import soundfile as sf
+    a, sr = sf.read(f"{d}/vo.wav"); a = a if a.ndim == 1 else a.mean(1); hop = sr // FPS
+    v = np.array([np.sqrt(np.mean(a[i * hop:(i + 1) * hop] ** 2)) if i * hop < len(a) else 0 for i in range(int(end * FPS) + 2)])
+    v = v / (np.percentile(v[v > 0], 95) if (v > 0).any() else 1)
+    v = np.convolve(v, [.25, .5, .25], "same"); return [round(float(min(1, x)), 2) for x in v]
+
+
 def timeline(R, d, m):
     total = sum(n for n, _ in phrases(R))
     if total != len(m):
@@ -88,12 +97,13 @@ def timeline(R, d, m):
     for n, text in phrases(R): caps.append({"t": m[k][1], "text": text}); k += n
     S = [m[i][1] for i in R["scenes"]]; W = {name: m[i][1] for name, i in R.get("marks", {}).items()}
     end = round(m[-1][2] + R.get("tail", .6), 2)
-    tl = {"caps": caps, "scenes": S, "words": W, "end": end}
+    tl = {"caps": caps, "scenes": S, "words": W, "end": end,
+          "wt": [[w, s, e] for w, s, e in m], "amp": amplitude(d, end)}
     if os.path.exists(f"{d}/assets/result.json"): tl["result"] = json.load(open(f"{d}/assets/result.json"))
     def at(expr):
         try: return float(expr)
         except (TypeError, ValueError): pass
-        mm = re.match(r"^(S\d+|[A-Za-z_]+)?\s*([+-]\s*[\d.]+)?$", str(expr).strip())
+        mm = re.match(r"^(S\d+|[A-Za-z_][A-Za-z_0-9]*)?\s*([+-]\s*[\d.]+)?$", str(expr).strip())
         base = mm.group(1); off = float(mm.group(2).replace(" ", "")) if mm.group(2) else 0.0
         b = S[int(base[1:])] if base and base.startswith("S") and base[1:].isdigit() else (W[base] if base else 0.0)
         return round(b + off, 3)

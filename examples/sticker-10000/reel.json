@@ -1,0 +1,199 @@
+{
+ "title": "The 10,000 KPH challenge (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Ten thousand keystrokes per hour.",
+   0.35
+  ],
+  [
+   "Can you hit that number?",
+   0.6
+  ],
+  [
+   "You've got one minute to enter as many numbers as you can.",
+   0.6
+  ],
+  [
+   "No typing shortcuts, just your number pad and your fingers.",
+   0.6
+  ],
+  [
+   "But don't sacrifice accuracy just to chase a higher score.",
+   0.6
+  ],
+  [
+   "There's your challenge.",
+   0.45
+  ],
+  [
+   "Take the test yourself at ten key typing test dot com.",
+   0.4
+  ],
+  [
+   "It's free.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "[10,000] keystrokes per hour.",
+  "Can you hit that [number?]",
+  "You've got [one minute] to enter",
+  "as many numbers as you can.",
+  "No typing [shortcuts,]",
+  "just your [number pad] and your fingers.",
+  "But don't sacrifice [accuracy]",
+  "just to chase a higher score.",
+  "There's your [challenge.]",
+  "Take the test yourself",
+  "at [10keytypingtest.com.]",
+  "It's [free.]"
+ ],
+ "scenes": [
+  0,
+  9,
+  21,
+  31,
+  41,
+  44
+ ],
+ "marks": {
+  "can": 4,
+  "go": 13,
+  "shortcuts": 23,
+  "numpad": 26,
+  "accuracy": 34,
+  "score": 40,
+  "free": 51,
+  "at10": 48
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slipEvery": 30,
+  "frames": 12
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "0.15",
+   "ticks",
+   1.4
+  ],
+  [
+   "can-0.1",
+   "scribble",
+   0.5
+  ],
+  [
+   "can+0.45",
+   "pop",
+   300
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.2",
+   "pop",
+   700
+  ],
+  [
+   "S1+0.35",
+   "pop",
+   300
+  ],
+  [
+   "go-0.05",
+   "pop",
+   800
+  ],
+  [
+   "go+0.3",
+   "clicks",
+   2.2
+  ],
+  [
+   "S2+0.05",
+   "pop",
+   600
+  ],
+  [
+   "shortcuts+0.1",
+   "buzz"
+  ],
+  [
+   "numpad-0.4",
+   "pop",
+   800
+  ],
+  [
+   "numpad",
+   "clicks",
+   1.6
+  ],
+  [
+   "S3+0.05",
+   "pop",
+   700
+  ],
+  [
+   "accuracy",
+   "ticks",
+   1
+  ],
+  [
+   "score-1.05",
+   "pop",
+   600
+  ],
+  [
+   "score-0.1",
+   "scribble",
+   0.35
+  ],
+  [
+   "score+0.25",
+   "pop",
+   900
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "S4+0.35",
+   "scribble",
+   0.5
+  ],
+  [
+   "S4+0.8",
+   "pop",
+   300
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "at10",
+   "clicks",
+   0.8
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ]
+ ]
+}

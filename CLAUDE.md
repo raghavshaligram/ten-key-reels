@@ -70,11 +70,15 @@ Captions in `phrases` use the normal spelling ("10-key", "KPH", "10,000", "[10ke
 - `engine/lib.js`: animation helpers (`pop`, `slam`, `out`, `count`, `drawCrop`, `frameBook`, `caption`, `presenter`, `moveCaption`).
   A scene's `window.render(t)` must be a pure function of time.
 - `engine/record.cjs`: types a real 1-minute test on the live site with Playwright and screenshots it.
+- `engine/character.js`: Tara, the illustrated presenter for the sticker style, drawn in SVG and posed by code
+  (rest, wave, point, present, think, thumbs, oops, cheer), with lip sync from the voice. A scene lists her poses as `[[time, pose], ...]`.
 - `engine/sfx.py`: sound effects made in code.
 - `engine/key.py`: the green-screen keyer used to make the presenter clips (only needed for new outfits).
 - `library/pointer/`: 11 presenter clips (VP9 WebM with transparency). `history.json` keeps the last outfits so one isn't reused within 4 reels.
 - `tools/ig/`: hook formulas, humanizer and caption linter from instagram-agent-skill (MIT, see `tools/ig/LICENSE`).
-- `examples/`: one finished reel per style, each builds as is.
+- `examples/`: one finished reel per style (cream, notebook, arcade, sticker), each builds as is.
+  In the sticker style the caption is the headline at the top (words turn dark as they're spoken, [accent] words in red serif),
+  one sticker prop per beat with a numbered badge, and Tara on screen the whole time, changing pose with the script.
 
 ## Secrets
 
