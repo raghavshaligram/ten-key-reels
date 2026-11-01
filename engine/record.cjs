@@ -2,11 +2,12 @@
 // Usage: node engine/record.cjs <outDir> '<json options>'
 //   options: { mode: "Mixed" | "Whole numbers" | "Dollar amounts" | "ZIP codes", gap: 322 (ms per key),
 //              slips: [23] (entry numbers that get one wrong digit), slipEvery: 0 (or N: every Nth entry),
-//              frames: 9 (seconds of frames to capture from the start, 0 = none) }
+//              frames: 9 (seconds of frames to capture from the start, 0 = none),
+//              finishClean: false (true = stop before an entry the clock would cut off, so it isn't scored as a miss) }
 // Writes: frames/f0000.jpg..., run.json ({clip, frames:[{t,f}]}), result.jpg, result.json (parsed numbers).
 // Frames are real screenshots at 2x, so crops stay sharp. The site's sticky header is hidden for clean crops.
 const { chromium } = require("playwright"); const fs = require("fs"); const path = require("path");
-const OUT = path.resolve(process.argv[2]); const O = Object.assign({ mode: "Mixed", gap: 300, slips: [], slipEvery: 0, frames: 9 }, JSON.parse(process.argv[3] || "{}"));
+const OUT = path.resolve(process.argv[2]); const O = Object.assign({ mode: "Mixed", gap: 300, slips: [], slipEvery: 0, frames: 9, finishClean: false }, JSON.parse(process.argv[3] || "{}"));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 (async () => {
   fs.mkdirSync(path.join(OUT, "frames"), { recursive: true });
@@ -25,11 +26,14 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       const t = (Date.now() - t0) / 1000, f = `frames/f${String(shots.length).padStart(4, "0")}.jpg`;
       await p.screenshot({ path: path.join(OUT, f), type: "jpeg", quality: 90, clip }); shots.push({ t, f }); } })() : Promise.resolve();
   if (O.frames > 0) await sleep(1500);                 // a beat of the idle 1:00 clock before the first key
-  let n = 0;
+  let n = 0, tStart = 0;
   while (true) {
     const tl = p.locator('[data-testid="target-number"]').first();
     if (!(await tl.isVisible().catch(() => false))) break;
     const target = (await tl.innerText({ timeout: 800 }).catch(() => "")).trim(); if (!target) break;
+    if (O.finishClean && tStart && (Date.now() - tStart) + (target.length + 1) * O.gap * 1.25 > 59500) {   // don't start an entry the clock will cut off
+      while (await tl.isVisible().catch(() => false)) await sleep(200); break; }
+    if (!tStart) tStart = Date.now();
     n++; const slipHere = O.slips.includes(n) || (O.slipEvery > 0 && n % O.slipEvery === 0);
     const slipAt = slipHere ? Math.max(0, [...target].findIndex((c) => /\d/.test(c)) + 1) : -1;
     for (let i = 0; i < target.length; i++) {

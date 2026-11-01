@@ -1,0 +1,222 @@
+{
+ "title": "One slip in a 1-minute test (sticker)",
+ "voice": "af_heart",
+ "speed": 1.02,
+ "lines": [
+  [
+   "One wrong digit costs you about three percent on a one-minute ten-key test.",
+   0.4
+  ],
+  [
+   "Here's why.",
+   0.25
+  ],
+  [
+   "A one-minute test is only about thirty entries.",
+   0.3
+  ],
+  [
+   "Accuracy is counted per entry, so every entry you get wrong takes about three percent off.",
+   0.45
+  ],
+  [
+   "Here's a real minute, with one digit typed wrong on purpose.",
+   0.3
+  ],
+  [
+   "That one slip did this.",
+   0.45
+  ],
+  [
+   "So check each number before you press Enter.",
+   0.45
+  ],
+  [
+   "Practice the one-minute test for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  [
+   5,
+   "One wrong digit costs you"
+  ],
+  [
+   8,
+   "about [3%] on a [1-minute] 10-key test."
+  ],
+  [
+   2,
+   "Here's why."
+  ],
+  [
+   8,
+   "A 1-minute test is only about [30 entries.]"
+  ],
+  [
+   5,
+   "[Accuracy] is counted [per entry,]"
+  ],
+  [
+   11,
+   "so every entry you get wrong takes about [3%] off."
+  ],
+  [
+   11,
+   "Here's a [real minute,] with one digit typed [wrong] on purpose."
+  ],
+  [
+   5,
+   "That [one slip] did this."
+  ],
+  [
+   8,
+   "So [check each number] before you press [Enter.]"
+  ],
+  [
+   6,
+   "Practice the 1-minute test [for free]"
+  ],
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  13,
+  23,
+  39,
+  55,
+  63
+ ],
+ "marks": {
+  "digit": 2,
+  "three": 6,
+  "minute2": 16,
+  "thirty": 21,
+  "wrong": 33,
+  "three2": 36,
+  "real": 41,
+  "typed": 46,
+  "slip": 52,
+  "this": 54,
+  "check": 56,
+  "enter": 62,
+  "free": 68,
+  "at": 69
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Whole numbers",
+  "gap": 300,
+  "slips": [
+   3
+  ],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "digit-0.1",
+   "scribble",
+   0.45
+  ],
+  [
+   "three",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "minute2-0.1",
+   "pop",
+   600
+  ],
+  [
+   "thirty-0.2",
+   "ticks",
+   0.8
+  ],
+  [
+   "S2+0.05",
+   "pop",
+   500
+  ],
+  [
+   "S2+0.3",
+   "clicks",
+   0.9
+  ],
+  [
+   "wrong-0.05",
+   "pop",
+   300
+  ],
+  [
+   "three2",
+   "pop",
+   850
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "typed-0.3",
+   "clicks",
+   1.0
+  ],
+  [
+   "slip",
+   "pop",
+   900
+  ],
+  [
+   "this-0.2",
+   "pop",
+   700
+  ],
+  [
+   "this+0.6",
+   "scribble",
+   0.45
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "enter",
+   "pop",
+   800
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
