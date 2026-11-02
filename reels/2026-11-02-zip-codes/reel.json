@@ -1,0 +1,175 @@
+{
+ "title": "ZIP codes on the 10-key test (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Stop rushing ZIP codes. One wrong digit out of nine loses the whole entry.",
+   0.45
+  ],
+  [
+   "This ten-key test has a ZIP code mode.",
+   0.3
+  ],
+  [
+   "Some codes have five digits. Others have nine, with a dash in the middle that you type on the minus key.",
+   0.45
+  ],
+  [
+   "Here's a real minute of it. Each code gets checked before Enter.",
+   0.45
+  ],
+  [
+   "So take your time on the long ones.",
+   0.45
+  ],
+  [
+   "Practice ZIP codes for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop rushing [ZIP codes.]",
+  "One wrong digit out of [9]",
+  "loses the [whole entry.]",
+  "This [10-key] test has a [ZIP code] mode.",
+  "Some codes have [5 digits.]",
+  "Others have [9,] with a [dash] in the middle",
+  "that you type on the [minus key.]",
+  "Here's a [real minute] of it.",
+  "Each code gets [checked] before [Enter.]",
+  "So take your time on the [long ones.]",
+  "Practice [ZIP codes] [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  14,
+  22,
+  43,
+  55,
+  63
+ ],
+ "marks": {
+  "zip": 2,
+  "wrong": 5,
+  "nine": 9,
+  "whole": 12,
+  "tenkey": 15,
+  "mode": 21,
+  "five": 25,
+  "nine2": 29,
+  "dash": 32,
+  "minus": 41,
+  "real": 45,
+  "checked": 52,
+  "enter": 54,
+  "long": 61,
+  "free": 67,
+  "at": 68
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "ZIP codes",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "wrong-0.05",
+   "pop",
+   300
+  ],
+  [
+   "whole",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.1",
+   "pop",
+   600
+  ],
+  [
+   "mode-0.1",
+   "pop",
+   900
+  ],
+  [
+   "S2",
+   "pop",
+   600
+  ],
+  [
+   "five",
+   "pop",
+   700
+  ],
+  [
+   "nine2",
+   "pop",
+   800
+  ],
+  [
+   "minus-0.1",
+   "pop",
+   900
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "S3+0.3",
+   "clicks",
+   1.0
+  ],
+  [
+   "checked",
+   "pop",
+   700
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "long",
+   "pop",
+   800
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
