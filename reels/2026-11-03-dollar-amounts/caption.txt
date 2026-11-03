@@ -1,0 +1,9 @@
+Save this before your next 10-key test or data entry test.
+
+Our 10-key test has a dollar amounts mode, and every amount has cents. Take 2297.44: skip the decimal point and you've typed 229744. Accuracy is counted per entry, so that whole entry is wrong.
+
+In the reel you can see a real minute of the dollar amounts mode, with the dot on every entry. It came back 26 of 26 correct, 100% accuracy.
+
+So when you see cents, slow down for the dot. You can practice dollar amounts for free on our site.
+
+#10key #dataentry #typingtest #numberpad

@@ -1,0 +1,187 @@
+{
+ "title": "Dollar amounts on the 10-key test (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "What happens to a two thousand dollar amount when you skip one key?",
+   0.45
+  ],
+  [
+   "Skip the dot and it's over two hundred thousand. That's a wrong entry.",
+   0.45
+  ],
+  [
+   "This ten-key test has a dollar amounts mode. Every amount has cents.",
+   0.45
+  ],
+  [
+   "Here's a real minute of it, with the dot on every entry.",
+   0.45
+  ],
+  [
+   "So when you see cents, slow down for the dot.",
+   0.45
+  ],
+  [
+   "Practice dollar amounts for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "What happens to a [$2,000] amount",
+  "when you skip [one key?]",
+  "Skip the [dot]",
+  "and it's over [200,000.]",
+  "That's a [wrong entry.]",
+  "This [10-key] test has a [dollar amounts] mode.",
+  "Every amount has [cents.]",
+  "Here's a [real minute] of it,",
+  "with the [dot] on every entry.",
+  "So when you see [cents,]",
+  "slow down for the [dot.]",
+  "Practice [dollar amounts] [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  11,
+  22,
+  34,
+  46,
+  56
+ ],
+ "marks": {
+  "skip": 8,
+  "onekey": 9,
+  "dot": 13,
+  "over": 17,
+  "wrong": 20,
+  "tenkey": 23,
+  "mode": 27,
+  "cents": 33,
+  "real": 36,
+  "dot2": 42,
+  "every": 44,
+  "cents2": 50,
+  "slow": 51,
+  "dot3": 55,
+  "free": 60,
+  "at": 61
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Dollar amounts",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "skip-0.1",
+   "pop",
+   900
+  ],
+  [
+   "onekey",
+   "pop",
+   300
+  ],
+  [
+   "S1",
+   "pop",
+   600
+  ],
+  [
+   "dot",
+   "pop",
+   800
+  ],
+  [
+   "over-0.1",
+   "pop",
+   500
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S2+0.1",
+   "pop",
+   600
+  ],
+  [
+   "mode-0.1",
+   "pop",
+   900
+  ],
+  [
+   "cents-0.1",
+   "pop",
+   700
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "S3+0.3",
+   "clicks",
+   1.0
+  ],
+  [
+   "every",
+   "pop",
+   700
+  ],
+  [
+   "S4",
+   "pop",
+   600
+  ],
+  [
+   "slow",
+   "pop",
+   800
+  ],
+  [
+   "dot3",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
