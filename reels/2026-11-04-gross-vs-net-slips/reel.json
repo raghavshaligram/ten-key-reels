@@ -1,0 +1,209 @@
+{
+ "title": "Accuracy first on the 10-key test (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Stop chasing speed on the ten-key test. Fix your accuracy first.",
+   0.45
+  ],
+  [
+   "Here's a real minute with two entries typed wrong on purpose.",
+   0.4
+  ],
+  [
+   "Net speed? Over ten thousand K P H.",
+   0.4
+  ],
+  [
+   "But accuracy fell under ninety-five percent. Employers usually want more, so the site says that speed doesn't count yet.",
+   0.45
+  ],
+  [
+   "Slow down until every entry is right. Then build speed back up.",
+   0.45
+  ],
+  [
+   "Practice for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop chasing [speed] on the 10-key test.",
+  "Fix your [accuracy] first.",
+  "Here's a [real minute] with two entries",
+  "typed [wrong] on purpose.",
+  "Net speed? Over [10,000 KPH.]",
+  "But accuracy fell [under 95%.]",
+  "Employers usually want more,",
+  "so the site says that speed [doesn't count yet.]",
+  "Slow down until [every entry] is right.",
+  "Then build [speed] back up.",
+  "Practice [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  11,
+  22,
+  27,
+  45,
+  57
+ ],
+ "marks": {
+  "stop": 0,
+  "speed": 2,
+  "fix": 7,
+  "accuracy": 9,
+  "real": 13,
+  "wrong": 16,
+  "just": 19,
+  "net": 22,
+  "over": 24,
+  "kph": 26,
+  "but": 27,
+  "under": 30,
+  "employers": 32,
+  "want": 34,
+  "site": 38,
+  "count": 43,
+  "slow": 45,
+  "every": 48,
+  "build": 53,
+  "free": 59,
+  "at": 60
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Whole numbers",
+  "gap": 300,
+  "slips": [
+   4,
+   12
+  ],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "speed",
+   "pop",
+   900
+  ],
+  [
+   "fix",
+   "pop",
+   700
+  ],
+  [
+   "accuracy+0.3",
+   "pop",
+   300
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.1",
+   "pop",
+   600
+  ],
+  [
+   "S1+0.3",
+   "clicks",
+   1.0
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "S2",
+   "pop",
+   600
+  ],
+  [
+   "over",
+   "pop",
+   900
+  ],
+  [
+   "kph",
+   "pop",
+   500
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "under",
+   "pop",
+   300
+  ],
+  [
+   "want",
+   "pop",
+   800
+  ],
+  [
+   "site",
+   "pop",
+   600
+  ],
+  [
+   "count",
+   "pop",
+   300
+  ],
+  [
+   "S4",
+   "pop",
+   600
+  ],
+  [
+   "every",
+   "pop",
+   800
+  ],
+  [
+   "build",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ],
+  [
+   "just+0.1",
+   "pop",
+   800
+  ]
+ ]
+}
