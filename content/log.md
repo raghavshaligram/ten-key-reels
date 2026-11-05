@@ -4,6 +4,7 @@ Newest first. One line per reel: date, folder, topic #, style, hook formula, out
 
 | Date | Folder | Topic | Style | Hook formula | Outfit | Status | Note |
 |------|--------|-------|-------|--------------|--------|--------|------|
+| 2026-11-05 | reels/2026-11-05-what-is-10-key | 1 | sticker | nobody tells you (#3) | Tara | sent | What a 10-key test is: Mixed run, clean, 10,860 net KPH, 100%, 27/27; /blog/what-is-10-key could not be fetched (permission timed out), so facts come from the live test and the topic bank |
 | 2026-11-04 | reels/2026-11-04-gross-vs-net-slips | 3 | sticker | negative command (#2) | Tara | sent | Accuracy beats speed: Whole numbers run with 2 deliberate slips, 10,800 net / 11,520 gross, 94.1%, 32/34; the 95% line is quoted from the site's result screen; guide pages could not be fetched (permission timed out) |
 | 2026-11-03 | reels/2026-11-03-dollar-amounts | 8 | sticker | question (closest to #18) | Tara | sent | Dollar amounts mode on the live test, run 26/26, 100%; guide pages could not be fetched (permission timed out), so a run-based topic |
 | 2026-11-02 | reels/2026-11-02-zip-codes | 9 | sticker | negative command (#2) | Tara | sent | ZIP codes mode on the live test, run 21/21, 100%; topic 1 needed /blog/what-is-10-key, which could not be fetched, so a run-based topic |

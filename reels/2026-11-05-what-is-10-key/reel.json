@@ -1,0 +1,213 @@
+{
+ "title": "What a 10-key test is (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Nobody tells you a data entry job can test the ten digits on your number pad.",
+   0.5
+  ],
+  [
+   "It's called a ten-key test.",
+   0.3
+  ],
+  [
+   "Numbers show up, and you type each one, fast and right.",
+   0.5
+  ],
+  [
+   "Here's a real minute of it.",
+   0.5
+  ],
+  [
+   "Then you get two scores. Speed in K P H, and accuracy.",
+   0.5
+  ],
+  [
+   "Employers look at both, not just the speed.",
+   0.5
+  ],
+  [
+   "You can practice on your own number pad for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Nobody tells you a [data entry] job",
+  "can test the [10 digits]",
+  "on your [number pad.]",
+  "It's called a [10-key test.]",
+  "[Numbers] show up,",
+  "and you type each one,",
+  "[fast] and [right.]",
+  "Here's a [real minute] of it.",
+  "Then you get [two scores.]",
+  "Speed in [KPH,]",
+  "and [accuracy.]",
+  "Employers look at [both,]",
+  "not just the [speed.]",
+  "You can practice",
+  "on your own [number pad]",
+  "[for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  16,
+  32,
+  38,
+  48,
+  56
+ ],
+ "marks": {
+  "test": 8,
+  "digits": 11,
+  "pad": 15,
+  "called": 17,
+  "tenkey": 19,
+  "numbers": 21,
+  "type": 26,
+  "fast": 29,
+  "right": 31,
+  "real": 34,
+  "two": 41,
+  "speed": 43,
+  "kph": 45,
+  "accuracy": 47,
+  "employers": 48,
+  "both": 51,
+  "just": 53,
+  "practice": 58,
+  "free": 65,
+  "at": 66
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "test",
+   "pop",
+   500
+  ],
+  [
+   "digits-0.1",
+   "clicks",
+   1.2
+  ],
+  [
+   "pad",
+   "pop",
+   300
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "called",
+   "pop",
+   700
+  ],
+  [
+   "numbers-0.1",
+   "pop",
+   500
+  ],
+  [
+   "type",
+   "clicks",
+   1.5
+  ],
+  [
+   "right",
+   "pop",
+   800
+  ],
+  [
+   "S2-0.1",
+   "whoosh",
+   0.6
+  ],
+  [
+   "real",
+   "pop",
+   300
+  ],
+  [
+   "S2+0.6",
+   "ticks",
+   0.9
+  ],
+  [
+   "S3+0.1",
+   "pop",
+   700
+  ],
+  [
+   "speed-0.1",
+   "pop",
+   700
+  ],
+  [
+   "accuracy-0.1",
+   "pop",
+   900
+  ],
+  [
+   "S4",
+   "whoosh",
+   0.6
+  ],
+  [
+   "employers",
+   "pop",
+   600
+  ],
+  [
+   "both",
+   "pop",
+   800
+  ],
+  [
+   "both+0.6",
+   "scribble",
+   0.45
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "practice",
+   "pop",
+   300
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}

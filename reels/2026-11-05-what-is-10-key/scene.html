@@ -1,0 +1,162 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-800-normal.woff2)}
+@font-face{font-family:Serif;font-style:italic;src:url(../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#F3F0EA;--ink:#191714;--grey:#CDC6BB;--red:#E0342C;--green:#2F7A4F;--muted:#8D867B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 40%,#f8f6f1 0%,#f3f0ea 55%,#ece7df 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--red);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:600 78px/1.1 Inter;letter-spacing:-.025em}
+#cap span{display:inline-block;margin-right:.24em;transition:none}
+#cap .acc{font-family:Serif;font-style:italic;font-weight:400;color:var(--red);font-size:1.12em;letter-spacing:-.01em}
+.stk{background:#fff;border-radius:34px;padding:14px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.win{background:#16181a;border-radius:24px;overflow:hidden}
+.bar{height:58px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#202326;color:#9aa19c;font:600 24px Mono}
+.bar i{width:16px;height:16px;border-radius:50%;background:#3b3f43;display:inline-block}
+.bar .t{margin-left:14px}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:#111;color:#fff;font:800 66px/104px Inter;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25);border:5px solid #fff}
+.stamp{font:800 64px/1 Inter;letter-spacing:.06em;color:var(--red);border:8px solid var(--red);border-radius:18px;padding:14px 26px 12px;background:rgba(255,255,255,.88);text-transform:uppercase;white-space:nowrap}
+.key{width:250px;height:230px;border-radius:40px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 14px 0 #cfc8bd,0 30px 50px rgba(40,30,20,.2);font:800 92px/210px Inter;text-align:center;color:#2a2622}
+.row{display:flex;align-items:center;gap:26px;font:600 50px/1 Inter;padding:30px 40px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14)}
+.row .v{margin-left:auto;font:800 84px/1 Inter;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.row .n{width:64px;height:64px;border-radius:50%;background:#111;color:#fff;font:800 36px/64px Inter;text-align:center}
+.ck{display:flex;align-items:center;gap:24px;font:600 56px/1 Inter;padding:20px 0}
+.ck .b{width:62px;height:62px;border-radius:16px;border:5px solid #2F7A4F;display:flex;align-items:center;justify-content:center;color:#fff;font:800 40px Inter}
+.ck .b.on{background:#2F7A4F}
+.chip{font:600 64px/1 Inter;padding:34px 46px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14);white-space:nowrap}
+.k{height:118px;border-radius:26px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 10px 0 #cfc8bd,0 18px 30px rgba(40,30,20,.16);font:800 72px/112px Inter;text-align:center;color:#2a2622}
+.k.on{background:linear-gradient(#ff6a5f,#E0342C);color:#fff;box-shadow:0 10px 0 #a8221c,0 18px 30px rgba(40,30,20,.2)}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+</style></head><body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .55 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: the number pad, ten digits -->
+  <div class="el stk" id="p0" style="left:190px;top:560px;width:700px;padding:34px 40px 40px">
+    <div class="lab" style="font-size:30px;margin-bottom:24px">number pad · 10 digits</div>
+    <div id="pad" style="display:grid;grid-template-columns:repeat(3,192px);gap:18px">
+      <div class="k">7</div><div class="k">8</div><div class="k">9</div><div class="k">4</div><div class="k">5</div><div class="k">6</div>
+      <div class="k">1</div><div class="k">2</div><div class="k">3</div><div class="k" style="grid-column:span 2">0</div><div class="k">.</div></div>
+  </div>
+  <div class="el stamp" id="s0" style="left:500px;top:1110px">tested</div>
+
+  <!-- b1: the name, then the test, live -->
+  <div class="el chip" id="p1t" style="left:150px;top:640px;width:780px;text-align:center;font:800 200px/1 Inter;letter-spacing:-.04em;padding:70px 60px">10-key<br><span style="font:400 italic 210px/1 Serif;color:var(--red)">test</span></div>
+  <div class="el stk" id="p1" style="left:100px;top:600px;width:880px"><div class="win"><div class="bar"><i style="background:#E0342C"></i><span class="t">10-key test · live</span></div><canvas id="k1" width="852" height="500"></canvas></div></div>
+  <div class="el stk" id="p2" style="left:220px;top:570px;width:640px"><div class="win"><canvas id="k2" width="612" height="600"></canvas></div></div>
+  <div class="el stamp" id="s1a" style="left:110px;top:1080px">fast</div>
+  <div class="el stamp" id="s1b" style="left:470px;top:1080px;color:var(--green);border-color:var(--green)">right ✓</div>
+
+  <!-- b2: the real result screen -->
+  <div class="el stk" id="p3" style="left:70px;top:600px;width:940px"><div class="win"><div class="bar"><i style="background:#9fcfa8"></i><span class="t">result · 1 minute</span></div><canvas id="k3" width="912" height="500"></canvas></div></div>
+  <div class="el stamp" id="s3" style="left:400px;top:1090px">real run</div>
+
+  <!-- b3: two scores from the run -->
+  <div class="el row" id="r1" style="left:90px;top:620px;width:900px;padding:70px 44px;font-size:64px"><span class="n">1</span>Speed<span class="lab" style="font-size:28px">net KPH</span><span class="v" id="v1" style="color:var(--green);font-size:110px">0</span></div>
+  <div class="el row" id="r2" style="left:90px;top:900px;width:900px;padding:70px 44px;font-size:64px"><span class="n">2</span>Accuracy<span class="v" id="v2" style="color:var(--green);font-size:110px">0%</span></div>
+
+  <!-- b4: both count -->
+  <div class="el chip" id="p4a" style="left:110px;top:640px;color:#a39b8f;font-size:96px">speed</div>
+  <div class="el" id="p4p" style="left:520px;top:660px;font:800 120px/1 Inter;color:#b4ab9e">+</div>
+  <div class="el chip" id="p4b" style="left:260px;top:880px;color:var(--green);font-size:104px">accuracy ✓</div>
+  <div class="el stamp" id="s4" style="left:330px;top:1080px">both count</div>
+
+  <!-- b5: the site -->
+  <div class="el stk" id="p5" style="left:90px;top:600px;width:900px"><div class="win" style="background:#fff">
+    <div class="bar" style="background:#efebe4;color:#3a3631;height:76px;font-size:30px"><i style="background:#e0a39e"></i><i style="background:#e8cf8c"></i><i style="background:#9fcfa8"></i>
+      <span class="t" style="flex:1;background:#fff;border-radius:16px;padding:10px 20px;margin-left:16px"><span id="url"></span><span id="caret" style="color:var(--red)">|</span></span></div>
+    <canvas id="k5" width="872" height="470"></canvas></div></div>
+  <div class="el stamp" id="s5a" style="left:540px;top:1070px">free</div>
+
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="tara" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../engine/lib.js"></script>
+<script src="../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end, R = TL.result;
+const book = frameBook(RUN); const tara = Tara("tara");
+const POSES = [[0, "wave"], [W.test - .2, "point"], [W.digits - .1, "present"], [S[1] + .1, "rest"], [W.called - .1, "present"], [W.numbers, "point"],
+  [W.fast - .1, "thumbs"], [S[2] + .1, "think"], [W.real - .1, "point"], [S[3] + .1, "present"], [W.speed - .1, "point"], [W.accuracy - .1, "thumbs"],
+  [S[4] + .1, "think"], [W.both - .1, "present"], [W.just, "point"], [S[5] + .1, "rest"], [W.practice - .1, "point"], [W.free, "present"], [W.at + .8, "rest"]];
+const res = new Image(); res.src = "assets/result.jpg"; const fmt = (v) => Math.round(v).toLocaleString("en-US");
+const CH = [["// 01 · the job", "keys <b>0-9</b>"], ["// 02 · the 10-key test", "time <b>60 sec</b>"], ["// 03 · one real minute", `correct <b>${R.right.replace(/ /g, "")}</b>`],
+  ["// 04 · two scores", `accuracy <b>${R.acc}%</b>`], ["// 05 · what counts", "speed <b>+</b> accuracy"], ["// 06 · practice", "cost <b>$0</b>"]];
+const IDS = ["p0","s0","p1t","p1","p2","s1a","s1b","p3","s3","r1","r2","p4a","p4p","p4b","s4","p5","s5a","badge"];
+const RES = [.1, .02, .8, .575];
+const KEYS = [...document.querySelectorAll("#pad .k")];
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#111"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // b0: the number pad; the digits light up as they are named
+  if (t < S[1] + .3) { pop("p0", t, .05, { r: -1.5, y: fl(t) }); badge(t, 1, .3, 880, 520);
+    KEYS.forEach((k, i) => k.classList.toggle("on", t >= W.digits - .15 + i * .07 && k.textContent !== "."));
+    slam("s0", t, W.test, { r: -8 }); for (const id of ["p0", "s0", "badge"]) out(id, t, S[1] - .15); }
+  // b1: the name, then the live test
+  if (inWin(t, S[1], W.numbers - .1)) { pop("p1t", t, W.called - .1, { r: -2, y: fl(t, 1) }); out("p1t", t, W.numbers - .3); }
+  if (inWin(t, W.numbers - .3, W.fast - .2)) { W8("k1", book.at(1.6 + (t - W.numbers) * 1.0), .02, .14, .62, .46); pop("p1", t, W.numbers - .3, { r: -1, y: fl(t, 1) }); badge(t, 2, W.numbers - .1, 905, 540);
+    for (const id of ["p1", "badge"]) out(id, t, W.fast - .35); }
+  if (inWin(t, W.fast - .35, S[2])) { W8("k2", book.at(4 + (t - W.fast)), .765, .13, .235, .575); pop("p2", t, W.fast - .35, { r: 2, y: fl(t, 2) }); badge(t, 2, W.fast - .2, 800, 520);
+    slam("s1a", t, W.fast, { r: -7 }); slam("s1b", t, W.right, { r: 6 }); for (const id of ["p2", "badge", "s1a", "s1b"]) out(id, t, S[2] - .2); }
+  // b2: the result of the real minute
+  if (inWin(t, S[2] - .05, S[3])) { if (res.naturalWidth) drawCrop("k3", res, RES[0], RES[1], RES[2], RES[3], "#16181a"); pop("p3", t, S[2], { r: -1, y: fl(t, 3) }); badge(t, 3, S[2] + .2, 905, 540);
+    slam("s3", t, W.real + .2, { r: -6 }); for (const id of ["p3", "s3", "badge"]) out(id, t, S[3] - .15); }
+  // b3: the two scores, counted up from the real run
+  if (inWin(t, S[3] - .05, S[4])) { const a1 = W.speed - .1, a2 = W.accuracy - .1; badge(t, 4, S[3] + .1, 905, 560);
+    pop("r1", t, S[3] + .15, { y: fl(t, 5) * .5 }); $("v1").textContent = t < a1 ? "?" : fmt(R.net * easeOut((t - a1 - .1) / .9));
+    pop("r2", t, S[3] + .4, { y: fl(t, 6) * .5 }); { const v = R.acc * easeOut((t - a2 - .1) / .9); $("v2").textContent = t < a2 ? "?" : (Number.isInteger(R.acc) ? Math.round(v) : v.toFixed(1)) + "%"; }
+    for (const id of ["r1", "r2", "badge"]) out(id, t, S[4] - .15); }
+  // b4: employers look at both
+  if (inWin(t, S[4] - .05, S[5])) { badge(t, 5, S[4] + .2, 905, 560); pop("p4a", t, S[4] + .2, { r: -3, y: fl(t, 7) }); pop("p4p", t, W.both - .3); if (t > W.both - .3) $("p4a").style.color = "var(--ink)";
+    pop("p4b", t, W.both - .2, { r: 2, y: fl(t, 8) }); slam("s4", t, W.just, { r: 7 });
+    for (const id of ["p4a", "p4p", "p4b", "s4", "badge"]) out(id, t, S[5] - .2); }
+  // b5: the site
+  if (t >= S[5] - .05) { W8("k5", book.at(.2), 0, 0, .75, .62, "#fff"); pop("p5", t, S[5], { r: -1, y: fl(t, 9) });
+    const u = "10keytypingtest.com", n = Math.round(clamp((t - W.at + .1) / .8) * u.length); $("url").textContent = u.slice(0, n);
+    $("caret").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0; slam("s5a", t, W.free, { r: -8 }); }
+  chapter(t); caption2(t); tara.render(t, POSES, TL.amp); wipe(t, S[1] - .45);
+};
+window.ready = Promise.all(book.imgs.map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>
