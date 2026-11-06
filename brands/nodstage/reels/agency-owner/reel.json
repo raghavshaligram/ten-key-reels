@@ -1,0 +1,356 @@
+{
+ "title": "Nodstage: the agency owner who does everything",
+ "voice": "am_michael",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Running a creative agency sounds exciting.",
+   0.3
+  ],
+  [
+   "Until you actually have to run one.",
+   0.5
+  ],
+  [
+   "One client wants an update. Another is waiting on revisions.",
+   0.25
+  ],
+  [
+   "Someone still hasn't approved the design.",
+   0.25
+  ],
+  [
+   "And the proposal you sent last week? Nobody's answered.",
+   0.5
+  ],
+  [
+   "How are you managing all of this?",
+   0.5,
+   "af_heart"
+  ],
+  [
+   "Maybe it's time to stop running your agency across six different tools.",
+   0.3
+  ],
+  [
+   "Meet Nodstage.",
+   0.6
+  ],
+  [
+   "Start with your pipeline. Track new leads, let clients book a call, and send proposals they can accept.",
+   0.3
+  ],
+  [
+   "Then run the work. Projects, tasks and deadlines, in one place.",
+   0.5
+  ],
+  [
+   "Every client gets their own portal. They open a proof and comment right on the work.",
+   0.2
+  ],
+  [
+   "Each comment becomes a task. Send the next version, and they approve it in one click.",
+   0.5
+  ],
+  [
+   "Add video walkthroughs, testimonials, team roles, brief forms, invoices and payments.",
+   0.25
+  ],
+  [
+   "And AI checks every proof before your client sees it.",
+   0.5
+  ],
+  [
+   "From the first enquiry to the final payment, Nodstage connects the whole job.",
+   0.3
+  ],
+  [
+   "So you spend less time chasing work, and more time doing the work you love.",
+   0.5
+  ],
+  [
+   "Explore Nodstage at nodstage dot com.",
+   0.3
+  ]
+ ],
+ "phrases": [
+  "Running a creative agency sounds exciting.",
+  "Until you actually have to run one.",
+  "One client wants an update.",
+  "Another is waiting on revisions.",
+  "Someone still hasn't approved the design.",
+  "And the proposal you sent last week?",
+  "Nobody's answered.",
+  "How are you managing all of this?",
+  "Maybe it's time to stop",
+  "running your agency across six different tools.",
+  [
+   3,
+   "Meet Nodstage."
+  ],
+  "Start with your pipeline.",
+  "Track new leads,",
+  "let clients book a call,",
+  "and send proposals they can accept.",
+  "Then run the work.",
+  "Projects, tasks and deadlines, in one place.",
+  "Every client gets their own portal.",
+  "They open a proof",
+  "and comment right on the work.",
+  "Each comment becomes a task.",
+  "Send the next version,",
+  "and they approve it in one click.",
+  "Add video walkthroughs,",
+  "testimonials, team roles, brief forms,",
+  "invoices and payments.",
+  "And AI checks every proof",
+  "before your client sees it.",
+  "From the first enquiry to the final payment,",
+  [
+   6,
+   "Nodstage connects the whole job."
+  ],
+  "So you spend less time chasing work,",
+  "and more time doing the work you love.",
+  [
+   5,
+   "Explore Nodstage at nodstage.com."
+  ]
+ ],
+ "scenes": [
+  0,
+  13,
+  38,
+  45,
+  60,
+  89,
+  121,
+  142,
+  171
+ ],
+ "marks": {
+  "run": 11,
+  "update": 17,
+  "revisions": 22,
+  "approved": 26,
+  "proposal": 31,
+  "answered": 37,
+  "managing": 41,
+  "tools": 56,
+  "meet": 57,
+  "pipeline": 63,
+  "leads": 66,
+  "call": 71,
+  "proposals": 74,
+  "accept": 77,
+  "work": 81,
+  "projects": 82,
+  "tasks": 83,
+  "deadlines": 85,
+  "portal": 94,
+  "proof": 98,
+  "comment": 100,
+  "task": 109,
+  "version": 113,
+  "approve": 116,
+  "click": 120,
+  "video": 122,
+  "testim": 124,
+  "roles": 126,
+  "forms": 128,
+  "invoices": 129,
+  "payments": 131,
+  "ai": 133,
+  "checks": 134,
+  "every": 135,
+  "proof2": 136,
+  "sees": 141,
+  "first": 144,
+  "final": 148,
+  "payment": 149,
+  "connects": 152,
+  "chasing": 161,
+  "love": 170,
+  "explore": 171
+ },
+ "tail": 1.6,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "run-0.5",
+   "beep",
+   990
+  ],
+  [
+   "run-0.3",
+   "beep",
+   880
+  ],
+  [
+   "run-0.1",
+   "beep",
+   780
+  ],
+  [
+   "update-0.2",
+   "pop",
+   700
+  ],
+  [
+   "revisions-0.2",
+   "pop",
+   640
+  ],
+  [
+   "approved-0.3",
+   "pop",
+   600
+  ],
+  [
+   "proposal-0.2",
+   "pop",
+   560
+  ],
+  [
+   "answered+0.2",
+   "buzz",
+   null
+  ],
+  [
+   "S2-0.9",
+   "whoosh",
+   0.6
+  ],
+  [
+   "tools-0.3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "meet-0.1",
+   "win",
+   null
+  ],
+  [
+   "S4-0.1",
+   "whoosh",
+   0.5
+  ],
+  [
+   "leads-0.2",
+   "pop",
+   700
+  ],
+  [
+   "call-0.2",
+   "pop",
+   780
+  ],
+  [
+   "proposals-0.2",
+   "pop",
+   860
+  ],
+  [
+   "accept-0.1",
+   "pop",
+   1000
+  ],
+  [
+   "work-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "S5-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "proof-0.2",
+   "whoosh",
+   0.3
+  ],
+  [
+   "comment+0.1",
+   "pop",
+   900
+  ],
+  [
+   "task-0.6",
+   "whoosh",
+   0.3
+  ],
+  [
+   "click-0.3",
+   "click",
+   null
+  ],
+  [
+   "click-0.1",
+   "pop",
+   1000
+  ],
+  [
+   "S6-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "testim-0.1",
+   "pop",
+   760
+  ],
+  [
+   "roles-0.1",
+   "pop",
+   820
+  ],
+  [
+   "forms-0.1",
+   "pop",
+   880
+  ],
+  [
+   "invoices-0.2",
+   "whoosh",
+   0.3
+  ],
+  [
+   "checks-0.1",
+   "pop",
+   900
+  ],
+  [
+   "checks+0.2",
+   "pop",
+   940
+  ],
+  [
+   "every+0.1",
+   "pop",
+   980
+  ],
+  [
+   "proof2+0.1",
+   "pop",
+   1020
+  ],
+  [
+   "S7+0.1",
+   "whoosh",
+   0.4
+  ],
+  [
+   "payment",
+   "pop",
+   1000
+  ],
+  [
+   "S8-0.1",
+   "whoosh",
+   0.5
+  ]
+ ]
+}
