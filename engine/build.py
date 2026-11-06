@@ -11,7 +11,7 @@ reel.json:
 {
   "title": "Gross vs Net KPH",
   "voice": "af_heart", "speed": 0.97,
-  "lines": [["What the voice says, numbers spelled the way they're spoken", 0.5], ...],   # [text, pause after]
+  "lines": [["What the voice says, numbers spelled the way they're spoken", 0.5], ...],   # [text, pause after, optional voice]
   "phrases": ["Caption words with [accent]", [2, "or with a count"], ...],   # must cover every spoken word (build tells you if not)
   "scenes": [0, 12, 23, 32],                    # word index where each scene starts -> S0, S1, ...
   "marks": {"keys": 20, "diff": 44},            # named word indices -> W.keys etc. in scene.html
@@ -46,8 +46,9 @@ def tts(R, d):
     import soundfile as sf
     k = Kokoro(f"{ROOT}/cache/kokoro-v1.0.onnx", f"{ROOT}/cache/voices-v1.0.bin")
     out = [np.zeros(int(.25 * 24000), np.float32)]
-    for text, gap in R["lines"]:
-        a, sr = k.create(text, voice=R.get("voice", "af_heart"), speed=R.get("speed", .97), lang="en-us")
+    for line in R["lines"]:   # [text, pause] or [text, pause, voice] for a two-voice reel
+        text, gap = line[0], line[1]
+        a, sr = k.create(text, voice=line[2] if len(line) > 2 else R.get("voice", "af_heart"), speed=R.get("speed", .97), lang="en-us")
         out += [a.astype(np.float32), np.zeros(int(gap * sr), np.float32)]
     sf.write(f"{d}/vo.wav", np.concatenate(out), 24000); open(f"{d}/.vo.key", "w").write(key)
     if os.path.exists(f"{d}/words.json"): os.remove(f"{d}/words.json")
