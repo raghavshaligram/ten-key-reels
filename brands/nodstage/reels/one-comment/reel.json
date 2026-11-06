@@ -1,0 +1,274 @@
+{
+ "title": "Nodstage: one comment",
+ "voice": "af_bella",
+ "speed": 1.05,
+ "lines": [
+  [
+   "One simple client comment can cost your agency hours.",
+   0.5
+  ],
+  [
+   "\"Can we just move this slightly to the left?\"",
+   0.45
+  ],
+  [
+   "Sounds harmless.",
+   0.5
+  ],
+  [
+   "But where was that comment?",
+   0.3
+  ],
+  [
+   "In an email? WhatsApp? A video call? A screenshot?",
+   0.55
+  ],
+  [
+   "Now someone has to find the original design, understand the feedback, assign the revision and remember which version the client was talking about.",
+   0.55
+  ],
+  [
+   "That's how small changes turn into expensive delays.",
+   0.6
+  ],
+  [
+   "Nodstage connects client feedback directly to your project workflow.",
+   0.45
+  ],
+  [
+   "Turn comments into tasks, track revisions and keep everything connected to the right proof.",
+   0.55
+  ],
+  [
+   "Stop losing hours trying to understand what your client meant.",
+   0.3
+  ]
+ ],
+ "phrases": [
+  "One simple client [comment]",
+  "can cost your agency [hours.]",
+  "\u201cCan we just move this",
+  "slightly to the [left?]\u201d",
+  "Sounds [harmless.]",
+  "But [where] was that comment?",
+  "In an [email?] [WhatsApp?]",
+  [
+   5,
+   "A [video call?] A [screenshot?]"
+  ],
+  "Now someone has to",
+  "find the [original design,]",
+  "understand the [feedback,]",
+  "assign the [revision]",
+  "and remember which [version]",
+  "the client was talking about.",
+  "That's how [small changes]",
+  "turn into [expensive delays.]",
+  "[Nodstage] connects",
+  "client feedback directly",
+  "to your [project workflow.]",
+  "Turn [comments] into [tasks,]",
+  "track [revisions]",
+  "and keep everything connected",
+  "to the [right proof.]",
+  "Stop losing [hours]",
+  "trying to understand",
+  "what your client meant."
+ ],
+ "scenes": [
+  0,
+  9,
+  20,
+  34,
+  57,
+  65,
+  74,
+  88
+ ],
+ "marks": {
+  "hours": 8,
+  "left": 17,
+  "harmless": 19,
+  "where": 21,
+  "email": 27,
+  "whatsapp": 28,
+  "call": 30,
+  "shot": 33,
+  "find": 38,
+  "under": 42,
+  "assign": 45,
+  "remember": 49,
+  "about": 56,
+  "small": 59,
+  "expensive": 63,
+  "nodstage": 65,
+  "workflow": 72,
+  "comments": 75,
+  "tasks": 77,
+  "revisions": 79,
+  "connected": 83,
+  "proof": 87,
+  "hours2": 90,
+  "meant": 97
+ },
+ "tail": 1.0,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "0.1",
+   "pop",
+   650
+  ],
+  [
+   "0.5",
+   "pop",
+   900
+  ],
+  [
+   "hours-0.1",
+   "ticks",
+   1.6
+  ],
+  [
+   "S1",
+   "whoosh",
+   0.4
+  ],
+  [
+   "S1+0.2",
+   "pop",
+   700
+  ],
+  [
+   "left-0.4",
+   "scribble",
+   0.4
+  ],
+  [
+   "harmless-0.1",
+   "pop",
+   500
+  ],
+  [
+   "email-0.1",
+   "beep",
+   990
+  ],
+  [
+   "whatsapp-0.1",
+   "beep",
+   880
+  ],
+  [
+   "call-0.2",
+   "beep",
+   780
+  ],
+  [
+   "shot-0.15",
+   "beep",
+   990
+  ],
+  [
+   "shot+0.1",
+   "scribble",
+   0.45
+  ],
+  [
+   "find-0.1",
+   "pop",
+   650
+  ],
+  [
+   "under-0.1",
+   "pop",
+   720
+  ],
+  [
+   "assign-0.1",
+   "pop",
+   790
+  ],
+  [
+   "remember-0.1",
+   "pop",
+   860
+  ],
+  [
+   "S4+0.05",
+   "whoosh",
+   0.4
+  ],
+  [
+   "small-0.15",
+   "pop",
+   600
+  ],
+  [
+   "expensive-0.5",
+   "ticks",
+   0.8
+  ],
+  [
+   "expensive+0.3",
+   "buzz",
+   null
+  ],
+  [
+   "S5-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "nodstage",
+   "win",
+   null
+  ],
+  [
+   "workflow-0.1",
+   "pop",
+   760
+  ],
+  [
+   "S6+0.05",
+   "pop",
+   700
+  ],
+  [
+   "tasks-0.3",
+   "scribble",
+   0.45
+  ],
+  [
+   "tasks-0.15",
+   "pop",
+   820
+  ],
+  [
+   "revisions-0.15",
+   "pop",
+   760
+  ],
+  [
+   "proof-0.25",
+   "pop",
+   900
+  ],
+  [
+   "S7",
+   "whoosh",
+   0.4
+  ],
+  [
+   "hours2+1.1",
+   "click",
+   null
+  ],
+  [
+   "hours2+1.15",
+   "pop",
+   520
+  ]
+ ]
+}

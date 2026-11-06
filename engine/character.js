@@ -23,6 +23,7 @@ function Tara(id, opt = {}) {
   // ground shadow + body
   const body = el("g");
   const nico = C.look === "nico", artist = C.look === "artist";   // Nodstage's presenter: short curly hair, no earrings, navy jacket over a magenta tee
+  if (artist) el("path", { d: "M392 250 Q330 320 334 420 Q326 540 338 600 Q346 640 380 650 L620 650 Q654 640 662 600 Q674 540 666 420 Q670 320 608 250 Z", fill: C.hairS }, body);   // long hair behind
   if (!nico && !artist) el("path", { d: "M330 600 Q330 470 380 420 L620 420 Q670 470 670 600 Z", fill: C.hairS }, body);             // back hair
   const torso = el("g", {}, body);
   el("path", { d: "M215 1010 L222 760 Q230 640 340 610 L430 590 L570 590 L660 610 Q770 640 778 760 L785 1010 Z", fill: C.knit }, torso);
@@ -60,16 +61,22 @@ function Tara(id, opt = {}) {
   const mouth = el("path", { fill: C.mouthIn, stroke: C.lip, "stroke-width": 6, "stroke-linejoin": "round" }, head);
   const teeth = el("path", { fill: "#fff" }, head);
   if (artist) {
-    // auburn hair pulled up into a messy bun with a pencil through it, round glasses, freckles
-    el("circle", { cx: 520, cy: 158, r: 66, fill: C.hair }, head);
-    el("path", { d: "M470 140 Q520 96 572 128", fill: "none", stroke: C.hairS, "stroke-width": 7, "stroke-linecap": "round", opacity: .6 }, head);
-    el("path", { d: "M430 120 L604 196", stroke: "#F2B632", "stroke-width": 13, "stroke-linecap": "round" }, head);
-    el("path", { d: "M430 120 L446 127", stroke: "#E58BA8", "stroke-width": 13, "stroke-linecap": "round" }, head);
-    el("path", { d: "M366 348 Q346 214 446 180 Q520 160 584 184 Q660 214 640 350 Q628 286 592 250 Q548 276 470 268 Q410 266 384 306 Q372 330 366 348 Z", fill: C.hair }, head);
-    el("path", { d: "M372 330 Q366 380 384 420 Q392 392 390 352 Z", fill: C.hair }, head);
-    el("path", { d: "M630 330 Q640 380 620 420 Q612 392 614 352 Z", fill: C.hair }, head);
+    // long wavy auburn hair with a side-swept fringe, a tilted beret, lashes, freckles
+    for (const [d, f] of [
+      ["M372 300 Q336 380 356 450 Q330 520 362 590 Q352 640 392 680 Q424 640 414 590 Q436 530 410 470 Q426 400 404 330 Z", C.hair],
+      ["M628 300 Q664 380 644 450 Q670 520 638 590 Q648 640 608 680 Q576 640 586 590 Q564 530 590 470 Q574 400 596 330 Z", C.hair],
+      ["M380 420 Q372 520 394 620", "none"], ["M620 420 Q628 520 606 620", "none"]])
+      el("path", f === "none" ? { d, fill: "none", stroke: C.hairS, "stroke-width": 7, "stroke-linecap": "round", opacity: .55 } : { d, fill: f }, head);
+    el("path", { d: "M364 352 Q344 214 446 180 Q520 160 586 184 Q662 216 640 352 Q628 272 588 238 Q548 292 456 280 Q404 282 380 322 Z", fill: C.hair }, head);
+    el("path", { d: "M588 240 Q560 280 470 286", fill: "none", stroke: C.hairS, "stroke-width": 7, "stroke-linecap": "round", opacity: .5 }, head);
+    const beret = el("g", { transform: "rotate(-14 480 182)" }, head);
+    el("ellipse", { cx: 480, cy: 176, rx: 158, ry: 56, fill: C.beret || "#D1176F" }, beret);
+    el("path", { d: "M330 186 Q480 236 630 186", fill: "none", stroke: C.beretS || "#A30F55", "stroke-width": 12, "stroke-linecap": "round" }, beret);
+    el("path", { d: "M380 156 Q470 128 560 146", fill: "none", stroke: "#fff", "stroke-width": 8, "stroke-linecap": "round", opacity: .22 }, beret);
+    el("path", { d: "M480 122 L486 98", stroke: C.beretS || "#A30F55", "stroke-width": 12, "stroke-linecap": "round" }, beret);
     for (const [cx, cy] of [[424, 372], [436, 384], [418, 388], [576, 372], [564, 384], [582, 388]]) el("circle", { cx, cy, r: 3.2, fill: C.skinS, opacity: .8 }, head);
-    el("g", {}, head).innerHTML = `<circle cx="450" cy="336" r="36" fill="rgba(255,255,255,.12)" stroke="${C.ink}" stroke-width="7"/><circle cx="550" cy="336" r="36" fill="rgba(255,255,255,.12)" stroke="${C.ink}" stroke-width="7"/><path d="M486 330 Q500 320 514 330" fill="none" stroke="${C.ink}" stroke-width="6"/>`;
+    for (const [g, x, s] of [[eyeL, 450, -1], [eyeR, 550, 1]])
+      el("path", { d: `M${x - 20 * s} 330 Q${x} 304 ${x + 20 * s} 326 M${x + 14 * s} 318 L${x + 28 * s} 306 M${x + 4 * s} 313 L${x + 12 * s} 299`, fill: "none", stroke: C.ink, "stroke-width": 6, "stroke-linecap": "round" }, g);
   } else if (nico) {
     // short curly hair: a cap of overlapping curls, tight at the sides
     el("path", { d: "M372 330 Q360 230 420 192 Q500 150 580 190 Q642 228 628 330 Q618 270 586 248 Q540 236 500 240 Q452 236 414 250 Q384 270 372 330 Z", fill: C.hair }, head);

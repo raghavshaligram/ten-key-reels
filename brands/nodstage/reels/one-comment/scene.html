@@ -1,0 +1,234 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#ECEEF1;--ink:#16181D;--red:#16181D;--grey:#B9BEC8;--mag:#D1176F;--yel:#F4D23C;--green:#1F7A4A;--muted:#6E7480}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 38%,#f6f7f9 0%,#eceef1 60%,#e3e6eb 100%)}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted)}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--mag);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:800 80px/1.08 Archivo;letter-spacing:-.03em}
+#cap span{display:inline-block;margin-right:.22em}
+#cap .acc.on{background:linear-gradient(180deg,transparent 52%,var(--yel) 52%,var(--yel) 92%,transparent 92%);padding:0 .06em}
+.stk{background:#fff;border-radius:30px;padding:14px;box-shadow:0 34px 70px rgba(22,24,29,.14),0 8px 18px rgba(22,24,29,.08)}
+.win{border-radius:20px;overflow:hidden;border:1px solid #e4e6ea;background:#fff}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:var(--mag);color:#fff;font:800 64px/104px Archivo;text-align:center;box-shadow:0 10px 24px rgba(209,23,111,.35);border:5px solid #fff}
+.stamp{font:800 62px/1 Archivo;letter-spacing:.04em;color:var(--mag);border:8px solid var(--mag);border-radius:18px;padding:14px 26px 10px;background:rgba(255,255,255,.9);text-transform:uppercase;white-space:nowrap}
+.stamp.g{color:var(--green);border-color:var(--green)}
+.card h4{font:600 30px/1.2 Inter;color:var(--muted)}
+.big{font:800 220px/1 Archivo;letter-spacing:-.05em}
+.bub{position:absolute;font:500 50px/1.25 Inter;padding:26px 34px;border-radius:34px;background:#fff;box-shadow:0 18px 40px rgba(22,24,29,.12);max-width:700px}
+.bub.me{background:#D1176F;color:#fff}
+.bub small{display:block;font:600 24px/1 Inter;color:var(--muted);margin-bottom:10px}
+.bub.me small{color:#ffd1e6}
+.btn{display:inline-block;font:700 44px/1 Inter;padding:26px 40px;border-radius:18px;background:var(--mag);color:#fff}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+#cursor{width:60px;height:60px}
+
+.app{background:#fff;border-radius:22px;box-shadow:0 30px 60px rgba(22,24,29,.16),0 6px 14px rgba(22,24,29,.08);overflow:hidden;width:600px}
+.app .tb{height:58px;display:flex;align-items:center;gap:10px;padding:0 20px;font:700 28px/1 Inter;color:#fff}
+.app .tb i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.55);display:inline-block}
+.app .tb span{margin-left:10px}
+.app .bd{padding:22px 26px;font:500 28px/1.35 Inter;color:#30343c}
+.row{display:flex;align-items:center;gap:16px;padding:9px 0;border-bottom:2px solid #f0f1f4}
+.cb{width:30px;height:30px;border-radius:8px;border:3px solid #b9bec8;flex:none}
+.cb.on{background:#1F7A4A;border-color:#1F7A4A}
+.pill{font:700 22px/1 Inter;padding:8px 14px;border-radius:999px;margin-left:auto}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#cfd8cf}
+.cells div{background:#fff;font:500 24px/1 Inter;padding:12px 10px;color:#2d3a2f}
+.toast{position:absolute;display:flex;gap:16px;align-items:center;background:#fff;border-radius:22px;padding:20px 26px;box-shadow:0 18px 40px rgba(22,24,29,.16);font:600 32px/1.2 Inter;max-width:640px}
+.toast .ic{width:56px;height:56px;border-radius:14px;flex:none;color:#fff;font:800 28px/56px Inter;text-align:center}
+.toast small{display:block;font:600 22px/1 Inter;color:var(--muted);margin-bottom:6px}
+.tile{position:absolute;width:150px;height:150px;border-radius:36px;box-shadow:0 14px 30px rgba(22,24,29,.14)}
+.chip{display:inline-block;font:800 40px/1 Archivo;padding:16px 26px;border-radius:14px;background:var(--ink);color:#fff}
+.hl{position:absolute;border:6px solid var(--mag);border-radius:12px}
+.chat{background:#DCF5C9;border-radius:30px 30px 30px 8px}
+.call{background:#1F2430;border-radius:26px;box-shadow:0 30px 60px rgba(22,24,29,.2);overflow:hidden}
+.call .g{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}
+.call .g div{height:96px;border-radius:14px;background:#2E3442;display:flex;align-items:center;justify-content:center}
+.call .g span{width:60px;height:60px;border-radius:50%;font:700 24px/60px Inter;color:#fff;text-align:center}
+.call .ft{display:flex;align-items:center;gap:12px;padding:6px 20px 16px;font:600 26px/1 Inter;color:#cfd3dc}
+.call .ft i{width:16px;height:16px;border-radius:50%;background:#E5484D}
+.chk{padding:26px 34px}
+.chk .r{display:flex;align-items:center;gap:22px;padding:40px 0;border-bottom:3px solid #f0f1f4;font:700 46px/1.1 Inter}
+.chk .r:last-child{border:0}
+.chk .r .cb{width:44px;height:44px;border-radius:12px;border-width:4px}
+.chk .r em{margin-left:auto;font:700 26px/1 Inter;font-style:normal;padding:10px 16px;border-radius:999px;background:#FCE3EE;color:var(--mag)}
+.cal{padding:28px 30px 34px}
+.cal .d{display:grid;grid-template-columns:repeat(5,1fr);font:700 28px/1 Inter;color:var(--muted);text-align:center;border-bottom:3px solid #f0f1f4;padding-bottom:16px}
+.cal .lane{position:relative;height:200px;margin-top:26px;background:repeating-linear-gradient(90deg,#f6f7f9 0 calc(20% - 3px),#e7e9ee calc(20% - 3px) 20%);border-radius:14px}
+.cal .bar{position:absolute;left:0;top:40px;height:120px;border-radius:14px;font:800 40px/120px Archivo;color:#16181D;padding:0 24px;white-space:nowrap;overflow:hidden}
+.ychip{display:inline-block;font:800 48px/1 Archivo;padding:18px 28px;border-radius:16px;background:var(--yel);color:var(--ink);box-shadow:0 14px 30px rgba(22,24,29,.12)}
+.cap2{font:700 26px/1 Inter;padding:14px 8px 4px}
+</style></head><body>
+<div id="stage">
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- 0: one comment, hours -->
+  <div class="el stk" id="c0" style="left:70px;top:640px;width:560px;padding:30px 32px">
+    <div style="display:flex;align-items:center;gap:18px"><span style="width:64px;height:64px;border-radius:50%;background:var(--mag);color:#fff;font:800 34px/64px Archivo;text-align:center">1</span>
+      <div><div style="font:700 26px/1 Inter;color:var(--muted)">CLIENT</div><div style="font:800 44px/1.1 Archivo;margin-top:6px">New comment</div></div></div>
+    <div style="margin-top:24px;height:22px;border-radius:11px;background:#eceef1;width:92%"></div><div style="margin-top:14px;height:22px;border-radius:11px;background:#eceef1;width:64%"></div></div>
+  <svg class="el" id="clk" width="400" height="400" viewBox="0 0 400 400" style="left:620px;top:600px">
+    <circle cx="200" cy="200" r="180" fill="#fff" stroke="#16181D" stroke-width="14"/>
+    <g id="ticks"></g>
+    <path d="M200 200 L200 30 A170 170 0 0 1 200 30 Z" id="sweep" fill="#D1176F" opacity=".18"/>
+    <line id="hh" x1="200" y1="200" x2="200" y2="100" stroke="#16181D" stroke-width="16" stroke-linecap="round"/>
+    <line id="mh" x1="200" y1="200" x2="200" y2="52" stroke="#D1176F" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="200" cy="200" r="16" fill="#16181D"/></svg>
+
+  <!-- 1: the ask on the real design -->
+  <div class="el stk" id="h1" style="left:70px;top:570px;width:940px"><div class="win"><canvas id="kh1" width="912" height="390"></canvas></div></div>
+  <svg class="el draw" id="a1" width="1080" height="200" style="left:0;top:640px"><path d="M760 100 L330 100 M380 52 L326 100 L380 148" stroke="#D1176F" stroke-width="16" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el bub" id="b1" style="left:150px;top:880px;width:780px;max-width:780px"><small>CLIENT · just now</small>“Can we just move this slightly to the left?”</div>
+  <div class="el ychip" id="y1" style="left:600px;top:1080px">a 2-minute fix?</div>
+
+  <!-- 2: where was it? -->
+  <div class="el toast" id="e2a" style="left:60px;top:570px;width:620px"><span class="ic" style="background:#E0803A">@</span><div><small>Email · Tue 9:02</small>Re: Re: homepage, one small thing</div></div>
+  <div class="el bub chat" id="e2b" style="left:430px;top:720px;width:600px"><small>Chat · 10:14</small>can you move the top bit left?</div>
+  <div class="el call" id="e2c" style="left:60px;top:850px;width:460px"><div class="g"><div><span style="background:#D1176F">CL</span></div><div><span style="background:#5B6BD6">MC</span></div><div><span style="background:#2BA6A0">RS</span></div><div><span style="background:#E0803A">TR</span></div></div><div class="ft"><i></i>Call · 42:10</div></div>
+  <div class="el stk" id="e2d" style="left:560px;top:930px;width:460px"><div class="win" style="position:relative"><canvas id="ke2" width="432" height="184"></canvas>
+    <svg class="draw" id="o2" width="432" height="184" style="position:absolute;left:0;top:0"><ellipse cx="120" cy="58" rx="104" ry="44" stroke="#E5484D" stroke-width="7" pathLength="1" stroke-dasharray="1"/></svg></div><div class="cap2">IMG_2291.png</div></div>
+
+  <!-- 3: someone has to -->
+  <div class="el stk chk" id="k3" style="left:70px;top:580px;width:940px">
+    <div class="r" id="r1"><span class="cb"></span>Find the original design<em>which file?</em></div>
+    <div class="r" id="r2"><span class="cb"></span>Understand the feedback<em>how far left?</em></div>
+    <div class="r" id="r3"><span class="cb"></span>Assign the revision<em>who?</em></div>
+    <div class="r" id="r4"><span class="cb"></span>Remember the version<em>v1? v2?</em></div></div>
+
+  <!-- 4: small change, long delay -->
+  <div class="el ychip" id="d4a" style="left:90px;top:590px">Small change</div>
+  <div class="el stk cal" id="d4b" style="left:70px;top:730px;width:940px"><div class="d"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+    <div class="lane"><div class="bar" id="bar4" style="background:var(--yel);width:28%">move left</div></div></div>
+  <div class="el stamp" id="d4c" style="left:330px;top:1060px">Delayed</div>
+
+  <!-- 5: Nodstage -->
+  <div class="el stk" id="lg" style="left:250px;top:560px;width:580px;padding:30px 40px"><img src="assets/logo.png" style="width:100%;display:block"></div>
+  <div class="el stk" id="p5" style="left:70px;top:740px;width:940px"><div class="win"><canvas id="k5" width="912" height="342"></canvas></div></div>
+  <div class="el stk" id="p5b" style="left:70px;top:740px;width:940px"><div class="win"><canvas id="k5b" width="912" height="408"></canvas></div></div>
+
+  <!-- 6: comment to task, revisions, right proof -->
+  <div class="el stk" id="c6a" style="left:50px;top:580px;width:470px"><div class="win"><canvas id="k6a" width="442" height="354"></canvas></div><div class="cap2">Client comment</div></div>
+  <div class="el stk" id="c6b" style="left:540px;top:820px;width:490px"><div class="win"><canvas id="k6b" width="462" height="172"></canvas></div><div class="cap2">Task · Doing</div></div>
+  <svg class="el draw" id="l6" width="1080" height="600" style="left:0;top:560px"><path d="M400 300 C 470 400, 700 160, 760 255" stroke="#D1176F" stroke-width="12" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el stk" id="c6c" style="left:60px;top:580px;width:330px"><div class="win"><canvas id="k6c" width="302" height="503"></canvas></div><div class="cap2">Versions</div></div>
+  <div class="el stk" id="c6d" style="left:410px;top:600px;width:620px"><div class="win"><canvas id="k6d" width="592" height="253"></canvas></div><div class="cap2">Homepage · v2</div></div>
+  <div class="el stk" id="c6e" style="left:410px;top:960px;width:620px"><div class="win"><canvas id="k6e" width="592" height="68"></canvas></div></div>
+
+  <!-- 7: the client approves the right proof -->
+  <div class="el stk" id="g7a" style="left:70px;top:570px;width:940px"><div class="win"><canvas id="k7a" width="912" height="127"></canvas></div></div>
+  <div class="el stk" id="g7b" style="left:70px;top:740px;width:940px"><div class="win"><canvas id="k7b" width="912" height="400"></canvas></div></div>
+  <svg class="el" id="cur" width="70" height="70" viewBox="0 0 24 24"><path d="M4 2 L4 20 L9 15.5 L12.5 22 L15.5 20.6 L12 14 L19 14 Z" fill="#16181D" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div class="el stamp g" id="s7" style="left:300px;top:920px">Approved ✓</div>
+  <div class="el" id="tag" style="left:0;top:1170px;width:1080px;text-align:center;font:700 40px/1 Inter">nodstage.com</div>
+
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="remi" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../../../engine/lib.js"></script>
+<script src="../../../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const img = (f) => { const i = new Image(); i.src = "assets/" + f; return i; };
+const REVIEW = img("review.png"), BOARD = img("board.png"), GUEST = img("guest.png");
+const remi = Tara("remi", { look: "artist", skin: "#F4CDB0", skinS: "#DCA584", hair: "#9A3F1F", hairS: "#6E2A13", knit: "#273050", knitS: "#1C2340", knitH: "#3A4570",
+  stripe: "#F4F1EA", denim: "#4A6FA5", denimS: "#365384", top: "#F4F1EA", lip: "#C04A55", cheek: "#EE8C7C", beret: "#D1176F", beretS: "#A30F55" });
+const POSES = [[0, "wave"], [W.hours - .25, "oops"], [S[1] + .1, "point"], [W.harmless - .2, "thumbs"], [S[2] + .05, "think"], [W.email - .1, "present"], [W.shot - .1, "oops"],
+  [S[3] + .1, "think"], [W.assign - .1, "point"], [W.about - .3, "oops"], [S[4] + .1, "present"], [W.expensive - .1, "oops"], [S[5] + .1, "cheer"], [W.workflow - .1, "point"],
+  [S[6] + .1, "present"], [W.revisions - .1, "point"], [W.proof - .1, "thumbs"], [S[7] + .1, "present"], [W.meant - .5, "rest"]];
+const CH = [["// 01 · one comment", "cost <b>hours</b>"], ["// 02 · the ask", "move <b>left</b>"], ["// 03 · but where?", "places <b>4</b>"], ["// 04 · someone has to", "steps <b>4</b>"],
+  ["// 05 · the delay", "days <b>5</b>"], ["// 06 · nodstage", "feedback <b>→ work</b>"], ["// 07 · connected", "proof <b>v2</b>"], ["// 08 · what they meant", "nodstage<b>.com</b>"]];
+const IDS = ["c0","clk","h1","a1","b1","y1","e2a","e2b","e2c","e2d","k3","d4a","d4b","d4c","lg","p5","p5b","c6a","c6b","l6","c6c","c6d","c6e","g7a","g7b","cur","s7","tag","badge"];
+(() => { const g = document.getElementById("ticks"); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  l.setAttribute("x1", 200 + Math.sin(a) * 150); l.setAttribute("y1", 200 - Math.cos(a) * 150); l.setAttribute("x2", 200 + Math.sin(a) * 166); l.setAttribute("y2", 200 - Math.cos(a) * 166);
+  l.setAttribute("stroke", "#16181D"); l.setAttribute("stroke-width", i % 3 ? 6 : 12); l.setAttribute("stroke-linecap", "round"); g.appendChild(l); } })();
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#D1176F"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+function clock(t) {   // minute hand idles, then races through the hours
+  const fast = clamp((t - W.hours + .2) / 1.6), mins = t * 30 + easeInOut(fast) * 360 * 3, hrs = mins / 12;
+  $("mh").setAttribute("transform", `rotate(${mins} 200 200)`); $("hh").setAttribute("transform", `rotate(${hrs} 200 200)`);
+  const sw = Math.min(359.9, easeInOut(fast) * 3 * 120) * Math.PI / 180, x = 200 + Math.sin(sw) * 170, y = 200 - Math.cos(sw) * 170;
+  $("sweep").setAttribute("d", `M200 200 L200 30 A170 170 0 ${sw > Math.PI ? 1 : 0} 1 ${x.toFixed(1)} ${y.toFixed(1)} Z`); }
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // 0: one comment, then the clock races
+  if (t < S[1]) { pop("c0", t, .1, { r: -2, y: fl(t) * .6 }); pop("clk", t, .35, { r: 3, y: fl(t, 1) * .6 }); clock(t); badge(t, 1, .5, 70, 560); for (const id of ["c0", "clk", "badge"]) out(id, t, S[1] - .15); }
+  // 1: the ask, on the real design
+  if (inWin(t, S[1] - .05, S[2])) { W8("kh1", REVIEW, .162, .221, .523, .357, "#fff"); pop("h1", t, S[1] - .05, { r: -1, y: fl(t, 2) * .4 }); pop("b1", t, S[1] + .2, { r: 1.5 });
+    draw("a1", t, W.left - .45, .5); slam("y1", t, W.harmless - .1, { r: -6 }); for (const id of ["h1", "b1", "a1", "y1"]) out(id, t, S[2] - .15); }
+  // 2: email, chat, call, screenshot
+  if (inWin(t, S[2] - .05, S[3])) { W8("ke2", REVIEW, .162, .221, .523, .357, "#fff");
+    [["e2a", W.email - .1, -2], ["e2b", W.whatsapp - .1, 2.5], ["e2c", W.call - .2, -2.5], ["e2d", W.shot - .15, 2]].forEach(([id, at, r], i) => { slam(id, t, at, { r, y: fl(t, i) * .5 }); out(id, t, S[3] - .15); });
+    draw("o2", t, W.shot + .1, .45); }
+  // 3: someone has to...
+  if (inWin(t, S[3] - .05, S[4])) { pop("k3", t, S[3] + .05, { r: -1, y: fl(t, 3) * .3 });
+    [["r1", W.find - .1], ["r2", W.under - .1], ["r3", W.assign - .1], ["r4", W.remember - .1]].forEach(([id, at]) => { const a = spring(clamp((t - at) / .45));
+      $(id).style.opacity = t >= at ? 1 : 0; $(id).style.transform = `translateX(${(1 - a) * 60}px)`; });
+    out("k3", t, S[4] - .15); }
+  // 4: a small change stretches into a delay
+  if (inWin(t, S[4] - .05, S[5])) { pop("d4a", t, W.small - .15, { r: -4 }); pop("d4b", t, S[4] + .05, { y: fl(t, 4) * .3 });
+    const g = easeInOut((t - W.expensive + .5) / .8); $("bar4").style.width = (28 + 72 * g) + "%"; $("bar4").style.background = g > .3 ? "var(--mag)" : "var(--yel)";
+    $("bar4").style.color = g > .3 ? "#fff" : "var(--ink)"; $("bar4").textContent = g > .3 ? "still on “move left”" : "move left";
+    slam("d4c", t, W.expensive + .3, { r: -8 }); for (const id of ["d4a", "d4b", "d4c"]) out(id, t, S[5] - .5); }
+  // 5: Nodstage (real screens)
+  if (inWin(t, S[5] - .05, S[6])) { pop("lg", t, S[5] + .05, { y: fl(t, 5) * .4 });
+    W8("k5", REVIEW, 0, 0, 1, .6, "#fff"); W8("k5b", BOARD, .034, .33, .76, .67, "#fff");
+    pop("p5", t, S[5] + .3, { r: -1, y: fl(t, 6) * .4 }); out("p5", t, W.workflow - .2); pop("p5b", t, W.workflow - .1, { r: 1, y: fl(t, 6) * .4 });
+    for (const id of ["lg", "p5b"]) out(id, t, S[6] - .15); }
+  // 6: comment -> task, versions, the right proof
+  if (inWin(t, S[6] - .05, S[7])) {
+    W8("k6a", REVIEW, .762, .554, .231, .296, "#fff"); W8("k6b", BOARD, .228, .68, .175, .125, "#fff");
+    W8("k6c", REVIEW, .008, .148, .115, .307, "#fff"); W8("k6d", REVIEW, .162, .221, .523, .357, "#fff"); W8("k6e", REVIEW, .123, .055, .338, .062, "#fff");
+    const B = W.revisions - .15;
+    if (t < B + .3) { pop("c6a", t, S[6] + .05, { r: -2, y: fl(t, 7) * .4 }); pop("c6b", t, W.tasks - .15, { r: 2, y: fl(t, 8) * .4 }); draw("l6", t, W.tasks - .3, .45); for (const id of ["c6a", "c6b", "l6"]) out(id, t, B - .1); }
+    if (t >= B) { pop("c6c", t, B, { r: -1.5, y: fl(t, 9) * .4 }); pop("c6d", t, B + .25, { r: 1.5, y: fl(t, 10) * .4 }); slam("c6e", t, W.proof - .25, { r: -1 }); for (const id of ["c6c", "c6d", "c6e"]) out(id, t, S[7] - .15); }
+    const M = t < B ? 2 : 3; badge(t, M, S[6] + .05, 905, 560); out("badge", t, S[7] - .15); }
+  // 7: the client approves the right proof, calm end
+  if (t >= S[7] - .05) { W8("k7a", GUEST, .72, 0, .28, .062, "#fff"); W8("k7b", GUEST, .085, .115, .63, .5, "#fff");
+    pop("g7a", t, S[7], { y: fl(t, 11) * .3 }); pop("g7b", t, S[7] + .25, { y: fl(t, 12) * .3 });
+    const c0 = W.hours2 + .1, k = easeInOut((t - c0) / .9), cx = 760 + (858 - 760) * k, cy = 1000 + (650 - 1000) * k, press = t > c0 + 1 && t < c0 + 1.15 ? .85 : 1;
+    $("cur").style.opacity = t > c0 - .2 ? 1 : 0; $("cur").style.transform = `translate(${cx}px,${cy}px) scale(${press})`;
+    slam("s7", t, c0 + 1.15, { r: -6 }); pop("tag", t, W.meant - .4); $("tag").style.transform = ""; }
+  chapter(t); caption2(t); [...$("cap").children].forEach((sp) => sp.classList.toggle("on", sp.classList.contains("acc") && sp.style.color.includes("--red")));
+  remi.render(t, POSES, TL.amp); wipe(t, S[5] - .45);
+};
+window.ready = Promise.all([REVIEW, BOARD, GUEST].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>
