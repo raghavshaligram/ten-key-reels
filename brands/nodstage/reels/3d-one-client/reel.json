@@ -1,0 +1,300 @@
+{
+ "title": "Nodstage 3D: one client, start to finish",
+ "voice": "am_michael",
+ "speed": 1.0,
+ "lines": [
+  [
+   "I just wanted to run a design studio. Why am I spending my whole day chasing clients?",
+   0.4
+  ],
+  [
+   "How are you managing your projects?",
+   0.35,
+   "af_heart"
+  ],
+  [
+   "Projects in one app. Feedback in email. Clients on WhatsApp. Proposals in documents. Invoices somewhere else.",
+   0.4
+  ],
+  [
+   "And you wonder why nothing stays organised.",
+   0.4,
+   "af_heart"
+  ],
+  [
+   "Fair.",
+   0.45
+  ],
+  [
+   "Let's take one client, start to finish. A new enquiry comes in. It lands on your pipeline.",
+   0.3,
+   "af_heart"
+  ],
+  [
+   "And the call?",
+   0.3
+  ],
+  [
+   "They book it on your booking page. Then you send a proposal with packages. They pick one and accept.",
+   0.3,
+   "af_heart"
+  ],
+  [
+   "Then what?",
+   0.3
+  ],
+  [
+   "The project starts. Tasks, deadlines, who's doing what.",
+   0.3,
+   "af_heart"
+  ],
+  [
+   "When the design's ready, they get one link. No account. They comment right on the work.",
+   0.3,
+   "af_heart"
+  ],
+  [
+   "Like, move this slightly to the left?",
+   0.3
+  ],
+  [
+   "Exactly. Pinned to the spot, and it becomes a task.",
+   0.35,
+   "af_heart"
+  ],
+  [
+   "And when they ask for a fourth round?",
+   0.3
+  ],
+  [
+   "Rounds past your fee become a change order. They approve it before you start.",
+   0.35,
+   "af_heart"
+  ],
+  [
+   "Wait. They pay for that?",
+   0.3
+  ],
+  [
+   "It goes straight on the invoice. They pay by card.",
+   0.4,
+   "af_heart"
+  ],
+  [
+   "One client. One place.",
+   0.35
+  ],
+  [
+   "Every client. It's called Nodstage. Comment studio, and we'll send you the link.",
+   0.3,
+   "af_heart"
+  ]
+ ],
+ "phrases": [
+  "I just wanted to run a design studio.",
+  "Why am I spending my whole day chasing clients?",
+  "How are you managing your projects?",
+  "Projects in one app. Feedback in email.",
+  "Clients on WhatsApp. Proposals in documents.",
+  "Invoices somewhere else.",
+  "And you wonder why nothing stays organised.",
+  "\u2026Fair.",
+  "Let's take one client, start to finish.",
+  "A new enquiry comes in.",
+  "It lands on your pipeline.",
+  "And the call?",
+  "They book it on your booking page.",
+  "Then you send a proposal with packages.",
+  "They pick one and accept.",
+  "Then what?",
+  "The project starts.",
+  "Tasks, deadlines, who's doing what.",
+  "When the design's ready, they get one link.",
+  "No account.",
+  "They comment right on the work.",
+  "Like, \u201cmove this slightly to the left\u201d?",
+  "Exactly.",
+  "Pinned to the spot, and it becomes a task.",
+  "And when they ask for a fourth round?",
+  "Rounds past your fee become a change order.",
+  "They approve it before you start.",
+  "Wait. They pay for that?",
+  "It goes straight on the invoice.",
+  "They pay by card.",
+  "One client. One place.",
+  [
+   2,
+   "Every client."
+  ],
+  [
+   4,
+   "It's called Nodstage."
+  ],
+  "Comment STUDIO,",
+  "and we'll send you the link."
+ ],
+ "scenes": [
+  0,
+  47,
+  170
+ ],
+ "marks": {
+  "why": 8,
+  "clients": 16,
+  "nod1": 17,
+  "projapp": 23,
+  "email": 29,
+  "whatsapp": 32,
+  "proposals": 33,
+  "invoices": 36,
+  "organised": 45,
+  "fair": 46,
+  "oneclient": 47,
+  "enquiry": 56,
+  "pipeline": 63,
+  "call": 66,
+  "booking": 72,
+  "proposal": 78,
+  "accept": 85,
+  "then": 86,
+  "project": 89,
+  "tasks": 91,
+  "ready": 99,
+  "link": 103,
+  "noacc": 104,
+  "comment": 107,
+  "work": 111,
+  "left": 118,
+  "exactly": 119,
+  "pinned": 120,
+  "task": 128,
+  "fourth": 135,
+  "rounds": 137,
+  "change": 143,
+  "approve": 146,
+  "wait": 151,
+  "pay": 153,
+  "invoice": 161,
+  "card": 165,
+  "one": 166,
+  "every": 170,
+  "nodstage": 174,
+  "studio": 177,
+  "linkend": 183
+ },
+ "tail": 1.6,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "projapp-0.1",
+   "pop",
+   640
+  ],
+  [
+   "email-0.2",
+   "pop",
+   700
+  ],
+  [
+   "whatsapp-0.2",
+   "pop",
+   760
+  ],
+  [
+   "proposals-0.1",
+   "pop",
+   820
+  ],
+  [
+   "invoices-0.1",
+   "pop",
+   880
+  ],
+  [
+   "oneclient-0.3",
+   "whoosh",
+   0.5
+  ],
+  [
+   "enquiry-0.4",
+   "whoosh",
+   0.4
+  ],
+  [
+   "enquiry-0.2",
+   "pop",
+   700
+  ],
+  [
+   "booking-0.2",
+   "pop",
+   780
+  ],
+  [
+   "proposal-0.2",
+   "pop",
+   860
+  ],
+  [
+   "accept-0.1",
+   "win",
+   null
+  ],
+  [
+   "project-0.2",
+   "whoosh",
+   0.3
+  ],
+  [
+   "ready-0.2",
+   "whoosh",
+   0.3
+  ],
+  [
+   "comment+0.1",
+   "pop",
+   900
+  ],
+  [
+   "pinned-0.2",
+   "whoosh",
+   0.3
+  ],
+  [
+   "task-0.2",
+   "pop",
+   900
+  ],
+  [
+   "rounds-0.2",
+   "whoosh",
+   0.3
+  ],
+  [
+   "change-0.1",
+   "pop",
+   1000
+  ],
+  [
+   "invoice-0.3",
+   "whoosh",
+   0.3
+  ],
+  [
+   "card",
+   "pop",
+   1000
+  ],
+  [
+   "one-0.2",
+   "whoosh",
+   0.4
+  ],
+  [
+   "S2-0.1",
+   "whoosh",
+   0.5
+  ]
+ ]
+}
