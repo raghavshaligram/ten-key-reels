@@ -1,0 +1,227 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#ECEEF1;--ink:#16181D;--red:#16181D;--grey:#B9BEC8;--mag:#D1176F;--yel:#F4D23C;--green:#1F7A4A;--muted:#6E7480}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#15120F}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#15120F}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+#scene{position:absolute;left:0;top:0}
+#who{left:0;top:268px;width:1080px;text-align:center;font:700 28px/1 Inter;letter-spacing:.06em;color:#fff}
+#line{left:60px;top:312px;width:960px;text-align:center;font:600 72px/1.15 Lora;color:#fff;text-wrap:balance}
+#cap{display:none}
+.stk{background:#fff;border-radius:22px;padding:22px 26px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.stk small{display:block;font:700 22px/1 Inter;color:#8A8F99;letter-spacing:.06em;margin-bottom:10px}
+.stk q{font:600 38px/1.25 Inter;color:#16181D;quotes:"“" "”"}
+.chip{display:flex;align-items:center;gap:14px;background:#fff;border-radius:999px;padding:12px 26px 12px 12px;font:700 34px/1 Inter;color:#16181D;box-shadow:0 12px 28px rgba(0,0,0,.3)}
+.chip i{width:50px;height:50px;border-radius:50%;color:#fff;font:800 24px/50px Inter;text-align:center;font-style:normal}
+.chip em{font-style:normal;color:#D1176F}
+.hrs{background:#2A211E;color:#fff;border-radius:20px;padding:18px 28px;display:flex;align-items:center;gap:16px;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.hrs b{font:800 110px/1 Inter;color:#F2C14E}.hrs span{font:800 44px/1 Inter;text-transform:uppercase}.hrs small{display:block;font:600 24px/1 Inter;color:#C9BFB4;margin-top:6px;text-transform:none}
+.dwin{background:#1E1C21;border-radius:28px;padding:12px 16px 16px;border:2px solid #3A3640;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.dwin .top{font:600 20px/1 Inter;color:#9C96A0;text-align:center;padding:6px 0 12px}.dwin .top b{color:#F2C14E}
+.dwin .pg{display:flex;gap:10px;margin:0 4px 12px}.dwin .pg span{flex:1;height:8px;border-radius:4px;background:#3A3640}.dwin .pg span.on{background:#8FCB9B}
+.dwin .hd{display:flex;align-items:center;gap:14px;padding:0 4px 12px}
+.dwin .hd b{font:700 20px/1 Mono;background:#8FCB9B;color:#16181D;padding:7px 9px;border-radius:6px;letter-spacing:.06em}
+.dwin .hd span{font:600 46px/1 Lora;color:#fff}
+.dwin .chrome{height:36px;background:#F1F2F4;border-radius:12px 12px 0 0;display:flex;align-items:center;gap:8px;padding:0 14px}
+.dwin .chrome i{width:11px;height:11px;border-radius:50%;background:#D0D3D9}.dwin .chrome u{margin:0 auto;text-decoration:none;font:600 17px/1 Inter;color:#7A7F8A;background:#fff;padding:5px 40px;border-radius:7px}
+.dwin canvas{display:block;border-radius:0 0 12px 12px}
+.logo{background:#fff;border-radius:26px;padding:26px 40px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+#endc{position:absolute;inset:0;background:radial-gradient(900px 900px at 50% 35%,#2A262B 0%,#1A181C 70%);opacity:0;text-align:center;color:#fff}
+#endc h2{font:800 84px/1 Inter;letter-spacing:-.02em;margin-top:70px}
+#endc h2 span{background:#F2C14E;color:#16181D;border-radius:14px;padding:6px 18px;margin-left:12px}
+#endc p{font:600 38px/1 Inter;color:#B8AFA6;margin-top:34px}
+#endc ul{list-style:none;margin-top:30px;font:700 44px/1.6 Inter}#endc li::before{content:"✓";display:inline-block;width:52px;height:52px;border-radius:50%;background:#2FBF71;color:#fff;font:800 32px/52px Inter;margin-right:18px}
+#endc .h{position:absolute;left:0;width:1080px;top:1300px;font:600 32px/1 Inter;color:#8A8390}
+</style></head><body><div id="stage">
+  <svg id="scene" width="1080" height="1920"><g id="back"></g><g id="mid"></g></svg>
+  <svg class="el" id="remi" viewBox="0 0 1000 1000" width="560" height="560" style="left:560px;top:1000px"></svg>
+  <svg class="el" id="front" width="1080" height="1920"></svg>
+  <svg class="el" id="nico" viewBox="0 0 1000 1000" width="600" height="600" style="left:40px;top:1040px"></svg>
+  <div class="el" id="who"></div><div class="el" id="line"></div><div id="cap"></div>
+
+  <div class="el stk" id="q1" style="left:60px;top:600px;width:600px"><small>CLIENT</small><q>Can we move it slightly to the left?</q></div>
+  <div class="el chip" id="ch1" style="left:690px;top:600px"><i style="background:#E0803A">@</i>Email<em>?</em></div>
+  <div class="el chip" id="ch2" style="left:700px;top:700px"><i style="background:#25A35A">✉</i>WhatsApp<em>?</em></div>
+  <div class="el chip" id="ch3" style="left:690px;top:800px"><i style="background:#5B6BD6">☎</i>Call<em>?</em></div>
+  <div class="el hrs" id="hr" style="left:90px;top:840px"><b id="hrn">1</b><div><span id="hru">hour</span><small id="hrs">finding the comment</small></div></div>
+
+  <div class="el dwin" id="dw" style="left:40px;top:520px;width:1000px">
+    <div class="top">Nodstage · <b>client feedback to paid work</b></div>
+    <div class="pg"><span id="g1"></span><span id="g2"></span><span id="g3"></span><span id="g4"></span></div>
+    <div class="hd"><b id="stn">STEP 1/4</b><span id="stt"></span></div>
+    <div class="chrome"><i></i><i></i><i></i><u>nodstage.com</u></div>
+    <canvas id="cv" width="964" height="350"></canvas></div>
+  <div class="el logo" id="lg" style="left:270px;top:680px;width:540px"><img src="assets/logo.png" style="width:100%;display:block"></div>
+
+  <div id="endc">
+    <svg width="420" height="420" viewBox="0 0 420 420" style="margin-top:420px"><circle cx="210" cy="210" r="200" fill="#1F3B2D"/>
+      <g transform="rotate(-6 210 210)"><rect x="95" y="110" width="230" height="200" rx="16" fill="#F4F1EA"/><rect x="120" y="140" width="180" height="70" rx="8" fill="#C9B8A0"/>
+      <rect x="120" y="225" width="150" height="14" rx="7" fill="#D9D2C6"/><rect x="120" y="250" width="110" height="14" rx="7" fill="#D9D2C6"/></g>
+      <g transform="rotate(-14 210 250)"><rect x="96" y="222" width="228" height="64" rx="10" fill="rgba(244,241,234,.85)" stroke="#2FBF71" stroke-width="7"/>
+      <text x="210" y="267" text-anchor="middle" font-family="Inter" font-weight="700" font-size="36" fill="#1F9D55" letter-spacing="3">APPROVED</text></g></svg>
+    <h2>Comment<span>FEEDBACK</span></h2><p>and we'll DM you:</p><ul><li>The Nodstage link</li></ul><div class="h">nodstage.com</div></div>
+</div>
+<script src="../../../../engine/lib.js"></script>
+<script src="../../../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const img = (f) => { const i = new Image(); i.src = "assets/" + f; return i; };
+const REVIEW = img("review.png"), BOARD = img("board.png"), GUEST = img("guest.png");
+const tw = (k) => TL.wt[k][1];
+const LINES = [[0, "Y"], [10, "R"], [13, "Y"], [25, "R"], [32, "Y"], [40, "R"], [54, "Y"], [56, "R"], [65, "Y"], [69, "R"], [85, "Y"], [89, "R"]];
+const WIN = LINES.map(([k, s], i) => [tw(k) - .08, i + 1 < LINES.length ? tw(LINES[i + 1][0]) - .12 : END, s]);
+const speakerAt = (t) => { let s = "Y"; for (const [a, , sp] of WIN) if (t >= a - .05) s = sp; return s; };
+const maskAmp = (who) => TL.amp.map((v, f) => WIN.some(([a, b, sp]) => sp === who && f / 30 >= a && f / 30 < b) ? v : 0);
+const AMP = { Y: maskAmp("Y"), R: maskAmp("R") };
+const nico = Tara("nico", { look: "nico", skin: "#B97A52", skinS: "#9A633F", hair: "#1E1612", hairS: "#140e0b", knit: "#2F6F73", knitS: "#24575A", knitH: "#3D8589", top: "#E9DFC9", lip: "#8A3A31", cheek: "#D9766A" });
+const remi = Tara("remi", { look: "artist", skin: "#F4CDB0", skinS: "#DCA584", hair: "#9A3F1F", hairS: "#6E2A13", knit: "#34417A", knitS: "#26305C", knitH: "#4A5894",
+  stripe: "#F4F1EA", denim: "#5B82BD", denimS: "#41659C", top: "#F4F1EA", lip: "#C04A55", cheek: "#EE8C7C", beret: "#D1176F", beretS: "#A30F55" });
+const NP = [[0, "present"], [tw(10), "rest"], [tw(13), "oops"], [W.call, "think"], [tw(32), "present"], [W.watch, "rest"], [W.noacc - .1, "think"], [tw(56), "rest"],
+  [W.task, "thumbs"], [tw(65), "present"], [tw(69), "rest"], [W.click2 - .2, "thumbs"], [tw(85), "present"], [W.nodstage + .4, "rest"]];
+const RP = [[0, "rest"], [tw(10) - .1, "think"], [tw(13), "rest"], [tw(25) - .1, "present"], [tw(32), "oops"], [W.watch - .1, "point"], [tw(54), "rest"], [tw(56) - .1, "thumbs"],
+  [W.task - .4, "point"], [tw(65), "rest"], [tw(69) - .1, "point"], [W.approve - .1, "present"], [tw(85), "rest"], [W.nodstage - .1, "cheer"], [W.comment, "rest"]];
+const IDS = ["q1", "ch1", "ch2", "ch3", "hr", "dw", "lg"];
+const BULBS = [];
+(() => { const NS = "http://www.w3.org/2000/svg", mk = (p, tag, at) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); p.appendChild(e); return e; };
+  const b = $("back"), f = $("front"), m = $("mid");
+  $("scene").insertAdjacentHTML("afterbegin", `<defs><radialGradient id="bulb"><stop offset="0" stop-color="#FFF0C8" stop-opacity=".95"/><stop offset="1" stop-color="#FFD48A" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow" cx="62%" cy="62%" r="55%"><stop offset="0" stop-color="#FFC27A" stop-opacity=".28"/><stop offset="1" stop-color="#FFC27A" stop-opacity="0"/></radialGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15120F"/><stop offset=".85" stop-color="#1D1915"/><stop offset="1" stop-color="#2A2420"/></linearGradient>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16244A"/><stop offset="1" stop-color="#2C4A8C"/></linearGradient></defs>`);
+  // wall with brick lines, dark band on top
+  mk(b, "rect", { x: 0, y: 500, width: 1080, height: 1110, fill: "#7C8274" });
+  for (let y = 500, r = 0; y < 1600; y += 56, r++) { mk(b, "path", { d: `M0 ${y} L1080 ${y}`, stroke: "#6E7467", "stroke-width": 3 });
+    for (let x = (r % 2 ? 90 : 0); x < 1080; x += 180) mk(b, "path", { d: `M${x} ${y} L${x} ${y + 56}`, stroke: "#6E7467", "stroke-width": 3 }); }
+  mk(b, "rect", { x: 0, y: 0, width: 1080, height: 520, fill: "url(#band)" });
+  // night window, left
+  mk(b, "rect", { x: -20, y: 760, width: 170, height: 440, fill: "#EDEDE6" }); mk(b, "rect", { x: -10, y: 774, width: 146, height: 412, fill: "url(#night)" });
+  for (let i = 0; i < 9; i++) mk(b, "rect", { x: 10 + (i % 3) * 40, y: 960 + Math.floor(i / 3) * 60, width: 18, height: 26, fill: i % 4 ? "#F2D27A" : "#3B4F80" });
+  for (let y = 790; y < 900; y += 14) mk(b, "path", { d: `M-10 ${y} L136 ${y}`, stroke: "#C9CBD3", "stroke-width": 5 });
+  // calendar
+  mk(b, "rect", { x: 240, y: 880, width: 150, height: 190, rx: 6, fill: "#F2EFE8" }); mk(b, "rect", { x: 240, y: 880, width: 150, height: 34, rx: 6, fill: "#6F8FB8" });
+  for (let i = 0; i < 20; i++) { const x = 252 + (i % 5) * 26, y = 926 + Math.floor(i / 5) * 34; if (i < 15) mk(b, "path", { d: `M${x} ${y} L${x + 16} ${y + 18} M${x + 16} ${y} L${x} ${y + 18}`, stroke: "#D0453C", "stroke-width": 4, "stroke-linecap": "round" }); }
+  // cork board with pinned briefs and a sticky note
+  mk(b, "rect", { x: 420, y: 780, width: 330, height: 230, rx: 8, fill: "#7A5636" }); mk(b, "rect", { x: 432, y: 792, width: 306, height: 206, rx: 4, fill: "#C99A66" });
+  for (const [x, y, a] of [[448, 806, -3], [544, 802, 2], [640, 808, -2]]) { mk(b, "rect", { x, y, width: 84, height: 110, fill: "#F5F2EA", transform: `rotate(${a} ${x + 42} ${y + 55})` });
+    for (let k = 0; k < 4; k++) mk(b, "path", { d: `M${x + 12} ${y + 28 + k * 18} L${x + 70} ${y + 28 + k * 18}`, stroke: "#C8C2B5", "stroke-width": 5 }); }
+  mk(b, "rect", { x: 470, y: 920, width: 110, height: 70, fill: "#F4D23C", transform: "rotate(-4 525 955)" });
+  // shelf with books
+  mk(b, "rect", { x: 820, y: 860, width: 260, height: 14, fill: "#5A4030" });
+  for (const [x, w, h, c] of [[840, 26, 70, "#2E3B66"], [868, 22, 62, "#F2EFE8"], [892, 26, 74, "#2E3B66"], [920, 28, 78, "#D0602F"]]) mk(b, "rect", { x, y: 860 - h, width: w, height: h, fill: c });
+  // string lights
+  mk(b, "path", { d: "M-20 640 Q300 700 560 668 Q820 640 1100 690", fill: "none", stroke: "#2B2A26", "stroke-width": 4 });
+  for (let i = 0; i <= 16; i++) { const u = i / 16, x = -20 + 1120 * u, y = 640 + Math.sin(u * Math.PI * 1.6) * 34 + u * 30;
+    BULBS.push(mk(b, "circle", { cx: x, cy: y + 16, r: 30, fill: "url(#bulb)" })); mk(b, "circle", { cx: x, cy: y + 16, r: 8, fill: "#FFF3D2" }); }
+  // floor and rug
+  mk(b, "rect", { x: 0, y: 1600, width: 1080, height: 320, fill: "#8A7B6C" }); mk(b, "rect", { x: 0, y: 1600, width: 1080, height: 16, fill: "#5F564C" });
+  mk(b, "path", { d: "M-40 1920 L80 1700 L1000 1700 L1120 1920 Z", fill: "#8E2B2B" }); mk(b, "path", { d: "M10 1900 L104 1724 L976 1724 L1070 1900 Z", fill: "none", stroke: "#E9D9C2", "stroke-width": 6 });
+  mk(b, "rect", { x: 0, y: 500, width: 1080, height: 1420, fill: "url(#glow)" });
+  // monitor behind Remi (right)
+  mk(b, "rect", { x: 900, y: 1150, width: 260, height: 190, rx: 8, fill: "#22252B" }); mk(b, "rect", { x: 910, y: 1160, width: 240, height: 170, fill: "#E9ECEF" });
+  for (let k = 0; k < 7; k++) mk(b, "path", { d: `M925 ${1180 + k * 20} L1060 ${1180 + k * 20}`, stroke: "#B9BEC8", "stroke-width": 5 });
+  mk(b, "rect", { x: 1000, y: 1340, width: 16, height: 120, fill: "#22252B" });
+  // Nico's chair back, seat and legs (he sits; the drawn rig is his upper body)
+  mk(m, "rect", { x: 110, y: 1250, width: 400, height: 390, rx: 40, fill: "#B3292E" }); mk(m, "rect", { x: 110, y: 1250, width: 400, height: 390, rx: 40, fill: "none", stroke: "#86191D", "stroke-width": 10 });
+  mk(m, "rect", { x: 120, y: 1610, width: 400, height: 54, rx: 20, fill: "#2B2E36" });
+  mk(m, "rect", { x: 300, y: 1660, width: 22, height: 140, fill: "#2B2E36" });
+  for (const a of [-60, -20, 20, 60]) mk(m, "path", { d: `M311 1800 L${311 + a * 2.2} ${1830 + Math.abs(a) * .2}`, stroke: "#2B2E36", "stroke-width": 14, "stroke-linecap": "round" });
+  for (const a of [-60, -20, 20, 60]) mk(m, "circle", { cx: 311 + a * 2.2, cy: 1846 + Math.abs(a) * .2, r: 14, fill: "#17191E" });
+  for (const x of [182, 330]) { mk(m, "rect", { x, y: 1600, width: 116, height: 110, rx: 30, fill: "#2A2D3A" }); mk(m, "rect", { x: x + 8, y: 1680, width: 100, height: 140, rx: 20, fill: "#2A2D3A" });
+    mk(m, "ellipse", { cx: x + 58, cy: 1824, rx: 66, ry: 26, fill: "#121318" }); }
+  // desk in front of Remi, with keyboard, mug of pencils, candle
+  mk(f, "rect", { x: 560, y: 1460, width: 540, height: 26, fill: "#D8B98F" }); mk(f, "rect", { x: 580, y: 1486, width: 500, height: 240, fill: "#B08D65" });
+  mk(f, "path", { d: "M600 1560 L1060 1560 M600 1640 L1060 1640", stroke: "#9A7955", "stroke-width": 5 }); mk(f, "rect", { x: 580, y: 1726, width: 30, height: 120, fill: "#8C6C4A" }); mk(f, "rect", { x: 1050, y: 1726, width: 30, height: 120, fill: "#8C6C4A" });
+  mk(f, "rect", { x: 760, y: 1440, width: 200, height: 22, rx: 5, fill: "#2B2E36" });
+  mk(f, "rect", { x: 620, y: 1396, width: 54, height: 66, rx: 8, fill: "#EFE8DC" }); for (const [dx, c] of [[8, "#F4D23C"], [20, "#D1176F"], [32, "#2BA6A0"]]) mk(f, "rect", { x: 620 + dx, y: 1360, width: 9, height: 42, fill: c });
+  mk(f, "rect", { x: 990, y: 1420, width: 40, height: 42, rx: 6, fill: "#F2EFE8" }); BULBS.push(mk(f, "circle", { cx: 1010, cy: 1400, r: 52, fill: "url(#bulb)" })); mk(f, "ellipse", { cx: 1010, cy: 1404, rx: 6, ry: 11, fill: "#FFD27A" });
+})();
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#D1176F"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+const CUR = new Path2D("M4 2 L4 20 L9 15.5 L12.5 22 L15.5 20.6 L12 14 L19 14 Z");
+function demo(t) {
+  const st = STEPS(); let si = 0; for (let k = 0; k < st.length; k++) if (t >= st[k][0] - .1) si = k;
+  $("stn").textContent = "STEP " + st[si][1]; $("stt").textContent = st[si][2]; for (let k = 0; k < 4; k++) $("g" + (k + 1)).className = k <= si ? "on" : "";
+  const g = $("cv").getContext("2d"), CW = 964, CHh = 350; g.fillStyle = "#E9EBEF"; g.fillRect(0, 0, CW, CHh);
+  const shots = SH(), s = shots.find((x) => t >= x[0] && t < x[1]) || (t < shots[0][0] ? shots[0] : shots[shots.length - 1]), [, , im, kf, ring, cur] = s;
+  let j = 0; for (let k = 0; k < kf.length; k++) if (t >= kf[k][0]) j = k;
+  const A = kf[j], B = kf[Math.min(j + 1, kf.length - 1)], p = B === A ? 1 : easeInOut((t - A[0]) / (B[0] - A[0]));
+  const z = A[3] + (B[3] - A[3]) * p, IW = im.naturalWidth || 1600, IH = im.naturalHeight || 1000;
+  const fit = (c, half, L) => L * z <= 2 * half ? L / 2 : clamp(c, half / z, L - half / z);
+  const cx = fit(A[1] + (B[1] - A[1]) * p, CW / 2, IW), cy = fit(A[2] + (B[2] - A[2]) * p, CHh / 2, IH);
+  const X = (x) => CW / 2 + (x - cx) * z, Y = (y) => CHh / 2 + (y - cy) * z;
+  if (im.naturalWidth) g.drawImage(im, X(0), Y(0), IW * z, IH * z);
+  if (ring && t >= ring[0]) { const q = easeOut((t - ring[0]) / .35), pad = 10 + (1 - q) * 30; g.globalAlpha = q; g.strokeStyle = ring[5]; g.lineWidth = 8;
+    g.beginPath(); g.roundRect(X(ring[1]) - pad, Y(ring[2]) - pad, (ring[3] - ring[1]) * z + 2 * pad, (ring[4] - ring[2]) * z + 2 * pad, 16); g.stroke(); g.globalAlpha = 1; }
+  if (cur && t >= cur[0] - .2) { const q = easeInOut((t - cur[0]) / (cur[1] - cur[0])), x = cur[2] + (cur[4] - cur[2]) * q, y = cur[3] + (cur[5] - cur[3]) * q, sc = t > cur[6] && t < cur[6] + .15 ? 2.4 : 2.8;
+    if (t > cur[6]) { const r = easeOut((t - cur[6]) / .5); g.globalAlpha = 1 - r; g.fillStyle = "rgba(22,24,29,.25)"; g.beginPath(); g.arc(X(x), Y(y), 18 + r * 55, 0, 6.29); g.fill(); g.globalAlpha = 1; }
+    g.save(); g.translate(X(x) - 4 * sc, Y(y) - 2 * sc); g.scale(sc, sc); g.fillStyle = "#16181D"; g.strokeStyle = "#fff"; g.lineWidth = 1.6; g.lineJoin = "round"; g.fill(CUR); g.stroke(CUR); g.restore(); }
+  let fl = 0; for (const x of shots.slice(1)) if (t >= x[0] && t < x[0] + .18) fl = .6 * (1 - (t - x[0]) / .18);
+  if (fl) { g.fillStyle = `rgba(255,255,255,${fl})`; g.fillRect(0, 0, CW, CHh); }
+}
+
+
+const SH = () => [
+  [S[1] - .1, W.noacc - .15, GUEST, [[S[1], 800, 500, .6], [W.click - .2, 800, 500, .6], [W.design, 481, 338, 1.6], [W.there + .3, 481, 338, 1.7]], [W.design + .1, 466, 323, 497, 354, "#D1176F"], null],
+  [W.noacc - .15, W.noacc2 + .9, GUEST, [[W.noacc - .15, 1410, 128, 1.4], [W.noacc2 + .9, 1410, 128, 1.5]], [W.noacc, 1237, 76, 1584, 178, "#D1176F"], null],
+  [W.noacc2 + .9, W.task - .1, REVIEW, [[W.noacc2 + .9, 1560, 760, 1.7], [W.noacc2 + 1.5, 1530, 790, 2.1]], [W.noacc2 + 1.6, 1466, 783, 1566, 810, "#D1176F"], [W.noacc2 + 1.2, W.task - .5, 1700, 900, 1520, 800, W.task - .4]],
+  [W.task - .1, tw(69) - .1, BOARD, [[W.task - .1, 800, 420, .6], [W.task + .5, 504, 620, 1.8]], [W.task + .6, 366, 570, 642, 670, "#D1176F"], null],
+  [tw(69) - .1, W.approve - .4, GUEST, [[tw(69) - .1, 800, 500, .6], [W.v2 + .4, 1390, 40, 1.8]], [W.v2 + .5, 1353, 15, 1432, 46, "#D1176F"], null],
+  [W.approve - .4, S[2] + 1, GUEST, [[W.approve - .4, 1390, 40, 1.8], [W.click2, 1440, 40, 1.9]], [W.click2 - .1, 1446, 12, 1586, 52, "#1F9D55"], [W.approve - .3, W.click2 - .35, 1250, 230, 1520, 34, W.click2 - .25]],
+];
+const STEPS = () => [[S[1], "1/4", "One link, no account"], [W.noacc2 + .9, "2/4", "The comment becomes a task"], [tw(69) - .1, "3/4", "v2, on the same link"], [W.approve - .4, "4/4", "Approve in one click"]];
+function speaker(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const you = speakerAt(PH[i].t + .02) === "Y";
+  if ($("line").dataset.i != i) { $("line").textContent = PH[i].toks.map((x) => x.w).join(" "); $("line").dataset.i = i; $("who").textContent = you ? "YOU" : "REMI"; }
+  $("line").style.color = you ? "#FFFFFF" : "#F2C14E"; $("who").style.color = you ? "#FFFFFF" : "#F2C14E";
+  const a = easeOut((t - PH[i].t + .05) / .2), o = t > S[3] - .1 ? 0 : 1; $("line").style.opacity = a * o; $("who").style.opacity = o; $("line").style.transform = `translateY(${(1 - a) * 10}px)`;
+}
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  BULBS.forEach((b, i) => b.setAttribute("opacity", (.75 + .25 * Math.sin(t * 2.3 + i * 1.7)).toFixed(3)));
+  if (t < S[1]) {
+    pop("q1", t, tw(0) + .7, { r: -2, y: fl(t) * .5 });
+    [["ch1", W.email - .1, 3], ["ch2", W.whatsapp - .1, -2], ["ch3", W.call - .1, 2.5]].forEach(([id, at, r], i) => slam(id, t, at, { r, y: fl(t, i + 1) * .5 }));
+    slam("hr", t, W.hour - .15, { r: -3 }); const two = t >= W.hour2 - .1; $("hrn").textContent = two ? "2" : "1"; $("hru").textContent = two ? "hours" : "hour";
+    $("hrs").textContent = two ? "and still guessing the version" : "finding the comment"; if (two) slam("hr", t, W.hour2 - .1, { r: 2 });
+    for (const id of ["q1", "ch1", "ch2", "ch3", "hr"]) out(id, t, S[1] - .25); }
+  if (inWin(t, S[1] - .1, tw(85) + .3)) { pop("dw", t, S[1] - .1); $("dw").style.transform = ""; demo(t); out("dw", t, tw(85)); }
+  if (inWin(t, W.nodstage - .2, S[3])) { pop("lg", t, W.nodstage - .1, { r: -2, y: fl(t, 5) * .4 }); out("lg", t, S[3] - .15); }
+  const e = easeOut((t - S[3] + .1) / .4); $("endc").style.opacity = e; $("endc").style.transform = `scale(${1.04 - .04 * e})`;
+  speaker(t); nico.render(t, NP, AMP.Y); remi.render(t, RP, AMP.R);
+};
+window.ready = Promise.all([REVIEW, BOARD, GUEST].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

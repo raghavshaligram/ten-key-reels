@@ -1,0 +1,227 @@
+{
+ "title": "Nodstage: slightly to the left",
+ "voice": "af_bella",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Remi. The client wants it moved slightly to the left.",
+   0.3,
+   "am_michael"
+  ],
+  [
+   "Left of what?",
+   0.35,
+   "af_bella"
+  ],
+  [
+   "No idea. It was in an email. Or WhatsApp. Or the call.",
+   0.3,
+   "am_michael"
+  ],
+  [
+   "So you'll lose an hour finding it.",
+   0.3,
+   "af_bella"
+  ],
+  [
+   "And another hour on which version they meant.",
+   0.45,
+   "am_michael"
+  ],
+  [
+   "Watch.",
+   0.3,
+   "af_bella"
+  ],
+  [
+   "Send them one link. They click on the design and comment right there.",
+   0.25,
+   "af_bella"
+  ],
+  [
+   "No account?",
+   0.25,
+   "am_michael"
+  ],
+  [
+   "No account. You turn the comment into a task.",
+   0.35,
+   "af_bella"
+  ],
+  [
+   "And when it's fixed?",
+   0.25,
+   "am_michael"
+  ],
+  [
+   "Upload version two. They see it on the same link,",
+   0.1,
+   "af_bella"
+  ],
+  [
+   "and approve it with one click.",
+   0.4,
+   "af_bella"
+  ],
+  [
+   "Okay. What's it called?",
+   0.3,
+   "am_michael"
+  ],
+  [
+   "Nodstage. Comment feedback, and we'll send you the link.",
+   0.3,
+   "af_bella"
+  ]
+ ],
+ "phrases": [
+  "Remi. The client wants it moved",
+  "\u201cslightly to the left.\u201d",
+  "Left of what?",
+  "No idea. It was in an email.",
+  "Or WhatsApp. Or the call.",
+  "So you'll lose an hour finding it.",
+  "And another hour",
+  "on which version they meant.",
+  "Watch.",
+  "Send them one link.",
+  "They click on the design",
+  "and comment right there.",
+  "No account?",
+  "No account.",
+  "You turn the comment into a task.",
+  "And when it's fixed?",
+  "Upload version two.",
+  "They see it on the same link,",
+  "and approve it with one click.",
+  "Okay. What's it called?",
+  [
+   2,
+   "Nodstage."
+  ],
+  "Comment FEEDBACK,",
+  "and we'll send you the link."
+ ],
+ "scenes": [
+  0,
+  40,
+  85,
+  91
+ ],
+ "marks": {
+  "left": 9,
+  "email": 19,
+  "whatsapp": 21,
+  "call": 24,
+  "hour": 29,
+  "hour2": 34,
+  "meant": 39,
+  "watch": 40,
+  "link1": 44,
+  "click": 46,
+  "design": 49,
+  "there": 53,
+  "noacc": 54,
+  "noacc2": 56,
+  "task": 64,
+  "fixed": 68,
+  "v2": 70,
+  "same": 77,
+  "approve": 80,
+  "click2": 84,
+  "called": 88,
+  "nodstage": 89,
+  "comment": 91,
+  "link": 98
+ },
+ "tail": 1.4,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "0.7",
+   "pop",
+   650
+  ],
+  [
+   "email-0.1",
+   "pop",
+   900
+  ],
+  [
+   "whatsapp-0.1",
+   "pop",
+   820
+  ],
+  [
+   "call-0.1",
+   "pop",
+   740
+  ],
+  [
+   "hour-0.15",
+   "pop",
+   500
+  ],
+  [
+   "hour2-0.1",
+   "pop",
+   420
+  ],
+  [
+   "watch-0.1",
+   "whoosh",
+   0.45
+  ],
+  [
+   "design+0.1",
+   "pop",
+   900
+  ],
+  [
+   "noacc",
+   "pop",
+   760
+  ],
+  [
+   "task-0.4",
+   "click",
+   null
+  ],
+  [
+   "task-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "task+0.6",
+   "pop",
+   900
+  ],
+  [
+   "v2+0.5",
+   "pop",
+   820
+  ],
+  [
+   "click2-0.25",
+   "click",
+   null
+  ],
+  [
+   "click2-0.1",
+   "pop",
+   1000
+  ],
+  [
+   "nodstage-0.1",
+   "win",
+   null
+  ],
+  [
+   "comment-0.1",
+   "whoosh",
+   0.4
+  ]
+ ]
+}
