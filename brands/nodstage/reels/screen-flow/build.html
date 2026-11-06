@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#16181D}
+#st{position:relative;width:1080px;height:1920px;background:radial-gradient(900px 700px at 50% 30%,#22252d 0%,#16181D 70%)}
+#txt{position:absolute;left:70px;top:250px;width:940px;color:#fff;font:800 70px/1.08 Archivo;letter-spacing:-.025em}
+#txt b{color:#F4D23C;font-weight:800}
+#step{position:absolute;left:70px;top:190px;font:600 30px/1 Mono;color:#D1176F;letter-spacing:.06em}
+#fr{position:absolute;left:40px;top:470px;width:1000px;height:960px;border-radius:34px;overflow:hidden;background:#fff;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+#end{position:absolute;left:0;top:560px;width:1080px;text-align:center;color:#fff;opacity:0}
+#end .lg{display:inline-block;background:#fff;border-radius:30px;padding:30px 46px}
+#end .lg img{width:520px;display:block}
+#end h2{font:800 84px/1.05 Archivo;letter-spacing:-.03em;margin-top:70px}
+#end h2 b{color:#F4D23C}
+#end p{font:700 44px/1 Inter;margin-top:40px;color:#cfd3dc}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+</style></head><body><div id="st">
+<div id="step"></div><div id="txt"></div>
+<div id="fr"><canvas id="cv" width="1000" height="960"></canvas></div>
+<div id="end"><div class="lg"><img src="assets/logo.png"></div><h2>Client feedback,<br><b>straight to done.</b></h2><p>nodstage.com</p></div>
+<div id="flash"></div></div>
+<script>
+const $ = (i) => document.getElementById(i), cl = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const eio = (x) => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }, eo = (x) => 1 - Math.pow(1 - cl(x), 3);
+const im = (f) => { const i = new Image(); i.src = "assets/" + f; return i; };
+const R = im("review.png"), B = im("board.png"), G = im("guest.png");
+// shots: [start, end, image, keyframes [t, cx, cy, zoom], ring [t0, x0, y0, x1, y1, colour], cursor [t0, t1, fromX, fromY, toX, toY, clickAt]]
+const SH = [
+  [0, 4.6, R, [[0, 900, 560, .56], [1.5, 900, 560, .56], [2.6, 480, 1010, 1.7], [3.6, 480, 1010, 1.8]], [2.7, 452, 1040, 500, 1086, "#D1176F"], null],
+  [4.6, 7.8, R, [[4.6, 1580, 690, 1.6], [5.2, 1560, 760, 2.1], [7.8, 1550, 770, 2.2]], [5.6, 1466, 783, 1566, 810, "#D1176F"], [5.8, 6.8, 1700, 980, 1520, 800, 6.9]],
+  [7.8, 11.0, B, [[7.8, 800, 420, .62], [8.8, 504, 620, 2.1], [11, 504, 620, 2.2]], [9.0, 366, 570, 642, 670, "#D1176F"], null],
+  [11.0, 14.2, R, [[11.0, 400, 400, 1.2], [11.9, 118, 300, 2.7], [14.2, 118, 300, 2.8]], [12.2, 16, 212, 222, 310, "#D1176F"], null],
+  [14.2, 17.6, G, [[14.2, 800, 500, .62], [15.2, 1390, 70, 2.0], [17.6, 1400, 66, 2.1]], [16.6, 1446, 12, 1586, 52, "#1F9D55"], [15.3, 16.4, 1150, 300, 1520, 34, 16.5]],
+];
+const TX = [[0, "", "Stop digging through emails<br>for <b>client feedback.</b>"], [1.5, "STEP 1 / 5", "The client comments <b>right on the design.</b>"],
+  [4.6, "STEP 2 / 5", "Each comment can become <b>a task.</b>"], [7.8, "STEP 3 / 5", "It lands on your team's <b>board.</b>"],
+  [11.0, "STEP 4 / 5", "The fix goes up as <b>v2 of the same proof.</b>"], [14.2, "STEP 5 / 5", "The client approves <b>the right version.</b>"]];
+const END0 = 17.6, DUR = 20;
+const CUR = new Path2D("M4 2 L4 20 L9 15.5 L12.5 22 L15.5 20.6 L12 14 L19 14 Z");
+let key = -1;
+window.render = function (t) {
+  const g = $("cv").getContext("2d"); g.fillStyle = "#E9EBEF"; g.fillRect(0, 0, 1000, 960);
+  // text
+  let i = 0; for (let k = 0; k < TX.length; k++) if (t >= TX[k][0]) i = k;
+  if (key !== i) { $("step").textContent = TX[i][1]; $("txt").innerHTML = TX[i][2]; key = i; }
+  const a = eo((t - TX[i][0]) / .3); $("txt").style.opacity = t < END0 ? a : 0; $("txt").style.transform = `translateY(${(1 - a) * 24}px)`; $("step").style.opacity = t < END0 ? a : 0;
+  // camera
+  const s = SH.find((x) => t >= x[0] && t < x[1]) || SH[SH.length - 1], [t0, t1, img, kf, ring, cur] = s;
+  let j = 0; for (let k = 0; k < kf.length; k++) if (t >= kf[k][0]) j = k;
+  const A = kf[j], Bk = kf[Math.min(j + 1, kf.length - 1)], p = Bk === A ? 1 : eio((t - A[0]) / (Bk[0] - A[0]));
+  const z = A[3] + (Bk[3] - A[3]) * p, IW = img.naturalWidth || 1600, IH = img.naturalHeight || 1000;
+  const fit = (c, half, L) => L * z <= 2 * half ? L / 2 : cl(c, half / z, L - half / z);
+  const cx = fit(A[1] + (Bk[1] - A[1]) * p, 500, IW), cy = fit(A[2] + (Bk[2] - A[2]) * p, 480, IH);
+  const X = (x) => 500 + (x - cx) * z, Y = (y) => 480 + (y - cy) * z;
+  if (img.naturalWidth) g.drawImage(img, X(0), Y(0), img.naturalWidth * z, img.naturalHeight * z);
+  if (ring && t >= ring[0]) { const q = eo((t - ring[0]) / .35), pad = 10 + (1 - q) * 30; g.globalAlpha = q; g.strokeStyle = ring[5]; g.lineWidth = 9;
+    g.beginPath(); g.roundRect(X(ring[1]) - pad, Y(ring[2]) - pad, (ring[3] - ring[1]) * z + 2 * pad, (ring[4] - ring[2]) * z + 2 * pad, 18); g.stroke(); g.globalAlpha = 1; }
+  if (cur && t >= cur[0] - .2) { const q = eio((t - cur[0]) / (cur[1] - cur[0])), x = cur[2] + (cur[4] - cur[2]) * q, y = cur[3] + (cur[5] - cur[3]) * q;
+    const dn = t > cur[6] && t < cur[6] + .15, sc = (dn ? 2.6 : 3.0);
+    if (t > cur[6]) { const r = eo((t - cur[6]) / .5); g.globalAlpha = 1 - r; g.fillStyle = "rgba(22,24,29,.25)"; g.beginPath(); g.arc(X(x), Y(y), 20 + r * 60, 0, 6.29); g.fill(); g.globalAlpha = 1; }
+    g.save(); g.translate(X(x) - 4 * sc, Y(y) - 2 * sc); g.scale(sc, sc); g.fillStyle = "#16181D"; g.strokeStyle = "#fff"; g.lineWidth = 1.6; g.lineJoin = "round"; g.fill(CUR); g.stroke(CUR); g.restore(); }
+  // frame in/out, flash on cuts
+  const fin = eo(t / .4), fout = eio((t - END0) / .5); $("fr").style.opacity = fin * (1 - fout); $("fr").style.transform = `translateY(${(1 - fin) * 60 + fout * -40}px) scale(${1 - fout * .06})`;
+  let fl = 0; for (const x of SH.slice(1)) if (t >= x[0] && t < x[0] + .2) fl = .5 * (1 - (t - x[0]) / .2); $("flash").style.opacity = fl;
+  const e = eo((t - END0 - .25) / .5); $("end").style.opacity = e; $("end").style.transform = `translateY(${(1 - e) * 40}px)`;
+};
+window.ready = Promise.all([R, B, G].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>
