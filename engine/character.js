@@ -29,7 +29,9 @@ function Tara(id, opt = {}) {
   el("path", { d: "M215 1010 L222 760 Q230 640 340 610 L430 590 L570 590 L660 610 Q770 640 778 760 L785 1010 Z", fill: C.knit }, torso);
   if (artist) {
     // Remi, the artist: striped tee, denim bib overalls with paint on them
-    for (let y = 640; y < 1010; y += 44) el("rect", { x: 220, y, width: 566, height: 16, fill: C.stripe }, torso);
+    const cp = el("clipPath", { id: id + "-tc" }, torso); el("path", { d: "M215 1010 L222 760 Q230 640 340 610 L430 590 L570 590 L660 610 Q770 640 778 760 L785 1010 Z" }, cp);
+    const sg = el("g", { "clip-path": `url(#${id}-tc)` }, torso);
+    for (let y = 640; y < 1010; y += 44) el("rect", { x: 200, y, width: 600, height: 16, fill: C.stripe }, sg);
     el("path", { d: "M352 1010 L360 720 Q362 700 382 700 L618 700 Q638 700 640 720 L648 1010 Z", fill: C.denim }, torso);
     el("path", { d: "M352 1010 L360 720 Q362 700 382 700 L420 700 L420 1010 Z", fill: C.denimS, opacity: .5 }, torso);
     el("path", { d: "M392 704 L372 612", stroke: C.denim, "stroke-width": 34, "stroke-linecap": "round" }, torso);

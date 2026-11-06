@@ -1,0 +1,209 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#0E0F13;--ink:#F4F5F7;--red:#F4F5F7;--grey:#454A56;--mag:#E0247E;--yel:#F4D23C;--green:#2FBF71;--muted:#9AA0AC}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1000px 900px at 50% 40%,#22141d 0%,#121318 60%,#0E0F13 100%)}
+#grid{position:absolute;inset:0;background-image:linear-gradient(rgba(224,36,126,.07) 2px,transparent 2px),linear-gradient(90deg,rgba(224,36,126,.07) 2px,transparent 2px);background-size:90px 90px;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 20%,#000 75%,transparent 100%)}
+#spot{position:absolute;left:90px;top:1200px;width:900px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(224,36,126,.30),rgba(224,36,126,0))}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.12em;color:var(--mag);text-transform:uppercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--yel);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:800 80px/1.08 Archivo;letter-spacing:-.03em}
+#cap span{display:inline-block;margin-right:.22em}
+#cap .acc.on{color:var(--yel)!important;text-shadow:0 0 26px rgba(244,210,60,.55)}
+.stk{background:#1A1C23;border:3px solid rgba(224,36,126,.65);border-radius:30px;padding:14px;box-shadow:0 0 44px rgba(224,36,126,.25),0 34px 70px rgba(0,0,0,.5)}
+.win{border-radius:20px;overflow:hidden;border:0;background:#fff}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:var(--mag);color:#fff;font:800 64px/104px Archivo;text-align:center;box-shadow:0 10px 24px rgba(209,23,111,.35);border:5px solid #fff}
+.stamp{font:800 62px/1 Archivo;letter-spacing:.04em;color:var(--mag);border:8px solid var(--mag);border-radius:18px;padding:14px 26px 10px;background:rgba(14,15,19,.92);box-shadow:0 0 40px rgba(224,36,126,.35);text-transform:uppercase;white-space:nowrap}
+.stamp.g{color:var(--green);border-color:var(--green)}
+.card h4{font:600 30px/1.2 Inter;color:var(--muted)}
+.big{font:800 220px/1 Archivo;letter-spacing:-.05em}
+.bub{position:absolute;font:500 50px/1.25 Inter;padding:26px 34px;border-radius:34px;background:#fff;box-shadow:0 18px 40px rgba(22,24,29,.12);max-width:700px}
+.bub.me{background:#D1176F;color:#fff}
+.bub small{display:block;font:600 24px/1 Inter;color:var(--muted);margin-bottom:10px}
+.bub.me small{color:#ffd1e6}
+.btn{display:inline-block;font:700 44px/1 Inter;padding:26px 40px;border-radius:18px;background:var(--mag);color:#fff}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+#cursor{width:60px;height:60px}
+
+.app{background:#fff;border-radius:22px;box-shadow:0 0 40px rgba(224,36,126,.22),0 30px 60px rgba(0,0,0,.5);overflow:hidden;width:600px}
+.app .tb{height:58px;display:flex;align-items:center;gap:10px;padding:0 20px;font:700 28px/1 Inter;color:#fff}
+.app .tb i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.55);display:inline-block}
+.app .tb span{margin-left:10px}
+.app .bd{padding:22px 26px;font:500 28px/1.35 Inter;color:#30343c}
+.row{display:flex;align-items:center;gap:16px;padding:9px 0;border-bottom:2px solid #f0f1f4}
+.cb{width:30px;height:30px;border-radius:8px;border:3px solid #b9bec8;flex:none}
+.cb.on{background:#1F7A4A;border-color:#1F7A4A}
+.pill{font:700 22px/1 Inter;padding:8px 14px;border-radius:999px;margin-left:auto}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#cfd8cf}
+.cells div{background:#fff;font:500 24px/1 Inter;padding:12px 10px;color:#2d3a2f}
+.toast{position:absolute;display:flex;gap:16px;align-items:center;background:#fff;color:#16181D;border-radius:22px;padding:20px 26px;box-shadow:0 18px 40px rgba(22,24,29,.16);font:600 32px/1.2 Inter;max-width:640px}
+.toast .ic{width:56px;height:56px;border-radius:14px;flex:none;color:#fff;font:800 28px/56px Inter;text-align:center}
+.toast small{display:block;font:600 22px/1 Inter;color:var(--muted);margin-bottom:6px}
+.tile{position:absolute;width:150px;height:150px;border-radius:36px;box-shadow:0 14px 30px rgba(22,24,29,.14)}
+.chip{display:inline-block;font:800 40px/1 Archivo;padding:16px 26px;border-radius:14px;background:var(--mag);color:#fff;box-shadow:0 0 30px rgba(224,36,126,.5)}
+.hl{position:absolute;border:6px solid var(--mag);border-radius:12px}
+</style></head><body>
+<div id="stage">
+  <div id="grid"></div><div id="spot"></div>
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- 0: a task app -->
+  <div class="el app" id="w0" style="left:240px;top:600px"><div class="tb" style="background:#5B6BD6"><i></i><i></i><i></i><span>My tasks</span></div>
+    <div class="bd"><div class="row"><span class="cb on"></span>Homepage layout</div><div class="row"><span class="cb on"></span>Shop page</div><div class="row"><span class="cb"></span>Story page</div><div class="row" style="border:0"><span class="cb"></span>Launch checklist</div></div></div>
+  <div class="el stamp" id="s0" style="left:300px;top:1040px">and clients?</div>
+
+  <!-- 1: four tools -->
+  <div class="el app" id="w1" style="left:70px;top:560px;width:540px"><div class="tb" style="background:#5B6BD6"><i></i><i></i><i></i><span>Projects</span></div>
+    <div class="bd" style="display:flex;gap:12px"><div style="flex:1;background:#eef0fb;border-radius:12px;height:150px"></div><div style="flex:1;background:#eef0fb;border-radius:12px;height:150px"></div><div style="flex:1;background:#eef0fb;border-radius:12px;height:150px"></div></div></div>
+  <div class="el app" id="w2" style="left:470px;top:640px;width:540px"><div class="tb" style="background:#E0803A"><i></i><i></i><i></i><span>Client feedback</span></div>
+    <div class="bd"><div style="background:#fff3ea;border-radius:16px;padding:12px 16px;margin-bottom:10px">“Can the logo be bigger?”</div><div style="background:#fff3ea;border-radius:16px;padding:12px 16px">“See my email from Tuesday”</div></div></div>
+  <div class="el app" id="w3" style="left:110px;top:840px;width:520px"><div class="tb" style="background:#2BA6A0"><i></i><i></i><i></i><span>Approvals</span></div>
+    <div class="bd"><div class="row">Logo v3<span class="pill" style="background:#fdf1d6;color:#9a6a00">Pending</span></div><div class="row" style="border:0">Homepage<span class="pill" style="background:#fdf1d6;color:#9a6a00">Pending</span></div></div></div>
+  <div class="el app" id="w4" style="left:500px;top:900px;width:520px"><div class="tb" style="background:#1F7A4A"><i></i><i></i><i></i><span>invoices.xlsx</span></div>
+    <div class="cells"><div>Client</div><div>Inv</div><div>Due</div><div>Paid?</div><div>Fernhill</div><div>0012</div><div>Nov 15</div><div>?</div><div>Harbour</div><div>0013</div><div>Nov 20</div><div>?</div></div></div>
+
+  <!-- 2: chasing -->
+  <div class="el" id="p2" style="left:0;top:540px;width:1080px;height:680px">
+    <div class="toast" id="t1" style="left:60px;top:0"><span class="ic" style="background:#E0803A">@</span><div><small>Email · 9:02</small>Re: Re: Re: homepage feedback</div></div>
+    <div class="toast" id="t2" style="left:330px;top:120px"><span class="ic" style="background:#2BA6A0">✓</span><div><small>Approvals</small>Still pending: Logo v3</div></div>
+    <div class="toast" id="t3" style="left:90px;top:245px"><span class="ic" style="background:#25B060">✉</span><div><small>Message · 11:40</small>Did you see my comments?</div></div>
+    <div class="toast" id="t4" style="left:390px;top:370px"><span class="ic" style="background:#5B6BD6">!</span><div><small>Projects</small>Waiting on client: 3 tasks</div></div>
+    <div class="toast" id="t5" style="left:40px;top:495px"><span class="ic" style="background:#E0803A">@</span><div><small>Email · 4:15</small>Which version is the final one?</div></div>
+  </div>
+
+  <!-- 3: another app -->
+  <div class="el" id="p3" style="left:0;top:580px;width:1080px;height:560px">
+    <div class="tile" style="left:215px;top:0;background:#5B6BD6"></div><div class="tile" style="left:465px;top:0;background:#E0803A"></div><div class="tile" style="left:715px;top:0;background:#2BA6A0"></div>
+    <div class="tile" style="left:215px;top:200px;background:#1F7A4A"></div><div class="tile" style="left:465px;top:200px;background:#8E6BD6"></div><div class="tile" style="left:715px;top:200px;background:#C9A227"></div>
+    <div class="tile" id="plus" style="left:465px;top:400px;background:#fff;border:6px dashed #b9bec8;box-shadow:none;font:800 90px/138px Archivo;color:#b9bec8;text-align:center">+</div>
+  </div>
+  <svg class="el draw" id="x3" width="260" height="260" style="left:410px;top:925px"><path d="M30 30 L230 230 M230 30 L30 230" stroke="#D1176F" stroke-width="16" pathLength="1" stroke-dasharray="1"/></svg>
+
+  <!-- 4: connect -->
+  <div class="el stk" id="c4a" style="left:70px;top:600px;width:440px;padding:30px 32px">
+    <div style="font:700 26px/1 Inter;color:var(--muted)">CLIENT COMMUNICATION</div>
+    <div style="margin-top:18px;background:#2A2D36;border-radius:18px;padding:18px 20px;font:500 32px/1.3 Inter">“Can the footer say 14 Mill Lane?”</div>
+    <div style="margin-top:10px;font:600 24px/1 Inter;color:var(--muted)">Hannah, the client</div></div>
+  <div class="el stk" id="c4b" style="left:570px;top:820px;width:440px;padding:30px 32px">
+    <div style="font:700 26px/1 Inter;color:var(--muted)">PROJECT DELIVERY</div>
+    <div style="margin-top:18px;display:flex;gap:14px;align-items:center;font:600 32px/1.25 Inter"><span class="cb on" style="width:36px;height:36px"></span>Footer address</div>
+    <div style="margin-top:12px;font:600 24px/1 Inter;color:var(--muted)">Task for Maya · done</div></div>
+  <svg class="el draw" id="l4" width="1080" height="700" style="left:0;top:560px"><path d="M300 290 C 300 420, 790 160, 790 280" stroke="#D1176F" stroke-width="12" pathLength="1" stroke-dasharray="1"/></svg>
+
+  <!-- 5: Nodstage -->
+  <div class="el stk" id="lg" style="left:250px;top:560px;width:580px;padding:30px 40px;background:#fff"><img src="assets/logo.png" style="width:100%;display:block"></div>
+  <div class="el stk" id="p5" style="left:70px;top:760px;width:940px"><div class="win"><canvas id="k5" width="912" height="449"></canvas></div></div>
+
+  <!-- 6: montage -->
+  <div class="el" id="ml" style="left:0;top:560px;width:1080px;text-align:center"><span class="chip" id="mlt">Projects</span></div>
+  <div class="el stk" id="m1" style="left:70px;top:650px;width:940px"><div class="win"><canvas id="km1" width="912" height="418"></canvas></div></div>
+  <div class="el stk" id="m2" style="left:160px;top:650px;width:760px"><div class="win"><canvas id="km2" width="732" height="500"></canvas></div></div>
+  <div class="el stk" id="m3" style="left:250px;top:650px;width:580px"><div class="win"><canvas id="km3" width="552" height="500"></canvas></div></div>
+  <div class="el stk" id="m4" style="left:70px;top:680px;width:940px"><div class="win"><canvas id="km4" width="912" height="270"></canvas></div></div>
+  <div class="el stk" id="m5" style="left:70px;top:700px;width:940px"><div class="win"><canvas id="km5" width="912" height="126"></canvas></div></div>
+  <div class="el stamp" id="s6" style="left:330px;top:1010px">5 tools → 1</div>
+
+  <!-- 7: end -->
+  <div class="el stk" id="n7" style="left:70px;top:560px;width:940px;padding:10px"><div class="win" style="position:relative"><canvas id="k7" width="920" height="66"></canvas>
+    <div class="hl" id="h1" style="left:300px;top:4px;width:94px;height:58px"></div><div class="hl" id="h2" style="left:484px;top:4px;width:94px;height:58px"></div><div class="hl" id="h3" style="left:800px;top:4px;width:94px;height:58px"></div></div></div>
+  <div class="el stk" id="e1" style="left:90px;top:700px;width:560px"><div class="win"><canvas id="ke1" width="532" height="332"></canvas></div><div style="font:700 28px/1 Inter;padding:14px 8px 4px">Review</div></div>
+  <div class="el stk" id="e2" style="left:430px;top:760px;width:560px"><div class="win"><canvas id="ke2" width="532" height="277"></canvas></div><div style="font:700 28px/1 Inter;padding:14px 8px 4px">Projects</div></div>
+  <div class="el" id="tag" style="left:0;top:1120px;width:1080px;text-align:center;font:700 40px/1 Inter">nodstage.com</div>
+
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="remi" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../../../engine/lib.js"></script>
+<script src="../../../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const img = (f) => { const i = new Image(); i.src = "assets/" + f; return i; };
+const REVIEW = img("review.png"), BOARD = img("board.png"), MONEY = img("money.png"), GUEST = img("guest.png");
+const remi = Tara("remi", { look: "artist", skin: "#F4CDB0", skinS: "#DCA584", hair: "#9A3F1F", hairS: "#6E2A13", knit: "#34417A", knitS: "#26305C", knitH: "#4A5894",
+  stripe: "#F4F1EA", denim: "#5B82BD", denimS: "#41659C", top: "#F4F1EA", lip: "#C04A55", cheek: "#EE8C7C", beret: "#E0247E", beretS: "#A30F55" });
+const POSES = [[0, "wave"], [W.clients - .3, "think"], [S[1] + .1, "point"], [W.approvals - .2, "present"], [S[2] + .05, "oops"], [W.chasing + .5, "think"],
+  [S[3] + .1, "present"], [W.app - .1, "oops"], [S[4] + .1, "point"], [W.connect - .1, "thumbs"], [S[5] + .1, "cheer"], [S[6] + .1, "point"],
+  [W.m3, "present"], [W.m5, "thumbs"], [S[7] + .1, "wave"], [W.paid + .3, "rest"]];
+const CH = [["// 01 · the question", "managing <b>clients?</b>"], ["// 02 · the stack", "tools <b>4</b>"], ["// 03 · still chasing", "unread <b>12</b>"],
+  ["// 04 · not another app", "apps <b>+1</b>"], ["// 05 · one place", "tools <b>1</b>"], ["// 06 · nodstage", "the <b>project</b>"], ["// 07 · everything", "tabs <b>1</b>"], ["// 08 · paid work", "nodstage<b>.com</b>"]];
+const IDS = ["w0","s0","w1","w2","w3","w4","p2","p3","x3","c4a","c4b","l4","lg","p5","ml","m1","m2","m3","m4","m5","s6","n7","e1","e2","tag","badge"];
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#F4D23C"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+const win = (a, b) => (t) => t >= a && t < b;
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // 0: the task app, then the question
+  if (t < S[1]) { pop("w0", t, .1, { r: -1.5, y: fl(t) * .6 }); slam("s0", t, W.clients + .1, { r: -7 }); for (const id of ["w0", "s0"]) out(id, t, S[1] - .15); }
+  // 1: tools pile up
+  if (inWin(t, S[1] - .05, S[2])) { [["w1", S[1] + .05, -3], ["w2", W.feedback - .05, 2.5], ["w3", W.approvals - .05, -2], ["w4", W.spreadsheet - .05, 3]].forEach(([id, at, r], i) => { pop(id, t, at, { r, y: fl(t, i) * .5 }); out(id, t, S[2] - .15); }); }
+  // 2: notifications everywhere
+  if (inWin(t, S[2] - .05, S[3])) { $("p2").style.opacity = 1; $("p2").style.transform = "";
+    [["t1", S[2]], ["t2", S[2] + .35], ["t3", S[2] + .7], ["t4", W.chasing], ["t5", W.chasing + .35]].forEach(([id, at], i) => { const a = spring(clamp((t - at) / .35)); const sh = t > at ? Math.sin((t - at) * 40) * Math.max(0, .35 - (t - at)) * 18 : 0;
+      $(id).style.opacity = t >= at ? 1 : 0; $(id).style.transform = `translate(${sh}px, ${(1 - a) * -30}px) rotate(${(i % 2 ? 1.5 : -1.5)}deg) scale(${.9 + .1 * a})`; });
+    out("p2", t, S[3] - .15); }
+  // 3: not another app
+  if (inWin(t, S[3] - .05, S[4])) { pop("p3", t, S[3] + .05); $("p3").style.transform = ""; draw("x3", t, W.app + .05, .35); for (const id of ["p3", "x3"]) out(id, t, S[4] - .15); }
+  // 4: communication and delivery connect
+  if (inWin(t, S[4] - .05, S[5])) { pop("c4a", t, W.place - .1, { r: -2, y: fl(t, 2) * .5 }); pop("c4b", t, W.delivery - .2, { r: 2, y: fl(t, 3) * .5 }); draw("l4", t, W.connect - .25, .5);
+    for (const id of ["c4a", "c4b", "l4"]) out(id, t, S[5] - .2); }
+  // 5: Nodstage (real project screen)
+  if (inWin(t, S[5] - .05, S[6])) { pop("lg", t, S[5] + .1, { y: fl(t, 4) * .4 }); W8("k5", BOARD, 0, .055, 1, .945, "#fff"); pop("p5", t, W.nodstage - .1, { r: -1, y: fl(t, 5) * .4 });
+    for (const id of ["lg", "p5"]) out(id, t, S[6] - .15); }
+  // 6: one link does all of it (real screens)
+  if (inWin(t, S[6] - .05, S[7])) {
+    const M = [["m1", W.m1, W.m2, "Projects"], ["m2", W.m2, W.m3, "Proofs"], ["m3", W.m3, W.m4, "Feedback"], ["m4", W.m4, W.m5, "Revisions"], ["m5", W.m5, S[7], "Approvals"]];
+    W8("km1", BOARD, .034, .33, .76, .67, "#fff"); W8("km2", REVIEW, .158, .215, .527, .72, "#fff"); W8("km3", REVIEW, .762, .326, .231, .4, "#fff");
+    W8("km4", MONEY, .025, .534, .572, .325, "#fff"); W8("km5", GUEST, .72, 0, .28, .062, "#fff");
+    for (const [id, a, b, name] of M) if (t >= a - .1 && t < b + .1) { pop(id, t, a - .1, { r: (id.charCodeAt(1) % 2 ? -1.2 : 1.2), y: fl(t, 6) * .4 }); out(id, t, b - .08); $("mlt").textContent = name; }
+    pop("ml", t, W.m1 - .1); $("ml").style.transform = ""; slam("s6", t, W.five, { r: -6 }); out("s6", t, S[7] - .15); out("ml", t, S[7] - .1);
+    badge(t, M.findIndex(([, a, b]) => t >= a - .1 && t < b + .1) + 1 || 5, W.m1, 905, 600); out("badge", t, S[7] - .15); }
+  // 7: Review, Projects and Pipeline
+  if (t >= S[7] - .05) { W8("k7", MONEY, 0, 0, .4, .055, "#16181D"); pop("n7", t, S[7]);
+    [["h3", S[7] + .25], ["h2", S[7] + .55], ["h1", S[7] + .85]].forEach(([id, at]) => { $(id).style.opacity = t > at ? 1 : 0; });
+    W8("ke1", REVIEW, .08, .06, .92, .6, "#fff"); W8("ke2", BOARD, 0, .055, 1, .55, "#fff");
+    pop("e1", t, S[7] + .3, { r: -2.5, y: fl(t, 7) * .4 }); pop("e2", t, S[7] + .6, { r: 2.5, y: fl(t, 8) * .4 }); pop("tag", t, W.paid); $("tag").style.transform = ""; }
+  chapter(t); caption2(t); [...$("cap").children].forEach((sp) => sp.classList.toggle("on", sp.classList.contains("acc") && sp.style.color.includes("--red")));
+  remi.render(t, POSES, TL.amp); wipe(t, S[5] - .45);
+};
+window.ready = Promise.all([REVIEW, BOARD, MONEY, GUEST].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>
