@@ -1,0 +1,310 @@
+{
+ "title": "Nodstage: the comment (room)",
+ "voice": "af_bella",
+ "speed": 1.05,
+ "lines": [
+  [
+   "Remi! One client comment just ate my whole afternoon.",
+   0.35,
+   "am_michael"
+  ],
+  [
+   "What did they say?",
+   0.35,
+   "af_bella"
+  ],
+  [
+   "\"Can we just move this slightly to the left?\"",
+   0.35,
+   "am_michael"
+  ],
+  [
+   "Sounds harmless.",
+   0.35,
+   "af_bella"
+  ],
+  [
+   "Sure. But where did they say it? Email? WhatsApp? The call? A screenshot?",
+   0.35,
+   "am_michael"
+  ],
+  [
+   "So now you find the design, work out what they meant, give it to someone, and remember which version.",
+   0.3,
+   "af_bella"
+  ],
+  [
+   "Every single time.",
+   0.4,
+   "am_michael"
+  ],
+  [
+   "Watch. Step one, the client comments right on the design.",
+   0.3,
+   "af_bella"
+  ],
+  [
+   "Step two, that comment becomes a task.",
+   0.3,
+   "af_bella"
+  ],
+  [
+   "Step three, the fix goes up as version two of the same proof.",
+   0.3,
+   "af_bella"
+  ],
+  [
+   "Step four, they approve the right version.",
+   0.4,
+   "af_bella"
+  ],
+  [
+   "So no more digging?",
+   0.35,
+   "am_michael"
+  ],
+  [
+   "No more digging. It's called Nodstage. Comment feedback, and we'll send you the link.",
+   0.3,
+   "af_bella"
+  ]
+ ],
+ "phrases": [
+  "Remi! One client comment",
+  "just ate my whole afternoon.",
+  "What did they say?",
+  "\u201cCan we just move this",
+  "slightly to the [left?]\u201d",
+  "Sounds [harmless.]",
+  "Sure. But [where] did they say it?",
+  "[Email?] [WhatsApp?]",
+  "The [call?] A [screenshot?]",
+  "So now you find the [design,]",
+  "work out what they [meant,]",
+  "give it to [someone,]",
+  "and remember which [version.]",
+  "Every single [time.]",
+  "Watch. Step one:",
+  "the client comments",
+  "right on the [design.]",
+  "Step two: that comment",
+  "becomes a [task.]",
+  "Step three: the fix goes up",
+  "as [version two]",
+  "of the same [proof.]",
+  "Step four: they approve",
+  "the [right version.]",
+  "So no more [digging?]",
+  "No more digging.",
+  [
+   4,
+   "It's called [Nodstage.]"
+  ],
+  "Comment [FEEDBACK]",
+  "and we'll send you the link."
+ ],
+ "scenes": [
+  0,
+  13,
+  24,
+  37,
+  59,
+  96,
+  107
+ ],
+ "marks": {
+  "afternoon": 8,
+  "say": 12,
+  "left": 21,
+  "harmless": 23,
+  "email": 31,
+  "whatsapp": 32,
+  "call": 34,
+  "shot": 36,
+  "find": 40,
+  "meant": 47,
+  "someone": 51,
+  "version": 55,
+  "time": 58,
+  "st1": 60,
+  "design": 68,
+  "st2": 69,
+  "task": 75,
+  "st3": 76,
+  "v2": 83,
+  "proof": 88,
+  "st4": 89,
+  "approve": 92,
+  "right": 94,
+  "dig": 99,
+  "nodstage": 105,
+  "comment": 107,
+  "feedback": 108,
+  "link": 114
+ },
+ "tail": 1.0,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "0.1",
+   "pop",
+   650
+  ],
+  [
+   "0.3",
+   "pop",
+   900
+  ],
+  [
+   "afternoon-0.9",
+   "ticks",
+   1.8
+  ],
+  [
+   "S1",
+   "whoosh",
+   0.4
+  ],
+  [
+   "S1+0.2",
+   "pop",
+   700
+  ],
+  [
+   "left-0.45",
+   "scribble",
+   0.4
+  ],
+  [
+   "harmless-0.1",
+   "pop",
+   500
+  ],
+  [
+   "email-0.1",
+   "beep",
+   990
+  ],
+  [
+   "whatsapp-0.1",
+   "beep",
+   880
+  ],
+  [
+   "call-0.2",
+   "beep",
+   780
+  ],
+  [
+   "shot-0.15",
+   "beep",
+   990
+  ],
+  [
+   "shot+0.1",
+   "scribble",
+   0.45
+  ],
+  [
+   "find-0.1",
+   "pop",
+   650
+  ],
+  [
+   "meant-0.3",
+   "pop",
+   720
+  ],
+  [
+   "someone-0.3",
+   "pop",
+   790
+  ],
+  [
+   "version-0.3",
+   "pop",
+   860
+  ],
+  [
+   "time-0.2",
+   "buzz",
+   null
+  ],
+  [
+   "S4-0.1",
+   "whoosh",
+   0.5
+  ],
+  [
+   "st1",
+   "pop",
+   700
+  ],
+  [
+   "st2",
+   "pop",
+   760
+  ],
+  [
+   "st2+1.1",
+   "click",
+   null
+  ],
+  [
+   "task-0.35",
+   "whoosh",
+   0.3
+  ],
+  [
+   "st3",
+   "pop",
+   820
+  ],
+  [
+   "v2",
+   "pop",
+   900
+  ],
+  [
+   "st4",
+   "pop",
+   880
+  ],
+  [
+   "approve+0.05",
+   "click",
+   null
+  ],
+  [
+   "right+0.1",
+   "pop",
+   1000
+  ],
+  [
+   "S5",
+   "whoosh",
+   0.4
+  ],
+  [
+   "dig+0.05",
+   "pop",
+   600
+  ],
+  [
+   "nodstage",
+   "win",
+   null
+  ],
+  [
+   "S6",
+   "whoosh",
+   0.4
+  ],
+  [
+   "feedback",
+   "pop",
+   800
+  ]
+ ]
+}
