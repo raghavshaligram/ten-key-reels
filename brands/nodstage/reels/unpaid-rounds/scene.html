@@ -1,0 +1,176 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(../../../../node_modules/@fontsource/archivo/files/archivo-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#ECEEF1;--ink:#16181D;--red:#16181D;--grey:#B9BEC8;--mag:#D1176F;--yel:#F4D23C;--green:#1F7A4A;--muted:#6E7480}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 38%,#f6f7f9 0%,#eceef1 60%,#e3e6eb 100%)}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted)}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--mag);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:800 80px/1.08 Archivo;letter-spacing:-.03em}
+#cap span{display:inline-block;margin-right:.22em}
+#cap .acc.on{background:linear-gradient(180deg,transparent 52%,var(--yel) 52%,var(--yel) 92%,transparent 92%);padding:0 .06em}
+.stk{background:#fff;border-radius:30px;padding:14px;box-shadow:0 34px 70px rgba(22,24,29,.14),0 8px 18px rgba(22,24,29,.08)}
+.win{border-radius:20px;overflow:hidden;border:1px solid #e4e6ea;background:#fff}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:var(--mag);color:#fff;font:800 64px/104px Archivo;text-align:center;box-shadow:0 10px 24px rgba(209,23,111,.35);border:5px solid #fff}
+.stamp{font:800 62px/1 Archivo;letter-spacing:.04em;color:var(--mag);border:8px solid var(--mag);border-radius:18px;padding:14px 26px 10px;background:rgba(255,255,255,.9);text-transform:uppercase;white-space:nowrap}
+.stamp.g{color:var(--green);border-color:var(--green)}
+.card h4{font:600 30px/1.2 Inter;color:var(--muted)}
+.big{font:800 220px/1 Archivo;letter-spacing:-.05em}
+.bub{position:absolute;font:500 50px/1.25 Inter;padding:26px 34px;border-radius:34px;background:#fff;box-shadow:0 18px 40px rgba(22,24,29,.12);max-width:700px}
+.bub.me{background:#D1176F;color:#fff}
+.bub small{display:block;font:600 24px/1 Inter;color:var(--muted);margin-bottom:10px}
+.bub.me small{color:#ffd1e6}
+.btn{display:inline-block;font:700 44px/1 Inter;padding:26px 40px;border-radius:18px;background:var(--mag);color:#fff}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+#cursor{width:60px;height:60px}
+</style></head><body>
+<div id="stage">
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: the quote -->
+  <div class="el stk card" id="p0" style="left:150px;top:640px;width:780px;padding:46px 56px 50px">
+    <h4>Website refresh · your quote</h4>
+    <div style="display:flex;align-items:flex-end;gap:30px;margin-top:14px"><span class="big" id="n0">2</span><span style="font:700 52px/1.15 Inter;padding-bottom:30px">rounds of<br>changes included</span></div>
+  </div>
+  <!-- b1: the round counter -->
+  <div class="el stk card" id="p1" style="left:230px;top:620px;width:620px;padding:40px 50px 46px;text-align:center">
+    <h4>Client feedback</h4>
+    <div style="font:800 64px/1 Archivo;margin-top:22px;color:var(--muted)">ROUND</div>
+    <div class="big" id="n1" style="font-size:300px">2</div>
+  </div>
+  <div class="el stamp" id="s1" style="left:420px;top:1030px">not in the fee</div>
+
+  <!-- b2: the favours -->
+  <div class="el" id="p2" style="left:0;top:560px;width:1080px;height:620px">
+    <div class="bub" id="m1" style="left:90px;top:0"><small>Client</small>Tiny change, quick one?</div>
+    <div class="bub" id="m2" style="left:90px;top:190px"><small>Client</small>One more small thing…</div>
+    <div class="bub me" id="m3" style="right:90px;top:390px"><small>You</small>Sure, no problem!</div>
+  </div>
+  <div class="el stamp" id="s2" style="left:140px;top:1060px">paid: $0</div>
+
+  <!-- b3: counted (real app) -->
+  <div class="el stk" id="p3" style="left:70px;top:620px;width:940px"><div class="win"><canvas id="k3" width="912" height="300"></canvas></div></div>
+  <svg class="el draw" id="c3" width="460" height="300" style="left:60px;top:610px"><ellipse cx="230" cy="150" rx="200" ry="120" stroke="#D1176F" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el stk" id="p3b" style="left:120px;top:940px;width:840px"><div class="win"><canvas id="k3b" width="812" height="300"></canvas></div></div>
+
+  <!-- b4: change order (real app) -->
+  <div class="el stk" id="p4" style="left:110px;top:600px;width:860px"><div class="win"><canvas id="k4" width="832" height="420"></canvas></div></div>
+  <div class="el stk" id="p4b" style="left:200px;top:640px;width:680px"><div class="win"><canvas id="k4b" width="652" height="500"></canvas></div></div>
+  <svg class="el draw" id="c4" width="420" height="170" style="left:580px;top:1030px"><ellipse cx="210" cy="85" rx="190" ry="62" stroke="#D1176F" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+
+  <!-- b5: approve -->
+  <div class="el stk card" id="p5" style="left:130px;top:620px;width:820px;padding:44px 52px 48px">
+    <h4>Change order · Fernhill Coffee</h4>
+    <div style="font:700 56px/1.15 Inter;margin-top:16px">Subscribe buttons</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:34px">
+      <span style="font:800 96px/1 Archivo;letter-spacing:-.03em">$270</span><span class="btn" id="apb">Approve</span></div>
+  </div>
+  <svg class="el" id="cursor" viewBox="0 0 24 24" style="left:700px;top:1000px"><path d="M4 2 L4 20 L9 15 L12.5 22 L15.5 20.6 L12 13.8 L19 13.8 Z" fill="#16181D" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  <div class="el stamp g" id="s5" style="left:420px;top:1040px">approved ✓</div>
+  <!-- b6: invoice (real app) -->
+  <div class="el stk" id="p6" style="left:70px;top:640px;width:940px"><div class="win"><canvas id="k6" width="912" height="344"></canvas></div></div>
+  <svg class="el draw" id="c6" width="860" height="170" style="left:80px;top:830px"><ellipse cx="430" cy="85" rx="410" ry="62" stroke="#D1176F" stroke-width="10" pathLength="1" stroke-dasharray="1" transform="rotate(-1.5 430 85)"/></svg>
+
+  <!-- b7: paid -->
+  <div class="el stk card" id="p7" style="left:150px;top:640px;width:780px;padding:44px 56px 50px;text-align:center">
+    <h4>Round 5</h4>
+    <div style="font:800 130px/1 Archivo;letter-spacing:-.04em;margin-top:18px">$270</div>
+    <div style="font:600 40px/1.3 Inter;color:var(--muted);margin-top:16px">on the next invoice</div>
+  </div>
+  <div class="el stamp g" id="s7" style="left:560px;top:960px">paid</div>
+  <div class="el" id="url" style="left:0;top:1095px;width:1080px;text-align:center;font:700 46px/1 Inter;color:var(--ink)">nodstage.com</div>
+
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="nico" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../../../engine/lib.js"></script>
+<script src="../../../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const img = (f) => { const i = new Image(); i.src = "assets/" + f; return i; };
+const MONEY = img("money.png"), GUEST = img("guest.png"), INV = img("invoice.png"), SIDE = img("side.png");
+const nico = Tara("nico", { look: "nico", skin: "#B97A52", skinS: "#9A633F", hair: "#1E1612", hairS: "#140e0b", knit: "#273050", knitS: "#1C2340", knitH: "#3A4570", top: "#D1176F", lip: "#8A3A31", cheek: "#D9766A" });
+const POSES = [[0, "wave"], [W.client - .2, "present"], [W.five - .1, "oops"], [S[1] + .1, "think"], [W.awkward - .3, "present"],
+  [S[2] + .1, "point"], [W.fee - .1, "thumbs"], [S[3] + .1, "think"], [W.price - .2, "point"], [S[4] + .05, "present"], [W.approves + .1, "thumbs"],
+  [W.next - .1, "point"], [S[5] + .05, "cheer"], [W.paid + .5, "rest"]];
+const CH = [["// 01 · the quote", "rounds <b>2</b>"], ["// 02 · the favours", "paid <b>$0</b>"], ["// 03 · counted", "round <b>2 of 2</b>"],
+  ["// 04 · past the fee", "change order <b>$270</b>"], ["// 05 · approved", "on the <b>invoice</b>"], ["// 06 · paid", "nodstage<b>.com</b>"]];
+const IDS = ["p0","p1","s1","p2","s2","p3","c3","p3b","p4","p4b","c4","p5","cursor","s5","p6","c6","p7","s7","url","badge"];
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#D1176F"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // b0, b1: two rounds quoted, the client is on five
+  if (t < W.client) { pop("p0", t, .05, { r: -1.5, y: fl(t) }); out("p0", t, W.client - .2); }
+  if (inWin(t, W.client - .2, S[1])) { pop("p1", t, W.client - .15, { r: 1.5, y: fl(t, 1) });
+    const n = t < W.client + .2 ? 2 : Math.min(5, 2 + Math.floor((t - W.client - .2) / ((W.five - W.client - .2) / 3)) + 1);
+    $("n1").textContent = n; $("n1").style.color = n > 2 ? "var(--mag)" : ""; slam("s1", t, W.five + .25, { r: -8 });
+    for (const id of ["p1", "s1"]) out(id, t, S[1] - .15); }
+  // b2: the favours
+  if (inWin(t, S[1] - .05, S[2])) { pop("p2", t, S[1]); $("p2").style.transform = "";
+    for (const [id, at] of [["m1", S[1] + .1], ["m2", S[1] + .9], ["m3", W.awkward - .4]]) { const a = spring(clamp((t - at) / .45)); $(id).style.opacity = t >= at ? 1 : 0; $(id).style.transform = `translateY(${(1 - a) * 40}px) scale(${.92 + .08 * a})`; }
+    slam("s2", t, W.awkward + .1, { r: -7 }); for (const id of ["p2", "s2"]) out(id, t, S[2] - .2); }
+  // b3: Nodstage counts the rounds (real screens)
+  if (inWin(t, S[2], S[3])) { W8("k3", MONEY, .565, .07, .17, .1, "#fff"); pop("p3", t, S[2] + .15, { r: -1, y: fl(t, 3) * .6 }); draw("c3", t, S[2] + .6, .45);
+    badge(t, 1, S[2] + .3, 905, 560);
+    W8("k3b", GUEST, .766, .2, .234, .086, "#fff"); pop("p3b", t, W.fee - .1, { r: 1.5, y: fl(t, 4) * .6 });
+    for (const id of ["p3", "c3", "p3b", "badge"]) out(id, t, S[3] - .15); }
+  // b4: past that, a change order with a price
+  if (inWin(t, S[3] - .05, S[4])) { W8("k4", GUEST, .766, .63, .234, .19, "#fff"); pop("p4", t, S[3], { r: -1, y: fl(t, 5) * .6 }); out("p4", t, W.price - .3);
+    W8("k4b", SIDE, 0, 0, 1, .248, "#fff"); pop("p4b", t, W.price - .25, { r: 1.5, y: fl(t, 6) * .6 }); draw("c4", t, W.price + .35, .4);
+    badge(t, 2, S[3] + .2, 905, 540); for (const id of ["p4b", "c4", "badge"]) out(id, t, S[4] - .15); }
+  // b5: the client approves
+  if (inWin(t, S[4] - .05, W.next - .1)) { pop("p5", t, S[4], { r: -1, y: fl(t, 7) * .6 });
+    const ct = clamp((t - S[4] - .2) / (W.approves - S[4] - .1)); $("cursor").style.opacity = t > S[4] + .2 ? 1 : 0;
+    const press = t > W.approves + .05 && t < W.approves + .25 ? .85 : 1;
+    $("cursor").style.transform = `translate(${(1 - easeInOut(ct)) * 160}px, ${(1 - easeInOut(ct)) * 200 - 150}px) scale(${press})`;
+    $("apb").style.background = t > W.approves + .1 ? "var(--green)" : ""; $("apb").textContent = t > W.approves + .1 ? "Approved" : "Approve";
+    slam("s5", t, W.approves + .3, { r: -6 }); for (const id of ["p5", "cursor", "s5"]) out(id, t, W.next - .35); }
+  // b6: on the next invoice (real invoice)
+  if (inWin(t, W.next - .35, S[5])) { W8("k6", INV, .1, .5, .65, .18, "#fff"); pop("p6", t, W.next - .3, { r: 1, y: fl(t, 8) * .6 }); draw("c6", t, W.next + .4, .45);
+    badge(t, 3, W.next - .2, 905, 530); for (const id of ["p6", "c6", "badge"]) out(id, t, S[5] - .15); }
+  // b7: round five gets paid
+  if (t >= S[5] - .05) { pop("p7", t, S[5], { r: -1, y: fl(t, 9) * .5 }); slam("s7", t, W.paid, { r: -8 }); pop("url", t, W.paid + .5); $("url").style.transform = ""; }
+  chapter(t); caption2(t); [...$("cap").children].forEach((sp) => sp.classList.toggle("on", sp.classList.contains("acc") && sp.style.color.includes("--red"))); nico.render(t, POSES, TL.amp); wipe(t, S[2] - .45);
+};
+window.ready = Promise.all([MONEY, GUEST, INV, SIDE].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

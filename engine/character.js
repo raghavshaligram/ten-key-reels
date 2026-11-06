@@ -22,7 +22,8 @@ function Tara(id, opt = {}) {
   root.innerHTML = "";
   // ground shadow + body
   const body = el("g");
-  el("path", { d: "M330 600 Q330 470 380 420 L620 420 Q670 470 670 600 Z", fill: C.hairS }, body);             // back hair
+  const nico = C.look === "nico";   // Nodstage's presenter: short curly hair, no earrings, navy jacket over a magenta tee
+  if (!nico) el("path", { d: "M330 600 Q330 470 380 420 L620 420 Q670 470 670 600 Z", fill: C.hairS }, body);             // back hair
   const torso = el("g", {}, body);
   el("path", { d: "M215 1010 L222 760 Q230 640 340 610 L430 590 L570 590 L660 610 Q770 640 778 760 L785 1010 Z", fill: C.knit }, torso);
   el("path", { d: "M430 592 L500 760 L570 592 Z", fill: C.top }, torso);                                         // tee
@@ -36,7 +37,7 @@ function Tara(id, opt = {}) {
   const head = el("g", {}, body);
   el("ellipse", { cx: 372, cy: 345, rx: 22, ry: 32, fill: C.skinS }, head); el("ellipse", { cx: 628, cy: 345, rx: 22, ry: 32, fill: C.skinS }, head);
   el("ellipse", { cx: 500, cy: 330, rx: 128, ry: 150, fill: C.skin }, head);
-  el("circle", { cx: 376, cy: 380, r: 8, fill: "#E2B04A" }, head); el("circle", { cx: 624, cy: 380, r: 8, fill: "#E2B04A" }, head);
+  if (!nico) { el("circle", { cx: 376, cy: 380, r: 8, fill: "#E2B04A" }, head); el("circle", { cx: 624, cy: 380, r: 8, fill: "#E2B04A" }, head); }
   const cheeks = [el("ellipse", { cx: 430, cy: 392, rx: 30, ry: 17, fill: C.cheek, opacity: .32 }, head), el("ellipse", { cx: 570, cy: 392, rx: 30, ry: 17, fill: C.cheek, opacity: .32 }, head)];
   const eyes = el("g", {}, head), eyeL = el("g", {}, eyes), eyeR = el("g", {}, eyes);
   for (const [g, x] of [[eyeL, 450], [eyeR, 550]]) { el("ellipse", { cx: x, cy: 335, rx: 16, ry: 21, fill: C.ink }, g); el("circle", { cx: x + 6, cy: 327, r: 6, fill: "#fff" }, g); el("circle", { cx: x - 5, cy: 343, r: 2.5, fill: "#fff", opacity: .7 }, g); }
@@ -45,11 +46,20 @@ function Tara(id, opt = {}) {
   el("path", { d: "M502 352 Q492 378 504 384", fill: "none", stroke: C.skinS, "stroke-width": 7, "stroke-linecap": "round" }, head);
   const mouth = el("path", { fill: C.mouthIn, stroke: C.lip, "stroke-width": 6, "stroke-linejoin": "round" }, head);
   const teeth = el("path", { fill: "#fff" }, head);
-  // hair on top: side-parted bob
-  el("path", { d: "M362 360 Q340 210 440 172 Q520 140 590 170 Q676 210 652 350 Q640 280 600 236 Q560 270 470 262 Q410 258 380 300 Q368 330 362 360 Z", fill: C.hair }, head);
-  el("path", { d: "M362 330 Q350 440 380 540 Q395 500 392 420 Z", fill: C.hair }, head);
-  el("path", { d: "M640 320 Q656 440 622 540 Q610 500 612 420 Z", fill: C.hair }, head);
-  el("path", { d: "M450 190 Q520 170 590 196", fill: "none", stroke: "#4A3530", "stroke-width": 8, "stroke-linecap": "round", opacity: .7 }, head);
+  if (nico) {
+    // short curly hair: a cap of overlapping curls, tight at the sides
+    el("path", { d: "M372 330 Q360 230 420 192 Q500 150 580 190 Q642 228 628 330 Q618 270 586 248 Q540 236 500 240 Q452 236 414 250 Q384 270 372 330 Z", fill: C.hair }, head);
+    for (const [cx, cy, r] of [[400, 236, 34], [440, 204, 36], [488, 188, 38], [536, 192, 36], [580, 214, 34], [612, 252, 26], [380, 276, 24], [462, 226, 22], [520, 222, 22]])
+      el("circle", { cx, cy, r, fill: C.hair }, head);
+    for (const [cx, cy] of [[440, 196], [500, 180], [560, 200], [404, 232]])
+      el("path", { d: `M${cx - 14} ${cy} q14 -12 28 0`, fill: "none", stroke: "#3a2a24", "stroke-width": 6, "stroke-linecap": "round", opacity: .8 }, head);
+  } else {
+    // hair on top: side-parted bob
+    el("path", { d: "M362 360 Q340 210 440 172 Q520 140 590 170 Q676 210 652 350 Q640 280 600 236 Q560 270 470 262 Q410 258 380 300 Q368 330 362 360 Z", fill: C.hair }, head);
+    el("path", { d: "M362 330 Q350 440 380 540 Q395 500 392 420 Z", fill: C.hair }, head);
+    el("path", { d: "M640 320 Q656 440 622 540 Q610 500 612 420 Z", fill: C.hair }, head);
+    el("path", { d: "M450 190 Q520 170 590 196", fill: "none", stroke: "#4A3530", "stroke-width": 8, "stroke-linecap": "round", opacity: .7 }, head);
+  }
   // arms (drawn last so hands can go in front of the face)
   const arms = {};
   for (const side of ["L", "R"]) {

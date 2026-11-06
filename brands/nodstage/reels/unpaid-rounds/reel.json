@@ -1,0 +1,183 @@
+{
+ "title": "Nodstage: unpaid rounds",
+ "voice": "am_michael",
+ "speed": 1.0,
+ "lines": [
+  [
+   "You quoted for two rounds of changes.",
+   0.35
+  ],
+  [
+   "The client is on round five.",
+   0.6
+  ],
+  [
+   "Most studios just do it, because asking for money feels awkward.",
+   0.6
+  ],
+  [
+   "In Nodstage, every round is counted against your fee.",
+   0.45
+  ],
+  [
+   "Past that, the changes become a change order with a price on it.",
+   0.45
+  ],
+  [
+   "The client approves it before you start, and it goes on the next invoice.",
+   0.55
+  ],
+  [
+   "So round five gets paid.",
+   0.3
+  ]
+ ],
+ "phrases": [
+  "You quoted for [two rounds] of changes.",
+  "The client is on [round five.]",
+  "Most studios just do it,",
+  "because asking for money feels [awkward.]",
+  [
+   7,
+   "In [Nodstage,] every round is counted"
+  ],
+  "against your [fee.]",
+  "Past that, the changes become",
+  "a [change order] with a price on it.",
+  "The client [approves] it before you start,",
+  "and it goes on the [next invoice.]",
+  "So round five [gets paid.]"
+ ],
+ "scenes": [
+  0,
+  13,
+  24,
+  34,
+  47,
+  61
+ ],
+ "marks": {
+  "client": 8,
+  "five": 12,
+  "awkward": 23,
+  "counted": 30,
+  "fee": 33,
+  "change": 40,
+  "price": 44,
+  "approves": 49,
+  "next": 59,
+  "paid": 65
+ },
+ "tail": 0.9,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "client-0.1",
+   "pop",
+   500
+  ],
+  [
+   "client+0.2",
+   "ticks",
+   1.0
+  ],
+  [
+   "five",
+   "pop",
+   300
+  ],
+  [
+   "S1+0.1",
+   "pop",
+   900
+  ],
+  [
+   "S1+0.9",
+   "pop",
+   950
+  ],
+  [
+   "awkward-0.4",
+   "pop",
+   1000
+  ],
+  [
+   "awkward+0.1",
+   "pop",
+   300
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S2+0.15",
+   "pop",
+   700
+  ],
+  [
+   "S2+0.6",
+   "scribble",
+   0.45
+  ],
+  [
+   "fee-0.1",
+   "pop",
+   800
+  ],
+  [
+   "S3",
+   "pop",
+   700
+  ],
+  [
+   "price",
+   "pop",
+   800
+  ],
+  [
+   "price+0.4",
+   "scribble",
+   0.4
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "approves+0.1",
+   "click"
+  ],
+  [
+   "approves+0.25",
+   "pop",
+   300
+  ],
+  [
+   "next-0.15",
+   "pop",
+   750
+  ],
+  [
+   "next+0.4",
+   "scribble",
+   0.45
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "paid",
+   "win"
+  ]
+ ]
+}
