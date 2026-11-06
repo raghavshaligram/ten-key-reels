@@ -1,0 +1,424 @@
+{
+ "title": "Nodstage 3D: follow one client",
+ "voice": "am_puck",
+ "speed": 1.0,
+ "lines": [
+  [
+   "I've got a new client.",
+   0.2,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Great.",
+   0.4,
+   "am_puck",
+   0.85
+  ],
+  [
+   "Now I need to find their emails, create a project, send a proposal, track feedback, and remember when to invoice them.",
+   0.45,
+   "am_puck",
+   1.12
+  ],
+  [
+   "Where do you manage all of that?",
+   0.35,
+   "af_jessica",
+   0.98
+  ],
+  [
+   "That's the problem.",
+   0.2,
+   "am_puck",
+   0.95
+  ],
+  [
+   "Five different places.",
+   0.5,
+   "am_puck",
+   0.9
+  ],
+  [
+   "Why not manage the entire client journey in one place?",
+   0.35,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "Can it handle everything from the first inquiry to the final payment?",
+   0.35,
+   "am_puck",
+   1.02
+  ],
+  [
+   "Let's follow one client.",
+   0.5,
+   "af_jessica",
+   0.95
+  ],
+  [
+   "A new inquiry comes in. Track the lead, book a discovery call, send your proposal, and follow it through.",
+   0.35,
+   "af_jessica",
+   1.05
+  ],
+  [
+   "And when they accept?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Your won lead becomes a project. No starting over.",
+   0.5,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "Now share the work with your client through their branded portal. They can review proofs, leave comments, and approve deliverables.",
+   0.35,
+   "af_jessica",
+   1.06
+  ],
+  [
+   "And what happens to all that feedback?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Turn actionable comments into tasks. Your team handles the revisions, and the feedback stays connected to the original proof.",
+   0.5,
+   "af_jessica",
+   1.06
+  ],
+  [
+   "And what if the client wants more work than we originally agreed?",
+   0.3,
+   "am_puck",
+   1.02
+  ],
+  [
+   "Handle scope changes with change orders, so additional work is properly documented.",
+   0.5,
+   "af_jessica",
+   1.02
+  ],
+  [
+   "Projects, tasks, team, calendar, communication, invoices and payments. It's all connected.",
+   0.35,
+   "af_jessica",
+   1.04
+  ],
+  [
+   "So I'm not jumping between five different tools anymore?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Exactly.",
+   0.7,
+   "af_jessica",
+   0.9
+  ],
+  [
+   "From the first inquiry to the final payment. Run your creative studio with Nodstage.",
+   0.3,
+   "bm_fable",
+   0.95
+  ]
+ ],
+ "phrases": [
+  "I've got a new client.",
+  "Great.",
+  "Now I need to find their emails,",
+  "create a project, send a proposal,",
+  "track feedback and remember when to invoice them.",
+  "Where do you manage all of that?",
+  "That's the problem.",
+  "Five different places.",
+  "Why not manage the entire client journey in one place?",
+  "Can it handle everything from the first inquiry",
+  "to the final payment?",
+  "Let's follow one client.",
+  "A new inquiry comes in.",
+  "Track the lead, book a discovery call,",
+  "send your proposal and follow it through.",
+  "And when they accept?",
+  "Your won lead becomes a project.",
+  "No starting over.",
+  "Now share the work with your client",
+  "through their branded portal.",
+  "They can review proofs, leave comments",
+  "and approve deliverables.",
+  "And what happens to all that feedback?",
+  "Turn actionable comments into tasks.",
+  "Your team handles the revisions,",
+  "and the feedback stays connected to the original proof.",
+  "And what if the client wants more work",
+  "than we originally agreed?",
+  "Handle scope changes with change orders,",
+  "so additional work is properly documented.",
+  "Projects, tasks, team, calendar, communication,",
+  "invoices and payments.",
+  "It's all connected.",
+  "So I'm not jumping between five different tools anymore?",
+  "Exactly.",
+  "From the first inquiry to the final payment.",
+  [
+   7,
+   "Run your creative studio with Nodstage."
+  ]
+ ],
+ "scenes": [
+  0,
+  40,
+  62,
+  98,
+  144,
+  168,
+  189
+ ],
+ "marks": {
+  "great": 5,
+  "emails": 12,
+  "project0": 15,
+  "proposal0": 18,
+  "feedback0": 20,
+  "invoice0": 25,
+  "where": 27,
+  "five": 37,
+  "places": 39,
+  "why": 40,
+  "oneplace": 49,
+  "payment0": 61,
+  "follow": 62,
+  "inquiry": 68,
+  "lead": 73,
+  "call": 77,
+  "proposal": 80,
+  "through": 84,
+  "accept": 88,
+  "won": 90,
+  "project": 94,
+  "share": 99,
+  "portal": 108,
+  "proofs": 112,
+  "comments": 114,
+  "approve": 116,
+  "feedback": 124,
+  "tasks": 129,
+  "revisions": 134,
+  "connected": 139,
+  "proof": 143,
+  "more": 150,
+  "agreed": 155,
+  "scope": 157,
+  "changeorders": 161,
+  "documented": 167,
+  "projects": 168,
+  "tasks2": 169,
+  "team": 170,
+  "calendar": 171,
+  "comms": 172,
+  "invoices": 173,
+  "payments": 175,
+  "allconn": 177,
+  "tools": 186,
+  "exactly": 188,
+  "from": 189,
+  "run": 197
+ },
+ "tail": 2.2,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "emails-0.25",
+   "pop",
+   700
+  ],
+  [
+   "project0-0.2",
+   "pop",
+   760
+  ],
+  [
+   "proposal0-0.2",
+   "pop",
+   820
+  ],
+  [
+   "feedback0-0.2",
+   "pop",
+   880
+  ],
+  [
+   "invoice0-0.2",
+   "pop",
+   940
+  ],
+  [
+   "five-0.1",
+   "buzz",
+   null
+  ],
+  [
+   "why-0.25",
+   "whoosh",
+   0.4
+  ],
+  [
+   "oneplace-0.2",
+   "win",
+   null
+  ],
+  [
+   "follow-0.2",
+   "whoosh",
+   0.4
+  ],
+  [
+   "inquiry-0.3",
+   "pop",
+   700
+  ],
+  [
+   "lead-0.15",
+   "pop",
+   760
+  ],
+  [
+   "call-0.15",
+   "pop",
+   820
+  ],
+  [
+   "proposal-0.15",
+   "pop",
+   880
+  ],
+  [
+   "won-0.15",
+   "pop",
+   1000
+  ],
+  [
+   "project-0.15",
+   "pop",
+   940
+  ],
+  [
+   "share-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "proofs-0.3",
+   "whoosh",
+   0.3
+  ],
+  [
+   "comments-0.1",
+   "pop",
+   900
+  ],
+  [
+   "approve",
+   "click",
+   null
+  ],
+  [
+   "approve+0.05",
+   "pop",
+   1000
+  ],
+  [
+   "tasks-0.2",
+   "pop",
+   900
+  ],
+  [
+   "revisions-0.3",
+   "whoosh",
+   0.3
+  ],
+  [
+   "connected-0.35",
+   "whoosh",
+   0.3
+  ],
+  [
+   "proof-0.3",
+   "pop",
+   900
+  ],
+  [
+   "scope",
+   "pop",
+   800
+  ],
+  [
+   "changeorders-0.3",
+   "whoosh",
+   0.3
+  ],
+  [
+   "changeorders+0.1",
+   "pop",
+   1000
+  ],
+  [
+   "projects-0.15",
+   "pop",
+   640
+  ],
+  [
+   "tasks2-0.15",
+   "pop",
+   700
+  ],
+  [
+   "team-0.15",
+   "pop",
+   760
+  ],
+  [
+   "calendar-0.15",
+   "pop",
+   820
+  ],
+  [
+   "comms-0.15",
+   "pop",
+   880
+  ],
+  [
+   "invoices-0.15",
+   "pop",
+   940
+  ],
+  [
+   "payments-0.15",
+   "pop",
+   1000
+  ],
+  [
+   "exactly-0.1",
+   "whoosh",
+   0.8
+  ],
+  [
+   "exactly+0.3",
+   "win",
+   null
+  ],
+  [
+   "from-0.1",
+   "whoosh",
+   0.6
+  ]
+ ]
+}

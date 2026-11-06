@@ -11,7 +11,7 @@ reel.json:
 {
   "title": "Gross vs Net KPH",
   "voice": "af_heart", "speed": 0.97,
-  "lines": [["What the voice says, numbers spelled the way they're spoken", 0.5], ...],   # [text, pause after, optional voice]
+  "lines": [["What the voice says, numbers spelled the way they're spoken", 0.5], ...],   # [text, pause after, optional voice, optional speed]
   "phrases": ["Caption words with [accent]", [2, "or with a count"], ...],   # must cover every spoken word (build tells you if not)
   "scenes": [0, 12, 23, 32],                    # word index where each scene starts -> S0, S1, ...
   "marks": {"keys": 20, "diff": 44},            # named word indices -> W.keys etc. in scene.html
@@ -48,7 +48,8 @@ def tts(R, d):
     out = [np.zeros(int(.25 * 24000), np.float32)]
     for line in R["lines"]:   # [text, pause] or [text, pause, voice] for a two-voice reel
         text, gap = line[0], line[1]
-        a, sr = k.create(text, voice=line[2] if len(line) > 2 else R.get("voice", "af_heart"), speed=R.get("speed", .97), lang="en-us")
+        v = line[2] if len(line) > 2 and line[2] else R.get("voice", "af_heart")   # [text, pause, voice, speed]: voice and speed per line
+        a, sr = k.create(text, voice=v, speed=line[3] if len(line) > 3 else R.get("speed", .97), lang="en-gb" if v.startswith("b") else "en-us")
         out += [a.astype(np.float32), np.zeros(int(gap * sr), np.float32)]
     sf.write(f"{d}/vo.wav", np.concatenate(out), 24000); open(f"{d}/.vo.key", "w").write(key)
     if os.path.exists(f"{d}/words.json"): os.remove(f"{d}/words.json")
