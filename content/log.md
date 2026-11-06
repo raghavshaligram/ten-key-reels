@@ -4,6 +4,7 @@ Newest first. One line per reel: date, folder, topic #, style, hook formula, out
 
 | Date | Folder | Topic | Style | Hook formula | Outfit | Status | Note |
 |------|--------|-------|-------|--------------|--------|--------|------|
+| 2026-11-06 | reels/2026-11-06-10000-feel | 4 | sticker | negative command (#2) | Tara | sent | What 10,000 KPH feels like (just under 3 keys a second): Mixed run with 1 deliberate slip, 10,380 net / 11,040 gross, 96.2%, 25/26; never-used topics 5+ need guide pages that could not be fetched (permission timed out), and topic 2 was covered by 11-04, so the run-based topic 4 |
 | 2026-11-05 | reels/2026-11-05-what-is-10-key | 1 | sticker | nobody tells you (#3) | Tara | sent | What a 10-key test is: Mixed run, clean, 10,860 net KPH, 100%, 27/27; /blog/what-is-10-key could not be fetched (permission timed out), so facts come from the live test and the topic bank |
 | 2026-11-04 | reels/2026-11-04-gross-vs-net-slips | 3 | sticker | negative command (#2) | Tara | sent | Accuracy beats speed: Whole numbers run with 2 deliberate slips, 10,800 net / 11,520 gross, 94.1%, 32/34; the 95% line is quoted from the site's result screen; guide pages could not be fetched (permission timed out) |
 | 2026-11-03 | reels/2026-11-03-dollar-amounts | 8 | sticker | question (closest to #18) | Tara | sent | Dollar amounts mode on the live test, run 26/26, 100%; guide pages could not be fetched (permission timed out), so a run-based topic |

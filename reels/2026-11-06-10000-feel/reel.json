@@ -1,0 +1,41 @@
+{
+ "title": "What 10,000 KPH feels like (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  ["Stop guessing what ten thousand K P H feels like.", 0.5],
+  ["It's just under three keys a second.", 0.5],
+  ["Here's a real minute of it on the ten-key test,", 0.25],
+  ["typed one number at a time, steady, with no rushing.", 0.5],
+  ["And here's the score.", 0.5],
+  ["Only the right keys count, so one slip costs you.", 0.5],
+  ["Try your own minute at ten key typing test dot com.", 0.2]
+ ],
+ "phrases": [
+  "Stop guessing what [10,000 KPH]",
+  "feels like.",
+  "It's just under [three keys] a second.",
+  "Here's a [real minute] of it",
+  "on the [10-key test,]",
+  "typed one number at a time,",
+  "[steady,] with no rushing.",
+  "And here's the [score.]",
+  "Only the [right keys] count,",
+  "so [one slip] costs you.",
+  "Try your own minute",
+  [2, "at [10keytypingtest.com.]"]
+ ],
+ "scenes": [0, 7, 14, 34, 38, 48],
+ "marks": {"kph": 3, "feels": 5, "three": 10, "second": 13, "real": 16, "typed": 24, "steady": 30, "score": 37, "right": 40, "slip": 45, "costs": 46, "try": 48, "at": 52},
+ "tail": 0.8,
+ "run": {"mode": "Mixed", "gap": 300, "slips": [12], "slipEvery": 0, "frames": 12, "finishClean": true},
+ "pointer": null,
+ "sfx": [
+  ["0.05", "pop", 600], ["0.15", "ticks", 1.4], ["feels-0.1", "scribble", 0.5], ["feels+0.4", "pop", 300],
+  ["S1-0.45", "whoosh", 0.7], ["S1+0.15", "pop", 700], ["three-0.1", "clicks", 1.2], ["second", "pop", 900],
+  ["S2-0.05", "whoosh", 0.6], ["real", "pop", 300], ["typed", "clicks", 2.0], ["steady", "pop", 700],
+  ["S3", "whoosh", 0.6], ["S3+0.1", "pop", 700], ["score+0.2", "scribble", 0.45], ["score+0.6", "pop", 900],
+  ["S4", "pop", 700], ["right", "pop", 500], ["slip-0.05", "buzz"],
+  ["S5", "whoosh"], ["at", "clicks", 0.8]
+ ]
+}
