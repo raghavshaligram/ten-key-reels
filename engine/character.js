@@ -22,22 +22,35 @@ function Tara(id, opt = {}) {
   root.innerHTML = "";
   // ground shadow + body
   const body = el("g");
-  const nico = C.look === "nico";   // Nodstage's presenter: short curly hair, no earrings, navy jacket over a magenta tee
-  if (!nico) el("path", { d: "M330 600 Q330 470 380 420 L620 420 Q670 470 670 600 Z", fill: C.hairS }, body);             // back hair
+  const nico = C.look === "nico", artist = C.look === "artist";   // Nodstage's presenter: short curly hair, no earrings, navy jacket over a magenta tee
+  if (!nico && !artist) el("path", { d: "M330 600 Q330 470 380 420 L620 420 Q670 470 670 600 Z", fill: C.hairS }, body);             // back hair
   const torso = el("g", {}, body);
   el("path", { d: "M215 1010 L222 760 Q230 640 340 610 L430 590 L570 590 L660 610 Q770 640 778 760 L785 1010 Z", fill: C.knit }, torso);
-  el("path", { d: "M430 592 L500 760 L570 592 Z", fill: C.top }, torso);                                         // tee
-  el("path", { d: "M430 592 L500 760 L500 1010 L380 1010 L408 640 Z", fill: C.knitS, opacity: .35 }, torso);      // left panel shade
-  el("path", { d: "M420 590 L500 800 L500 1010", fill: "none", stroke: C.knitH, "stroke-width": 10, opacity: .55 }, torso);
-  el("path", { d: "M580 590 L500 800", fill: "none", stroke: C.knitH, "stroke-width": 10, opacity: .55 }, torso);
-  for (const y of [850, 930]) el("circle", { cx: 518, cy: y, r: 9, fill: C.top, opacity: .9 }, torso);           // buttons
+  if (artist) {
+    // Remi, the artist: striped tee, denim bib overalls with paint on them
+    for (let y = 640; y < 1010; y += 44) el("rect", { x: 220, y, width: 566, height: 16, fill: C.stripe }, torso);
+    el("path", { d: "M352 1010 L360 720 Q362 700 382 700 L618 700 Q638 700 640 720 L648 1010 Z", fill: C.denim }, torso);
+    el("path", { d: "M352 1010 L360 720 Q362 700 382 700 L420 700 L420 1010 Z", fill: C.denimS, opacity: .5 }, torso);
+    el("path", { d: "M392 704 L372 612", stroke: C.denim, "stroke-width": 34, "stroke-linecap": "round" }, torso);
+    el("path", { d: "M608 704 L628 612", stroke: C.denim, "stroke-width": 34, "stroke-linecap": "round" }, torso);
+    for (const x of [400, 600]) el("circle", { cx: x, cy: 722, r: 11, fill: "#E8B23A" }, torso);
+    el("rect", { x: 448, y: 760, width: 104, height: 84, rx: 10, fill: "none", stroke: C.denimS, "stroke-width": 6 }, torso);   // pocket
+    for (const [cx, cy, rr, c] of [[470, 880, 16, "#D1176F"], [586, 820, 12, "#F4D23C"], [420, 930, 13, "#2BA6A0"], [560, 950, 9, "#D1176F"], [610, 900, 7, "#F4D23C"]])
+      el("ellipse", { cx, cy, rx: rr, ry: rr * .8, fill: c, transform: `rotate(${cx % 40} ${cx} ${cy})` }, torso);
+  } else {
+    el("path", { d: "M430 592 L500 760 L570 592 Z", fill: C.top }, torso);                                         // tee
+    el("path", { d: "M430 592 L500 760 L500 1010 L380 1010 L408 640 Z", fill: C.knitS, opacity: .35 }, torso);      // left panel shade
+    el("path", { d: "M420 590 L500 800 L500 1010", fill: "none", stroke: C.knitH, "stroke-width": 10, opacity: .55 }, torso);
+    el("path", { d: "M580 590 L500 800", fill: "none", stroke: C.knitH, "stroke-width": 10, opacity: .55 }, torso);
+    for (const y of [850, 930]) el("circle", { cx: 518, cy: y, r: 9, fill: C.top, opacity: .9 }, torso);           // buttons
+  }
   el("path", { d: "M462 470 L538 470 L540 600 Q500 630 460 600 Z", fill: C.skin }, body);                         // neck
   el("path", { d: "M462 470 L538 470 L538 530 Q500 560 462 530 Z", fill: C.skinS }, body);
   // head
   const head = el("g", {}, body);
   el("ellipse", { cx: 372, cy: 345, rx: 22, ry: 32, fill: C.skinS }, head); el("ellipse", { cx: 628, cy: 345, rx: 22, ry: 32, fill: C.skinS }, head);
   el("ellipse", { cx: 500, cy: 330, rx: 128, ry: 150, fill: C.skin }, head);
-  if (!nico) { el("circle", { cx: 376, cy: 380, r: 8, fill: "#E2B04A" }, head); el("circle", { cx: 624, cy: 380, r: 8, fill: "#E2B04A" }, head); }
+  if (!nico && !artist) { el("circle", { cx: 376, cy: 380, r: 8, fill: "#E2B04A" }, head); el("circle", { cx: 624, cy: 380, r: 8, fill: "#E2B04A" }, head); }
   const cheeks = [el("ellipse", { cx: 430, cy: 392, rx: 30, ry: 17, fill: C.cheek, opacity: .32 }, head), el("ellipse", { cx: 570, cy: 392, rx: 30, ry: 17, fill: C.cheek, opacity: .32 }, head)];
   const eyes = el("g", {}, head), eyeL = el("g", {}, eyes), eyeR = el("g", {}, eyes);
   for (const [g, x] of [[eyeL, 450], [eyeR, 550]]) { el("ellipse", { cx: x, cy: 335, rx: 16, ry: 21, fill: C.ink }, g); el("circle", { cx: x + 6, cy: 327, r: 6, fill: "#fff" }, g); el("circle", { cx: x - 5, cy: 343, r: 2.5, fill: "#fff", opacity: .7 }, g); }
@@ -46,7 +59,18 @@ function Tara(id, opt = {}) {
   el("path", { d: "M502 352 Q492 378 504 384", fill: "none", stroke: C.skinS, "stroke-width": 7, "stroke-linecap": "round" }, head);
   const mouth = el("path", { fill: C.mouthIn, stroke: C.lip, "stroke-width": 6, "stroke-linejoin": "round" }, head);
   const teeth = el("path", { fill: "#fff" }, head);
-  if (nico) {
+  if (artist) {
+    // auburn hair pulled up into a messy bun with a pencil through it, round glasses, freckles
+    el("circle", { cx: 520, cy: 158, r: 66, fill: C.hair }, head);
+    el("path", { d: "M470 140 Q520 96 572 128", fill: "none", stroke: C.hairS, "stroke-width": 7, "stroke-linecap": "round", opacity: .6 }, head);
+    el("path", { d: "M430 120 L604 196", stroke: "#F2B632", "stroke-width": 13, "stroke-linecap": "round" }, head);
+    el("path", { d: "M430 120 L446 127", stroke: "#E58BA8", "stroke-width": 13, "stroke-linecap": "round" }, head);
+    el("path", { d: "M366 348 Q346 214 446 180 Q520 160 584 184 Q660 214 640 350 Q628 286 592 250 Q548 276 470 268 Q410 266 384 306 Q372 330 366 348 Z", fill: C.hair }, head);
+    el("path", { d: "M372 330 Q366 380 384 420 Q392 392 390 352 Z", fill: C.hair }, head);
+    el("path", { d: "M630 330 Q640 380 620 420 Q612 392 614 352 Z", fill: C.hair }, head);
+    for (const [cx, cy] of [[424, 372], [436, 384], [418, 388], [576, 372], [564, 384], [582, 388]]) el("circle", { cx, cy, r: 3.2, fill: C.skinS, opacity: .8 }, head);
+    el("g", {}, head).innerHTML = `<circle cx="450" cy="336" r="36" fill="rgba(255,255,255,.12)" stroke="${C.ink}" stroke-width="7"/><circle cx="550" cy="336" r="36" fill="rgba(255,255,255,.12)" stroke="${C.ink}" stroke-width="7"/><path d="M486 330 Q500 320 514 330" fill="none" stroke="${C.ink}" stroke-width="6"/>`;
+  } else if (nico) {
     // short curly hair: a cap of overlapping curls, tight at the sides
     el("path", { d: "M372 330 Q360 230 420 192 Q500 150 580 190 Q642 228 628 330 Q618 270 586 248 Q540 236 500 240 Q452 236 414 250 Q384 270 372 330 Z", fill: C.hair }, head);
     for (const [cx, cy, r] of [[400, 236, 34], [440, 204, 36], [488, 188, 38], [536, 192, 36], [580, 214, 34], [612, 252, 26], [380, 276, 24], [462, 226, 22], [520, 222, 22]])
@@ -81,6 +105,11 @@ function Tara(id, opt = {}) {
     thumb: `<rect x="-38" y="-78" width="80" height="82" rx="30" fill="${C.skin}"/>
       <rect x="-36" y="-140" width="24" height="84" rx="12" fill="${C.skin}"/>
       <path d="M-4 -58 L38 -58 M-4 -36 L38 -36 M-4 -14 L34 -14" stroke="${C.skinS}" stroke-width="5" stroke-linecap="round"/>`,
+    brush: `<rect x="-14" y="-230" width="16" height="170" rx="7" fill="#C9772E" transform="rotate(-8)"/>
+      <rect x="-20" y="-262" width="26" height="40" rx="5" fill="#B9BEC8" transform="rotate(-8)"/>
+      <path d="M-40 -262 Q-30 -320 -18 -262 Z" fill="#D1176F" transform="rotate(-8)"/>
+      <rect x="-38" y="-80" width="76" height="84" rx="32" fill="${C.skin}"/>
+      <path d="M-22 -58 L22 -58 M-22 -34 L22 -34" stroke="${C.skinS}" stroke-width="5" stroke-linecap="round"/>`,
     fist: `<rect x="-38" y="-78" width="76" height="82" rx="32" fill="${C.skin}"/>
       <path d="M-22 -58 L22 -58 M-22 -34 L22 -34" stroke="${C.skinS}" stroke-width="5" stroke-linecap="round"/>`,
   };
@@ -134,7 +163,8 @@ function Tara(id, opt = {}) {
       const A_ = arms[side]; A_.sleeve.setAttribute("points", pts);
       A_.crease.setAttribute("points", `${lerp(j.s[0], j.e[0], .75)},${lerp(j.s[1], j.e[1], .75)} ${j.e[0]},${j.e[1]} ${lerp(j.e[0], j.w[0], .2)},${lerp(j.e[1], j.w[1], .2)}`);
       A_.cuff.setAttribute("cx", j.w[0]); A_.cuff.setAttribute("cy", j.w[1]);
-      const shape = kk > .5 ? Q.h : P.h; if (A_.shape !== shape) { A_.hand.innerHTML = HANDS[shape]; A_.shape = shape; }
+      let shape = kk > .5 ? Q.h : P.h; if (artist && shape === "point" && ty < 500) shape = "brush";   // she points with a paintbrush
+      if (A_.shape !== shape) { A_.hand.innerHTML = HANDS[shape]; A_.shape = shape; }
       const flip = side === "L" ? -1 : 1;
       A_.hand.setAttribute("transform", `translate(${j.w[0]} ${j.w[1]}) rotate(${hr}) scale(${flip} 1) translate(0 -8)`);
     }

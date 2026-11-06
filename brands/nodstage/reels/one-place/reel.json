@@ -1,0 +1,237 @@
+{
+ "title": "Nodstage: one place",
+ "voice": "af_bella",
+ "speed": 1.05,
+ "lines": [
+  [
+   "Your project management tool manages tasks.",
+   0.3
+  ],
+  [
+   "But who's managing your clients?",
+   0.6
+  ],
+  [
+   "You have one tool for projects, another for client feedback, another for approvals, and probably a spreadsheet for tracking invoices.",
+   0.6
+  ],
+  [
+   "And somehow, you're still chasing clients for feedback.",
+   0.6
+  ],
+  [
+   "The problem isn't that you need another productivity app.",
+   0.45
+  ],
+  [
+   "You need one place where client communication and project delivery actually connect.",
+   0.6
+  ],
+  [
+   "That's why we built Nodstage.",
+   0.5
+  ],
+  [
+   "Manage projects, share proofs, collect feedback, track revisions and get approvals without jumping between five different tools.",
+   0.6
+  ],
+  [
+   "Nodstage. From client feedback to paid work.",
+   0.3
+  ]
+ ],
+ "phrases": [
+  "Your project management tool manages [tasks,]",
+  "but who's managing your [clients?]",
+  "You have one tool for [projects,]",
+  "another for [client feedback,]",
+  "another for [approvals,]",
+  "and probably a [spreadsheet]",
+  "for tracking invoices.",
+  "And somehow, you're still",
+  "[chasing clients] for feedback.",
+  "The problem isn't that you need",
+  "another [productivity app.]",
+  "You need [one place]",
+  "where client communication",
+  "and project delivery actually [connect.]",
+  "That's why we built [Nodstage.]",
+  "Manage [projects,] share [proofs,]",
+  "collect [feedback,] track [revisions,]",
+  "and get [approvals]",
+  "without jumping between five different tools.",
+  "[Nodstage,] from client feedback",
+  "to [paid work.]"
+ ],
+ "scenes": [
+  0,
+  11,
+  31,
+  39,
+  48,
+  60,
+  65,
+  82
+ ],
+ "marks": {
+  "clients": 10,
+  "projects": 16,
+  "feedback": 19,
+  "approvals": 23,
+  "spreadsheet": 27,
+  "chasing": 35,
+  "app": 46,
+  "place": 50,
+  "delivery": 57,
+  "connect": 59,
+  "nodstage": 64,
+  "m1": 65,
+  "m2": 67,
+  "m3": 69,
+  "m4": 71,
+  "m5": 74,
+  "five": 79,
+  "paid": 87
+ },
+ "tail": 0.9,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "0.1",
+   "pop",
+   650
+  ],
+  [
+   "clients+0.1",
+   "pop",
+   320
+  ],
+  [
+   "projects",
+   "pop",
+   700
+  ],
+  [
+   "feedback",
+   "pop",
+   760
+  ],
+  [
+   "approvals",
+   "pop",
+   820
+  ],
+  [
+   "spreadsheet",
+   "pop",
+   880
+  ],
+  [
+   "S2",
+   "beep",
+   990
+  ],
+  [
+   "S2+0.35",
+   "beep",
+   880
+  ],
+  [
+   "S2+0.7",
+   "beep",
+   990
+  ],
+  [
+   "chasing",
+   "beep",
+   880
+  ],
+  [
+   "chasing+0.35",
+   "beep",
+   990
+  ],
+  [
+   "chasing+0.7",
+   "beep",
+   780
+  ],
+  [
+   "S3+0.1",
+   "whoosh",
+   0.5
+  ],
+  [
+   "app",
+   "buzz"
+  ],
+  [
+   "S4+0.1",
+   "pop",
+   700
+  ],
+  [
+   "place+0.4",
+   "pop",
+   760
+  ],
+  [
+   "connect-0.2",
+   "scribble",
+   0.5
+  ],
+  [
+   "connect+0.3",
+   "pop",
+   900
+  ],
+  [
+   "S5-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "nodstage",
+   "win"
+  ],
+  [
+   "m1",
+   "pop",
+   700
+  ],
+  [
+   "m2",
+   "pop",
+   760
+  ],
+  [
+   "m3",
+   "pop",
+   820
+  ],
+  [
+   "m4",
+   "pop",
+   880
+  ],
+  [
+   "m5",
+   "pop",
+   940
+  ],
+  [
+   "five",
+   "tick"
+  ],
+  [
+   "S7",
+   "whoosh"
+  ],
+  [
+   "paid",
+   "pop",
+   500
+  ]
+ ]
+}
