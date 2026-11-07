@@ -1,0 +1,586 @@
+{
+ "title": "Nodstage: the dossier format",
+ "voice": "am_puck",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Nod. Round five. She wants round five.",
+   0.35,
+   "am_puck",
+   0.98
+  ],
+  [
+   "Of the logo?",
+   0.3,
+   "af_jessica",
+   0.95
+  ],
+  [
+   "Of the logo. And the invoice is still in a spreadsheet.",
+   0.45,
+   "am_puck",
+   1.05
+  ],
+  [
+   "Let's fix the whole thing. It's called Nodstage.",
+   0.4,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "A lead books a call from your booking page. You send the proposal. She accepts it online.",
+   0.35,
+   "af_jessica",
+   1.05
+  ],
+  [
+   "No PDF ping-pong?",
+   0.25,
+   "am_puck",
+   1.05
+  ],
+  [
+   "None.",
+   0.45,
+   "af_jessica",
+   0.9
+  ],
+  [
+   "Share the proof in her portal. She comments right on the design.",
+   0.3,
+   "af_jessica",
+   1.03
+  ],
+  [
+   "Not in a twelve-email thread?",
+   0.25,
+   "am_puck",
+   1.05
+  ],
+  [
+   "Not anymore.",
+   0.45,
+   "af_jessica",
+   0.95
+  ],
+  [
+   "And round five?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "If it's beyond the scope, send a change order. She approves it, and it gets billed.",
+   0.35,
+   "af_jessica",
+   1.03
+  ],
+  [
+   "Billed?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Billed.",
+   0.5,
+   "af_jessica",
+   0.9
+  ],
+  [
+   "The invoice goes out from the same project. Then ask her for a testimonial.",
+   0.35,
+   "af_jessica",
+   1.03
+  ],
+  [
+   "So it's all in one place?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "From the first inquiry to the final payment.",
+   0.45,
+   "af_jessica",
+   0.97
+  ],
+  [
+   "Should I thank you?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Start free at Nodstage dot com.",
+   0.3,
+   "af_jessica",
+   0.97
+  ]
+ ],
+ "phrases": [
+  [
+   1,
+   "Nod."
+  ],
+  [
+   2,
+   "Round five."
+  ],
+  [
+   4,
+   "She wants [round five.]"
+  ],
+  [
+   3,
+   "Of the logo?"
+  ],
+  [
+   3,
+   "Of the logo."
+  ],
+  [
+   5,
+   "And the invoice is still"
+  ],
+  [
+   3,
+   "in a [spreadsheet.]"
+  ],
+  [
+   5,
+   "Let's fix the whole thing."
+  ],
+  [
+   4,
+   "It's called [Nodstage.]"
+  ],
+  [
+   5,
+   "A lead books a call"
+  ],
+  [
+   4,
+   "from your [booking page.]"
+  ],
+  [
+   4,
+   "You send the [proposal.]"
+  ],
+  [
+   4,
+   "She accepts it [online.]"
+  ],
+  [
+   4,
+   "No PDF [ping-pong?]"
+  ],
+  [
+   1,
+   "None."
+  ],
+  [
+   3,
+   "Share the proof"
+  ],
+  [
+   3,
+   "in her [portal.]"
+  ],
+  [
+   2,
+   "She comments"
+  ],
+  [
+   4,
+   "right on the [design.]"
+  ],
+  [
+   3,
+   "Not in a"
+  ],
+  [
+   3,
+   "[12-email] thread?"
+  ],
+  [
+   2,
+   "Not anymore."
+  ],
+  [
+   3,
+   "And [round five?]"
+  ],
+  [
+   5,
+   "If it's beyond the scope,"
+  ],
+  [
+   4,
+   "send a [change order.]"
+  ],
+  [
+   3,
+   "She approves it,"
+  ],
+  [
+   4,
+   "and it gets [billed.]"
+  ],
+  [
+   1,
+   "[Billed?]"
+  ],
+  [
+   1,
+   "[Billed.]"
+  ],
+  [
+   4,
+   "The invoice goes out"
+  ],
+  [
+   4,
+   "from the [same project.]"
+  ],
+  [
+   3,
+   "Then ask her"
+  ],
+  [
+   3,
+   "for a [testimonial.]"
+  ],
+  [
+   3,
+   "So it's all"
+  ],
+  [
+   3,
+   "in [one place?]"
+  ],
+  [
+   4,
+   "From the first inquiry"
+  ],
+  [
+   4,
+   "to the [final payment.]"
+  ],
+  [
+   4,
+   "Should I thank you?"
+  ],
+  [
+   3,
+   "Start free at"
+  ],
+  [
+   1,
+   "[nodstage.com]"
+  ]
+ ],
+ "scenes": [
+  0,
+  21,
+  30,
+  52,
+  72,
+  93,
+  107,
+  125
+ ],
+ "marks": {
+  "five": 1,
+  "logo": 9,
+  "spreadsheet": 20,
+  "fix": 21,
+  "whole": 24,
+  "nodstage": 28,
+  "lead": 31,
+  "call": 34,
+  "booking": 37,
+  "sendp": 39,
+  "proposal": 42,
+  "accepts": 44,
+  "online": 46,
+  "pdf": 47,
+  "none": 51,
+  "share": 52,
+  "proof": 54,
+  "portal": 57,
+  "comments": 59,
+  "design": 63,
+  "notin": 64,
+  "email": 67,
+  "anymore": 70,
+  "round5": 72,
+  "beyond": 77,
+  "scope": 79,
+  "changeorder": 82,
+  "approves": 85,
+  "billed": 90,
+  "billedq": 91,
+  "billeda": 92,
+  "invoice": 94,
+  "goes": 95,
+  "same": 99,
+  "project": 100,
+  "ask": 101,
+  "testimonial": 106,
+  "so": 107,
+  "oneplace": 111,
+  "from": 113,
+  "inquiry": 116,
+  "payment": 120,
+  "should": 121,
+  "thank": 123,
+  "start": 125,
+  "url": 128
+ },
+ "tail": 1.6,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "five-0.05",
+   "pop",
+   700
+  ],
+  [
+   "logo-0.1",
+   "pop",
+   820
+  ],
+  [
+   "spreadsheet-0.1",
+   "pop",
+   900
+  ],
+  [
+   "whole-0.1",
+   "pop",
+   980
+  ],
+  [
+   "nodstage-0.15",
+   "whoosh",
+   0.4
+  ],
+  [
+   "nodstage+0.1",
+   "win",
+   null
+  ],
+  [
+   "S2-0.15",
+   "whoosh",
+   0.35
+  ],
+  [
+   "call",
+   "click",
+   null
+  ],
+  [
+   "booking",
+   "click",
+   null
+  ],
+  [
+   "booking+0.5",
+   "click",
+   null
+  ],
+  [
+   "booking+0.6",
+   "pop",
+   1000
+  ],
+  [
+   "sendp-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "accepts",
+   "click",
+   null
+  ],
+  [
+   "accepts+0.1",
+   "pop",
+   1100
+  ],
+  [
+   "pdf-0.08",
+   "whoosh",
+   0.25
+  ],
+  [
+   "none-0.05",
+   "whoosh",
+   0.2
+  ],
+  [
+   "S3-0.15",
+   "whoosh",
+   0.35
+  ],
+  [
+   "portal",
+   "pop",
+   900
+  ],
+  [
+   "comments",
+   "pop",
+   950
+  ],
+  [
+   "design",
+   "pop",
+   1050
+  ],
+  [
+   "email-0.1",
+   "pop",
+   700
+  ],
+  [
+   "anymore",
+   "buzz",
+   null
+  ],
+  [
+   "S4-0.1",
+   "pop",
+   650
+  ],
+  [
+   "beyond",
+   "pop",
+   900
+  ],
+  [
+   "changeorder-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "changeorder+0.5",
+   "click",
+   null
+  ],
+  [
+   "approves",
+   "click",
+   null
+  ],
+  [
+   "approves+0.1",
+   "pop",
+   1100
+  ],
+  [
+   "billed",
+   "win",
+   null
+  ],
+  [
+   "billedq-0.08",
+   "whoosh",
+   0.25
+  ],
+  [
+   "billeda-0.05",
+   "whoosh",
+   0.2
+  ],
+  [
+   "S5-0.15",
+   "whoosh",
+   0.35
+  ],
+  [
+   "goes",
+   "pop",
+   1000
+  ],
+  [
+   "same",
+   "pop",
+   900
+  ],
+  [
+   "ask-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "testimonial+0.2",
+   "click",
+   null
+  ],
+  [
+   "testimonial+0.3",
+   "pop",
+   1100
+  ],
+  [
+   "so",
+   "pop",
+   640
+  ],
+  [
+   "so+0.25",
+   "pop",
+   700
+  ],
+  [
+   "so+0.5",
+   "pop",
+   760
+  ],
+  [
+   "so+0.75",
+   "pop",
+   820
+  ],
+  [
+   "so+1.0",
+   "pop",
+   880
+  ],
+  [
+   "so+1.25",
+   "pop",
+   940
+  ],
+  [
+   "from",
+   "whoosh",
+   0.5
+  ],
+  [
+   "payment",
+   "win",
+   null
+  ],
+  [
+   "should-0.08",
+   "whoosh",
+   0.25
+  ],
+  [
+   "start-0.1",
+   "whoosh",
+   0.6
+  ],
+  [
+   "url",
+   "pop",
+   1000
+  ]
+ ]
+}
