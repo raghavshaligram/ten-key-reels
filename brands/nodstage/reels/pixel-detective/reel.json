@@ -1,0 +1,236 @@
+{
+ "title": "Nodstage 3D: the case of the missing feedback",
+ "voice": "bm_george",
+ "speed": 1.0,
+ "lines": [
+  [
+   "The case of the missing feedback.",
+   0.45,
+   "bm_george",
+   0.9
+  ],
+  [
+   "A client asked: can we move it slightly to the left?",
+   0.3,
+   "bm_george",
+   0.98
+  ],
+  [
+   "Then the trail went cold.",
+   0.5,
+   "bm_george",
+   0.88
+  ],
+  [
+   "Where did they say it?",
+   0.3,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "An email. A WhatsApp. A call. And a screenshot with a red circle.",
+   0.35,
+   "bm_george",
+   1.0
+  ],
+  [
+   "Four places. And which version were they looking at?",
+   0.3,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "Nobody knows. That's the mystery.",
+   0.5,
+   "bm_george",
+   0.92
+  ],
+  [
+   "Then let's pin it down.",
+   0.4,
+   "af_jessica",
+   0.95
+  ],
+  [
+   "In Nodstage, the client comments right on the design. No account needed.",
+   0.3,
+   "af_jessica",
+   1.03
+  ],
+  [
+   "And then?",
+   0.25,
+   "bm_george",
+   0.95
+  ],
+  [
+   "The comment becomes a task, pinned to the right version.",
+   0.35,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "And if they ask for a fourth round?",
+   0.3,
+   "bm_george",
+   0.98
+  ],
+  [
+   "That's a change order. They approve it before you start.",
+   0.45,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "Case closed.",
+   0.6,
+   "bm_george",
+   0.85
+  ],
+  [
+   "Comment feedback, and we'll send you the link.",
+   0.3,
+   "af_jessica",
+   0.97
+  ]
+ ],
+ "phrases": [
+  "The case of the missing feedback.",
+  "A client asked:",
+  "\u201ccan we move it slightly to the left?\u201d",
+  "Then the trail went cold.",
+  "Where did they say it?",
+  "An email. A WhatsApp. A call.",
+  "And a screenshot with a red circle.",
+  "Four places.",
+  "And which version were they looking at?",
+  "Nobody knows. That's the mystery.",
+  "Then let's pin it down.",
+  [
+   3,
+   "In Nodstage,"
+  ],
+  "the client comments right on the design.",
+  "No account needed.",
+  "And then?",
+  "The comment becomes a task,",
+  "pinned to the right version.",
+  "And if they ask for a fourth round?",
+  "That's a change order.",
+  "They approve it before you start.",
+  "Case closed.",
+  "Comment FEEDBACK,",
+  "and we'll send you the link."
+ ],
+ "scenes": [
+  0,
+  59,
+  102,
+  104
+ ],
+ "marks": {
+  "left": 16,
+  "cold": 21,
+  "email": 28,
+  "whatsapp": 30,
+  "call": 32,
+  "shot": 35,
+  "circle": 39,
+  "version": 44,
+  "knows": 50,
+  "mystery": 53,
+  "pin": 56,
+  "nodstage": 59,
+  "design": 68,
+  "noacc": 69,
+  "task": 78,
+  "pinned": 79,
+  "rversion": 83,
+  "fourth": 90,
+  "change": 94,
+  "approve": 97,
+  "closed": 103,
+  "comment": 104,
+  "link": 111
+ },
+ "tail": 2.2,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "left-0.6",
+   "pop",
+   500
+  ],
+  [
+   "email-0.15",
+   "pop",
+   700
+  ],
+  [
+   "whatsapp-0.15",
+   "pop",
+   760
+  ],
+  [
+   "call-0.15",
+   "pop",
+   820
+  ],
+  [
+   "shot-0.15",
+   "pop",
+   880
+  ],
+  [
+   "circle-0.3",
+   "scribble",
+   0.4
+  ],
+  [
+   "pin-0.4",
+   "whoosh",
+   0.5
+  ],
+  [
+   "nodstage-0.1",
+   "whoosh",
+   0.3
+  ],
+  [
+   "design-0.2",
+   "pop",
+   900
+  ],
+  [
+   "task-0.2",
+   "pop",
+   900
+  ],
+  [
+   "rversion-0.7",
+   "whoosh",
+   0.3
+  ],
+  [
+   "change",
+   "pop",
+   1000
+  ],
+  [
+   "closed-0.35",
+   "buzz",
+   null
+  ],
+  [
+   "closed",
+   "win",
+   null
+  ],
+  [
+   "comment-0.1",
+   "whoosh",
+   0.5
+  ]
+ ]
+}
