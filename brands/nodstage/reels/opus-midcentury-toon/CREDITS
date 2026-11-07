@@ -1,0 +1,7 @@
+Visual style and drawing engine (engine/toon.js, chars.js, icons.js): "Mid-century Cartoon" from Lemo-Opuscar by Lemomo
+  https://github.com/lemomo-ai/lemo-opuscar  (code MIT; style prompt CC BY 4.0)
+Fonts: Alfa Slab One, Oleo Script, Jost (SIL Open Font License 1.1, Google Fonts; licences in fonts/)
+Animation: GSAP not used; canvas 2D code in film.js
+Voice: Kokoro TTS (Apache 2.0), voice af_heart
+Score and sound effects: synthesized in code (mix.py, engine/sfx.py)
+Screenshot: Nodstage proof view (proof.png) and logo (logo.png), Nodstage's own material

@@ -1,0 +1,7 @@
+Nodstage · one client, start to finish (Swiss Motion, 9:16)
+
+Style: "Swiss Motion Graphics" style prompt from Lemo-Opuscar by Lemomo (github.com/lemomo-ai/lemo-opuscar), code MIT, style text CC BY 4.0. Easing (cubic-bezier .7,0,.2,1) and snap/steps grammar adapted from its demo engine (MIT).
+Font: Archivo (SIL Open Font License 1.1), via @fontsource/archivo.
+Voice: Kokoro-82M TTS (Apache-2.0), voice af_heart.
+Music and sound effects: synthesized in numpy for this film (mix.py).
+Screens: proof.png is a crop of a real Nodstage screen; the logo is Nodstage's own. All names and amounts (Hannah Brooks, Fernhill Coffee Co., Northbeam Studio) are demo data.
