@@ -1,0 +1,298 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Nodstage · one client</title>
+<style>
+@font-face{font-family:Archivo;font-weight:600;src:url(archivo-latin-600-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(archivo-latin-700-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:800;src:url(archivo-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(inter-latin-700-normal.woff2)}
+:root{--mag:#D0176F;--ink:#1B1C21;--grey:#6B6F78;--line:#E7E1DA;--cream:#F6F1EA;--green:#1F7A4D;--greenT:#E3F2E9}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:Inter;color:var(--ink)}
+#bg{position:absolute;inset:0;background:linear-gradient(170deg,#FBF8F4 0%,#F4EDE4 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px)}
+#grain{position:absolute;inset:-50px;opacity:.10;mix-blend-mode:multiply;pointer-events:none}
+#field{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 100%,#E8338A 0%,#C8126A 55%,#9E0E55 100%);clip-path:circle(0px at 252px 1264px)}
+#world{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:0 0}
+.card{position:absolute;background:#fff;border-radius:36px;box-shadow:0 40px 90px -30px rgba(60,30,40,.28),0 6px 18px rgba(60,30,40,.06);overflow:hidden}
+.pane{position:absolute;left:0;top:0;width:100%;padding:56px}
+.row{display:flex;align-items:center;gap:20px}
+.ns{width:60px;height:60px;border-radius:14px;background:var(--ink);color:#fff;font:700 24px Inter;display:grid;place-items:center}
+.studio{font:600 36px Inter}
+.ttl{font:700 56px/1.1 Archivo;letter-spacing:-.5px}
+.sub{font:500 32px Inter;color:var(--grey)}
+.chip{display:inline-block;padding:8px 22px;border-radius:40px;font:600 30px Inter}
+.btn{height:100px;border-radius:24px;background:var(--mag);color:#fff;font:600 38px Inter;display:grid;place-items:center}
+.day{width:145px;height:124px;border:3px solid var(--line);border-radius:22px;display:grid;place-items:center;text-align:center;font:500 30px Inter;color:var(--grey)}
+.day b{display:block;font:700 42px Archivo;color:var(--ink)}
+.slot{height:96px;border:3px solid var(--line);border-radius:22px;display:grid;place-items:center;font:600 38px Inter}
+.li{display:flex;justify-content:space-between;align-items:center;height:100px;border-bottom:2px solid var(--line);font:500 36px Inter}
+.li span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+.stamp{position:absolute;border:7px solid var(--green);color:var(--green);border-radius:18px;padding:6px 30px;font:800 64px Archivo;letter-spacing:3px;background:rgba(255,255,255,.85)}
+.head{position:absolute;left:60px;right:60px;top:250px;text-align:center;font:700 74px/1.08 Archivo;letter-spacing:-1px;color:var(--ink)}
+.head .w{display:inline-block;margin-right:.24em}
+.pin{position:absolute;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:var(--mag);color:#fff;font:700 32px Inter;display:grid;place-items:center;border:5px solid #fff;box-shadow:0 8px 20px rgba(208,23,111,.4)}
+.bub{position:absolute;width:580px;background:#fff;border-radius:28px;padding:28px 30px;box-shadow:0 30px 70px -20px rgba(40,20,30,.35);font:500 34px/1.35 Inter}
+.av{width:58px;height:58px;border-radius:50%;background:#DDEFE3;color:var(--green);font:700 24px Inter;display:grid;place-items:center;flex:none}
+.who{font:600 30px Inter}
+#cur{position:absolute;left:0;top:0;width:10px;height:10px;opacity:0}
+#rail{position:absolute;left:0;top:0}
+.node{position:absolute;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:#fff;border:4px solid #D9D0C5;display:grid;place-items:center}
+.node svg{opacity:0}
+.mini{position:absolute;width:340px;height:440px;margin:-220px 0 0 -170px;background:#fff;border-radius:30px;box-shadow:0 30px 60px -20px rgba(60,30,40,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;font:600 34px Inter}
+.mini .ic{width:120px;height:120px;border-radius:30px;background:#FBE3EE;display:grid;place-items:center}
+#close{position:absolute;left:50px;right:50px;top:500px;text-align:center;color:#fff;font:700 80px/1.08 Archivo;letter-spacing:-1.5px}
+#close .w{display:inline-block;margin-right:.22em}
+</style></head>
+<body><div id="stage">
+<div id="bg">
+  <div class="blob" id="b1" style="width:760px;height:760px;background:#F9CFE1"></div>
+  <div class="blob" id="b2" style="width:640px;height:640px;background:#FFE3C9"></div>
+  <div class="blob" id="b3" style="width:560px;height:560px;background:#DCEBDF"></div>
+</div>
+<svg id="grain" width="1180" height="2020"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .25 0 0 0 1.4 -.2"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+<div id="field"></div>
+
+<div id="world">
+  <!-- hook: the whole journey as a hand of cards -->
+  <div id="fan"></div>
+
+  <!-- the one card that carries the client through -->
+  <div class="card" id="card" style="left:90px;top:450px;width:900px;height:868px;opacity:0">
+    <div class="pane" id="p1">
+      <div class="row"><div class="ns">NS</div><div class="studio">Northbeam Studio</div></div>
+      <div class="ttl" style="margin-top:34px">Book a discovery call</div>
+      <div class="sub" style="margin-top:12px">30 min · Video call</div>
+      <div class="row" style="margin-top:34px;gap:16px" id="days"></div>
+      <div style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:24px" id="slots"></div>
+      <div class="btn" id="b1btn" style="margin-top:44px">Confirm booking</div>
+      <div id="booked" class="row" style="position:absolute;left:56px;right:56px;top:756px;height:100px;border-radius:24px;background:var(--greenT);color:var(--green);font:700 36px Inter;justify-content:center;opacity:0">✓ Booked: Thu, Oct 9 · 10:00 AM</div>
+    </div>
+    <div class="pane" id="p2" style="opacity:0">
+      <div class="row"><span class="chip" style="background:#FBE3EE;color:var(--mag)">Proposal</span><span class="sub">For Fernhill Coffee Co.</span></div>
+      <div class="ttl" style="margin-top:30px;font-size:64px">Website refresh</div>
+      <div style="margin-top:30px">
+        <div class="li l2"><span>Discovery and moodboard</span><span>$800</span></div>
+        <div class="li l2"><span>Design: homepage and shop</span><span>$2,400</span></div>
+        <div class="li l2"><span>Build: Shopify theme</span><span>$3,600</span></div>
+        <div class="li l2" style="border:0;height:110px;font:700 42px Inter"><span>Total</span><span style="font:800 54px Archivo">$6,800</span></div>
+      </div>
+      <div class="btn" id="b2btn" style="margin-top:22px">Accept proposal</div>
+      <div class="stamp" id="st2" style="left:230px;top:680px;transform:rotate(-6deg);opacity:0">ACCEPTED</div>
+    </div>
+    <div class="pane" id="p3" style="opacity:0;padding:0">
+      <div class="row" style="height:96px;padding:0 30px;justify-content:space-between">
+        <span style="font:600 36px Inter">Homepage v2</span><span class="chip" style="background:#FDE8DD;color:#B4471A">Changes asked</span></div>
+      <img id="proof" src="proof.png" style="position:absolute;left:20px;top:100px;width:940px;border-radius:18px">
+    </div>
+    <div class="pane" id="p5" style="opacity:0">
+      <div class="row"><div class="ns">NS</div><div class="studio">Northbeam Studio</div></div>
+      <div class="sub" style="margin-top:30px;font-size:32px">Invoice INV-0012</div>
+      <div class="ttl" style="margin-top:8px;font-size:54px">Website refresh: design stage</div>
+      <div style="margin-top:26px">
+        <div class="li"><span>Design: homepage and shop</span><span>$1,500</span></div>
+        <div class="li" id="l5b" style="opacity:0"><span>Change order CO-03</span><span>$225</span></div>
+        <div class="li" style="border:0;height:120px"><span style="font:700 40px Inter">Amount due</span><span id="due" style="font:800 58px Archivo">$1,725</span></div>
+      </div>
+      <div class="stamp" id="st5" style="left:540px;top:630px;transform:rotate(-10deg);opacity:0">PAID</div>
+    </div>
+    <div class="pane" id="p6" style="opacity:0">
+      <div class="row"><div class="av">HB</div><div><div class="who">Hannah Brooks</div><div class="sub" style="font-size:30px">Fernhill Coffee Co.</div></div></div>
+      <div class="ttl" style="margin-top:36px">Ask for a testimonial</div>
+      <div style="margin-top:30px;border:3px solid var(--line);border-radius:24px;padding:30px;font:500 36px/1.4 Inter;color:#3A3D45">Hi Hannah, it was great working on the refresh. Would you share a few words about it?</div>
+      <div class="btn" id="b6btn" style="margin-top:36px">Send request</div>
+      <svg id="plane" width="80" height="80" viewBox="0 0 24 24" style="position:absolute;left:700px;top:600px;opacity:0"><path d="M2 12 22 3l-7 19-3-8z" fill="#fff" stroke="#D0176F" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <!-- pins and bubbles live in the world so the camera carries them -->
+  <div class="pin" id="pinA" style="left:390px;top:753px;opacity:0">1</div>
+  <div class="bub" id="bubA" style="left:190px;top:800px;opacity:0">
+    <div class="row" style="gap:14px;margin-bottom:12px"><div class="av">HB</div><span class="who">Hannah Brooks</span></div>
+    Love the new headline. Could we show the price per cup in the hero?</div>
+  <div class="pin" id="pinB" style="left:252px;top:1264px;opacity:0">2</div>
+  <div class="bub" id="bubB" style="left:170px;top:930px;opacity:0">
+    <div class="row" style="gap:14px;margin-bottom:12px"><div class="av">HB</div><span class="who">Hannah Brooks</span></div>
+    Add a Subscribe button under each bag, not just Add to cart.
+    <div style="margin-top:16px"><span class="chip" id="oos" style="background:#FFF1C2;color:#8A5A00;opacity:0">Out of scope</span></div></div>
+
+  <!-- the extra request, lifted out as its own card -->
+  <div class="card" id="co" style="left:130px;top:500px;width:820px;height:700px;opacity:0;padding:52px">
+    <div class="row" style="justify-content:space-between"><span class="chip" style="background:#FBE3EE;color:var(--mag)">Change order</span><span class="sub">CO-03</span></div>
+    <div class="ttl" style="margin-top:30px;font-size:54px">Subscribe button under each bag</div>
+    <div class="li" style="margin-top:24px"><span>Extra design and build</span><span style="font:800 50px Archivo">+$225</span></div>
+    <div class="row" style="margin-top:26px;gap:14px"><div class="av">HB</div><span class="sub">Requested by Hannah</span></div>
+    <div class="btn" id="cobtn" style="margin-top:34px;position:relative"><span id="cot">Approve</span></div>
+  </div>
+
+  <div id="cur">
+    <svg width="54" height="62" viewBox="0 0 18 21" style="position:absolute;left:-4px;top:-2px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))"><path d="M1 1v17l4.5-4.2 3 6.6 3-1.4-3-6.4H15z" fill="#1B1C21" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+    <div class="av" style="position:absolute;left:44px;top:46px;width:52px;height:52px;font-size:22px;border:4px solid #fff">HB</div>
+  </div>
+</div>
+
+<div id="heads"></div>
+<svg id="rail" width="1080" height="1920"></svg>
+
+<div id="close"></div>
+<div id="logo" style="position:absolute;left:240px;top:930px;width:600px;height:180px;background:#fff;border-radius:40px;display:grid;place-items:center;opacity:0;box-shadow:0 30px 70px -20px rgba(60,0,30,.5)"><img src="logo.png" style="width:480px"></div>
+<div id="url" style="position:absolute;left:0;right:0;top:1160px;text-align:center;color:#fff;font:600 52px Inter;opacity:0">nodstage.com</div>
+</div>
+
+<script src="gsap.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+// ---------- build repeated bits ----------
+const days=[["Mon",6],["Tue",7],["Wed",8],["Thu",9],["Fri",10]];
+$('#days').innerHTML=days.map((d,i)=>`<div class="day" id="d${i}">${d[0]}<b>${d[1]}</b></div>`).join('');
+$('#slots').innerHTML=["9:00 AM","10:00 AM","11:30 AM","2:00 PM"].map((s,i)=>`<div class="slot" id="s${i}">${s}</div>`).join('');
+const ICON={
+ cal:'<rect x="4" y="6" width="16" height="14" rx="3"/><path d="M4 10h16M9 3v5M15 3v5"/>',
+ doc:'<path d="M7 3h7l4 4v14H7z"/><path d="M10 12h5M10 16h5"/>',
+ bub:'<path d="M4 5h16v11H10l-5 4v-4H4z"/>',
+ plus:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/>',
+ rec:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+ star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'};
+const STAGES=[["cal","Booking"],["doc","Proposal"],["bub","Feedback"],["plus","Change order"],["rec","Invoice"],["star","Testimonial"]];
+const ic=(k,c="#D0176F",s=64)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
+$('#fan').innerHTML=STAGES.map((s,i)=>`<div class="mini" id="m${i}" style="z-index:${6-i}"><div class="ic">${ic(s[0])}</div>${s[1]}</div>`).join('');
+// rail
+const RX=i=>150+i*156, RY=1420;
+let r=`<line id="rbase" x1="150" y1="${RY}" x2="930" y2="${RY}" stroke="#D9D0C5" stroke-width="6" stroke-linecap="round"/>
+<line id="rfill" x1="150" y1="${RY}" x2="930" y2="${RY}" stroke="#D0176F" stroke-width="6" stroke-linecap="round" stroke-dasharray="780" stroke-dashoffset="780"/>`;
+STAGES.forEach((s,i)=>{r+=`<g id="n${i}" transform="translate(${RX(i)} ${RY})"><circle class="nc" r="26" fill="#fff" stroke="#D9D0C5" stroke-width="5"/><path class="nk" d="M-9 0l6 6 11-12" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></g>`});
+$('#rail').innerHTML=r;
+// headlines
+const HEADS=[[0.3,2.45,"One client,|start to finish",104],[2.7,5.0,"Hannah books a call",74],[5.15,7.6,"The proposal, accepted",74],
+ [7.75,11.95,"Feedback on the design",74],[12.0,16.8,"Extra work becomes a change order",74],[16.9,19.6,"The invoice already has it",74],[19.75,22.0,"Then, a testimonial",74]];
+const words=(txt)=>txt.split('|').map(l=>l.split(' ').map(w=>`<span class="w">${w}</span>`).join('')).join('<br>');
+$('#heads').innerHTML=HEADS.map((h,i)=>`<div class="head" id="h${i}" style="font-size:${h[3]}px;opacity:0">${words(h[2])}</div>`).join('');
+$('#close').innerHTML=words("From the first inquiry|to the final payment");
+
+// ---------- timeline ----------
+gsap.set('#cur',{x:900,y:1700});
+const tl=gsap.timeline({paused:true});
+const E="power3.out", IO="power2.inOut";
+function cam(t,s,px,py,cx=540,cy=900,d=1){tl.to('#world',{scale:s,x:cx-s*px,y:cy-s*py,duration:d,ease:IO},t)}
+function say(sel,t,step=.13){const ws=document.querySelectorAll(sel+' .w');gsap.set(sel,{opacity:1});
+  tl.fromTo(ws,{opacity:0,y:34,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.45,stagger:step,ease:E},t)}
+function unsay(sel,t){tl.to(sel,{opacity:0,y:-30,filter:'blur(8px)',duration:.35,ease:"power2.in"},t)}
+function click(btn,t,cx,cy){tl.to('#cur',{x:cx,y:cy,duration:.55,ease:E},t-.6).to(btn,{scale:.93,duration:.08},t).to(btn,{scale:1,duration:.18,ease:"back.out(3)"},t+.08)}
+function done(i,t){tl.to('#rfill',{attr:{'stroke-dashoffset':780-156*i},duration:.5,ease:IO},t-.3)
+  .to(`#n${i} .nc`,{attr:{fill:'#D0176F',stroke:'#D0176F'},duration:.2},t).to(`#n${i} .nk`,{opacity:1,duration:.2},t)
+  .fromTo(`#n${i}`,{scale:1},{scale:1.35,duration:.14,yoyo:true,repeat:1,transformOrigin:'50% 50%'},t)}
+tl.set({},{},28.6);
+
+// 0 hook — the journey as a fanned hand
+HEADS.forEach((h,i)=>{say('#h'+i,h[0]); if(i<HEADS.length-1) unsay('#h'+i,h[1]-.25)});
+unsay('#h6',21.85);
+STAGES.forEach((s,i)=>{const a=(i-2.5)*9;
+  tl.fromTo('#m'+i,{x:540,y:1900,rotation:0,opacity:0},{x:540+(i-2.5)*95,y:1000+Math.abs(i-2.5)*24,rotation:a,opacity:1,duration:.7,ease:"back.out(1.4)"},.35+i*.08)});
+tl.to('#fan',{rotation:2,duration:1.2,ease:IO,transformOrigin:'540px 1100px'},1.1);
+// zoom slam into the booking card (front-left)
+tl.to('#world',{scale:2.4,x:540-2.4*302,y:900-2.4*1060,filter:'blur(6px)',duration:.4,ease:"power3.in"},2.15)
+  .set('#fan',{opacity:0},2.56).set('#card',{opacity:1},2.56)
+  .fromTo('#world',{scale:1.18,x:540-1.18*540,y:900-1.18*884,filter:'blur(6px)'},{scale:1,x:0,y:0,filter:'blur(0px)',duration:.7,ease:E,immediateRender:false},2.56);
+tl.fromTo('#rail',{opacity:0,y:30},{opacity:1,y:0,duration:.5,ease:E},2.7);
+
+// 1 booking
+tl.to('#cur',{opacity:1,duration:.2},2.9);
+click('#d3',3.45,700,802); tl.to('#d3',{backgroundColor:'#D0176F',borderColor:'#D0176F',color:'#fff',duration:.15},3.45).to('#d3 b',{color:'#fff',duration:.15},3.45);
+click('#s1',4.0,743,950); tl.to('#s1',{backgroundColor:'#FBE3EE',borderColor:'#D0176F',color:'#D0176F',duration:.15},4.0);
+click('#b1btn',4.55,560,1212); tl.to('#b1btn',{opacity:0,duration:.15},4.7).fromTo('#booked',{opacity:0,scale:.9},{opacity:1,scale:1,duration:.35,ease:"back.out(2)"},4.7);
+done(0,4.8);
+
+// 2 proposal — same card, next step
+tl.to('#p1',{opacity:0,y:-60,duration:.35,ease:"power2.in"},5.1).to('#card',{height:846,duration:.5,ease:IO},5.1)
+  .fromTo('#p2',{opacity:0,y:80},{opacity:1,y:0,duration:.5,ease:E},5.35)
+  .fromTo('#p2 .l2',{opacity:0,x:-30},{opacity:1,x:0,duration:.35,stagger:.1,ease:E},5.45);
+click('#b2btn',6.55,560,1190);
+tl.to('#b2btn',{opacity:0,duration:.1},6.7).fromTo('#st2',{opacity:0,scale:2.2},{opacity:1,scale:1,duration:.25,ease:"power4.in"},6.7)
+  .to('#world',{x:'+=8',y:'-=6',duration:.05,yoyo:true,repeat:3},6.95);
+done(1,7.0);
+
+// 3 feedback — the card opens up into the proof
+tl.to('#cur',{opacity:0,duration:.2},7.3)
+  .to('#p2',{opacity:0,y:-60,duration:.35,ease:"power2.in"},7.65)
+  .to('#card',{left:50,width:980,height:850,duration:.6,ease:IO},7.7)
+  .fromTo('#p3',{opacity:0},{opacity:1,duration:.4},7.95)
+  .fromTo('#proof',{scale:1.08,y:20},{scale:1,y:0,duration:.8,ease:E},7.95);
+cam(8.5,1.1,390,753,540,773,1.0);
+tl.fromTo('#pinA',{opacity:0,scale:0},{opacity:1,scale:1,duration:.35,ease:"back.out(3)"},8.9)
+  .fromTo('#bubA',{opacity:0,y:30,scale:.9},{opacity:1,y:0,scale:1,duration:.45,ease:"back.out(1.6)",transformOrigin:'200px 0'},9.15);
+done(2,10.9);
+// pan to the second comment
+tl.to('#bubA',{opacity:0,y:-20,duration:.3},11.55);
+cam(11.6,1.1,252,1264,380,1355,.9);
+tl.fromTo('#pinB',{opacity:0,scale:0},{opacity:1,scale:1,duration:.35,ease:"back.out(3)"},12.1)
+  .fromTo('#bubB',{opacity:0,y:30,scale:.9},{opacity:1,y:0,scale:1,duration:.45,ease:"back.out(1.6)",transformOrigin:'80px 300px'},12.3)
+  .fromTo('#oos',{opacity:0,scale:.6},{opacity:1,scale:1,duration:.3,ease:"back.out(3)"},13.25);
+
+// 4 change order — the request is lifted out, the world turns brand colour
+cam(13.7,1,0,0,0,0,.8);
+tl.to('#card',{opacity:.18,filter:'grayscale(1)',duration:.6},13.75).to(['#bubB','#pinB','#pinA'],{opacity:0,duration:.4},13.75)
+  .to('#field',{clipPath:'circle(2400px at 252px 1264px)',duration:1.0,ease:"power2.in"},13.75)
+  .to('#rbase',{attr:{stroke:'rgba(255,255,255,.45)'},duration:.4},14.2)
+  .to('#h4',{color:'#fff',duration:.4},14.1)
+  .fromTo('#co',{opacity:0,y:300,rotationX:35,scale:.85},{opacity:1,y:0,rotationX:0,scale:1,duration:.7,ease:"back.out(1.3)",transformPerspective:1400},14.0);
+[0,1,2].forEach(i=>tl.to(`#n${i} .nc`,{attr:{fill:'#fff',stroke:'#fff'},duration:.3},14.2).to(`#n${i} .nk`,{attr:{stroke:'#D0176F'},duration:.3},14.2));
+[3,4,5].forEach(i=>tl.to(`#n${i} .nc`,{attr:{stroke:'rgba(255,255,255,.6)',fill:'#C8126A'},duration:.3},14.2));
+tl.to('#cur',{opacity:1,duration:.2},14.6);
+click('#cobtn',15.55,600,1100);
+tl.to('#cobtn',{backgroundColor:'#1F7A4D',duration:.2},15.6).set('#cot',{textContent:'Approved ✓'},15.65);
+tl.to('#rfill',{attr:{'stroke-dashoffset':780-156*3,stroke:'#fff'},duration:.5,ease:IO},15.4).to('#n3 .nc',{attr:{fill:'#fff',stroke:'#fff'},duration:.2},15.7).to('#n3 .nk',{attr:{stroke:'#D0176F'},opacity:1,duration:.2},15.7)
+  .fromTo('#n3',{scale:1},{scale:1.35,duration:.14,yoyo:true,repeat:1,transformOrigin:'50% 50%'},15.7);
+[0,1,2,3].forEach(i=>tl.to(`#n${i} .nc`,{attr:{fill:'#D0176F',stroke:'#D0176F'},duration:.3},17.2).to(`#n${i} .nk`,{attr:{stroke:'#fff'},duration:.3},17.2));
+[4,5].forEach(i=>tl.to(`#n${i} .nc`,{attr:{stroke:'#D9D0C5',fill:'#fff'},duration:.3},17.2));
+tl.to('#rfill',{attr:{stroke:'#D0176F'},duration:.3},17.2);
+
+// 5 invoice — the change order flies into the invoice as a line
+tl.to('#cur',{opacity:0,duration:.2},16.5)
+  .to('#card',{opacity:1,filter:'grayscale(0)',left:90,width:900,height:780,duration:.6,ease:IO},16.7)
+  .to('#p3',{opacity:0,duration:.25},16.7)
+  .fromTo('#p5',{opacity:0,y:60},{opacity:1,y:0,duration:.5,ease:E},16.95)
+  .to('#co',{left:146,top:858,scale:.12,opacity:0,duration:.6,ease:"power3.in",transformOrigin:'0 0'},17.05)
+  .fromTo('#l5b',{opacity:0,x:-40,backgroundColor:'#FBE3EE'},{opacity:1,x:0,backgroundColor:'rgba(251,227,238,0)',duration:.9,ease:E},17.6)
+  .to('#field',{clipPath:'circle(0px at 540px 1300px)',duration:.8,ease:"power2.inOut"},16.9)
+  .to('#rbase',{attr:{stroke:'#D9D0C5'},duration:.4},17.2);
+tl.fromTo('#st5',{opacity:0,scale:2.4},{opacity:1,scale:1,duration:.25,ease:"power4.in"},18.55)
+  .to('#world',{x:'+=9',y:'-=7',duration:.05,yoyo:true,repeat:3},18.8);
+done(4,18.85);
+
+// 6 testimonial
+tl.to('#p5',{opacity:0,y:-60,duration:.35,ease:"power2.in"},19.6).to('#card',{height:760,duration:.5,ease:IO},19.6)
+  .fromTo('#p6',{opacity:0,y:80},{opacity:1,y:0,duration:.5,ease:E},19.85)
+  .to('#cur',{opacity:1,duration:.2},20.1);
+click('#b6btn',20.85,580,1080);
+tl.to('#b6btn',{backgroundColor:'#1F7A4D',duration:.2},20.9).set('#b6btn',{textContent:'Request sent ✓'},20.95)
+  .fromTo('#plane',{opacity:1,x:0,y:0,rotation:0},{opacity:0,x:260,y:-560,rotation:-15,duration:.9,ease:"power2.in"},20.95)
+  .to('#cur',{opacity:0,duration:.2},21.4);
+done(5,21.1);
+
+// close — the card returns to the journey, the field rises
+tl.to('#card',{y:420,scale:.3,opacity:0,duration:.45,ease:"power3.in",transformOrigin:'840px 700px'},21.85).set('#field',{clipPath:'circle(0px at 930px 1420px)'},22.1)
+  .to('#field',{clipPath:'circle(2400px at 930px 1420px)',duration:1.1,ease:"power2.inOut"},22.2)
+  .to('#rbase',{attr:{stroke:'rgba(255,255,255,.5)'},duration:.5},22.6)
+  .to('#rfill',{attr:{stroke:'#fff'},duration:.5},22.6)
+  .to('#rail .nc',{attr:{fill:'#fff',stroke:'#fff'},duration:.5},22.6)
+  .to('#rail .nk',{attr:{stroke:'#D0176F'},duration:.5},22.6);
+STAGES.forEach((s,i)=>tl.fromTo(`#n${i}`,{scale:1},{scale:1.3,duration:.16,yoyo:true,repeat:1,transformOrigin:'50% 50%'},22.7+i*.1));
+gsap.set('#close',{opacity:1});
+tl.fromTo('#close .w',{opacity:0,y:40,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.5,stagger:.16,ease:E},22.6);
+tl.fromTo('#logo',{opacity:0,y:60,scale:.9},{opacity:1,y:0,scale:1,duration:.7,ease:"back.out(1.5)"},24.9)
+  .fromTo('#url',{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:E},25.4);
+
+// ---------- background: a pure function of time ----------
+function bg(t){
+  const b=(id,x,y,ax,ay,f,p)=>{const e=document.getElementById(id);e.style.transform=`translate(${x+ax*Math.sin(t*f+p)}px,${y+ay*Math.cos(t*f*.8+p)}px)`};
+  b('b1',-180,120,90,60,.35,0); b('b2',520,1050,80,90,.28,1.7); b('b3',-140,1250,70,50,.31,3.1);
+  document.getElementById('grain').style.transform=`translate(${-(Math.floor(t*12)%5)*9}px,${-(Math.floor(t*12)%7)*6}px)`;
+}
+window.DURATION=28.6;
+window.seek=t=>{tl.time(t);bg(t)};
+window.ready=document.fonts.ready.then(()=>{seek(0);return true});
+if(!/clean/.test(location.search)){const t0=performance.now();(function loop(){seek(((performance.now()-t0)/1000)%DURATION);requestAnimationFrame(loop)})()}
+</script></body></html>

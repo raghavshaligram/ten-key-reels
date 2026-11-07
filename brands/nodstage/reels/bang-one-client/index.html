@@ -32,7 +32,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
 .li{display:flex;justify-content:space-between;align-items:center;height:100px;border-bottom:2px solid var(--line);font:500 36px Inter}
 .li span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
 .stamp{position:absolute;border:7px solid var(--green);color:var(--green);border-radius:18px;padding:6px 30px;font:800 64px Archivo;letter-spacing:3px;background:rgba(255,255,255,.85)}
-.head{position:absolute;left:60px;right:60px;top:250px;text-align:center;font:700 74px/1.08 Archivo;letter-spacing:-1px;color:var(--ink)}
+.head{position:absolute;left:40px;right:40px;top:222px;text-align:center;font:700 74px/1.08 Archivo;letter-spacing:-1px;color:var(--ink)}
 .head .w{display:inline-block;margin-right:.24em}
 .pin{position:absolute;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:var(--mag);color:#fff;font:700 32px Inter;display:grid;place-items:center;border:5px solid #fff;box-shadow:0 8px 20px rgba(208,23,111,.4)}
 .bub{position:absolute;width:580px;background:#fff;border-radius:28px;padding:28px 30px;box-shadow:0 30px 70px -20px rgba(40,20,30,.35);font:500 34px/1.35 Inter}
@@ -56,6 +56,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
 <svg id="grain" width="1180" height="2020"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .25 0 0 0 1.4 -.2"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
 <div id="field"></div>
 
+<div id="frame" style="position:absolute;inset:0;transform-origin:540px 450px;transform:translateY(-20px) scale(.88)">
 <div id="world">
   <!-- hook: the whole journey as a hand of cards -->
   <div id="fan"></div>
@@ -133,6 +134,7 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
     <div class="av" style="position:absolute;left:44px;top:46px;width:52px;height:52px;font-size:22px;border:4px solid #fff">HB</div>
   </div>
 </div>
+</div>
 
 <div id="heads"></div>
 <svg id="rail" width="1080" height="1920"></svg>
@@ -142,6 +144,11 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
 <div id="url" style="position:absolute;left:0;right:0;top:1160px;text-align:center;color:#fff;font:600 52px Inter;opacity:0">nodstage.com</div>
 </div>
 
+<svg id="pres" width="1080" height="1920" style="position:absolute;left:0;top:0;pointer-events:none">
+<defs><linearGradient id="fadeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".8" stop-color="#fff"/><stop offset=".92" stop-color="#000"/></linearGradient>
+<mask id="fadeM" maskUnits="userSpaceOnUse" x="0" y="900" width="1080" height="760"><rect x="0" y="900" width="1080" height="760" fill="url(#fadeG)"/></mask></defs>
+<g mask="url(#fadeM)"><g id="presG"></g></g></svg>
+<script src="amp.js"></script>
 <script src="gsap.min.js"></script>
 <script>
 const $=s=>document.querySelector(s);
@@ -160,14 +167,14 @@ const STAGES=[["cal","Booking"],["doc","Proposal"],["bub","Feedback"],["plus","C
 const ic=(k,c="#D0176F",s=64)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
 $('#fan').innerHTML=STAGES.map((s,i)=>`<div class="mini" id="m${i}" style="z-index:${6-i}"><div class="ic">${ic(s[0])}</div>${s[1]}</div>`).join('');
 // rail
-const RX=i=>150+i*156, RY=1420;
+const RX=i=>150+i*156, RY=365;
 let r=`<line id="rbase" x1="150" y1="${RY}" x2="930" y2="${RY}" stroke="#D9D0C5" stroke-width="6" stroke-linecap="round"/>
 <line id="rfill" x1="150" y1="${RY}" x2="930" y2="${RY}" stroke="#D0176F" stroke-width="6" stroke-linecap="round" stroke-dasharray="780" stroke-dashoffset="780"/>`;
 STAGES.forEach((s,i)=>{r+=`<g id="n${i}" transform="translate(${RX(i)} ${RY})"><circle class="nc" r="26" fill="#fff" stroke="#D9D0C5" stroke-width="5"/><path class="nk" d="M-9 0l6 6 11-12" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></g>`});
 $('#rail').innerHTML=r;
 // headlines
-const HEADS=[[0.3,2.45,"One client,|start to finish",104],[2.7,5.0,"Hannah books a call",74],[5.15,7.6,"The proposal, accepted",74],
- [7.75,11.95,"Feedback on the design",74],[12.0,16.8,"Extra work becomes a change order",74],[16.9,19.6,"The invoice already has it",74],[19.75,22.0,"Then, a testimonial",74]];
+const HEADS=[[0.3,2.45,"One client,|start to finish",104],[2.7,5.0,"Hannah books a call",62],[5.15,7.6,"The proposal, accepted",62],
+ [7.75,11.95,"Feedback on the design",62],[12.0,16.8,"Extras become change orders",62],[16.9,19.6,"The invoice already has it",62],[19.75,22.0,"Then, a testimonial",62]];
 const words=(txt)=>txt.split('|').map(l=>l.split(' ').map(w=>`<span class="w">${w}</span>`).join('')).join('<br>');
 $('#heads').innerHTML=HEADS.map((h,i)=>`<div class="head" id="h${i}" style="font-size:${h[3]}px;opacity:0">${words(h[2])}</div>`).join('');
 $('#close').innerHTML=words("From the first inquiry|to the final payment");
@@ -285,6 +292,54 @@ tl.fromTo('#close .w',{opacity:0,y:40,filter:'blur(10px)'},{opacity:1,y:0,filter
 tl.fromTo('#logo',{opacity:0,y:60,scale:.9},{opacity:1,y:0,scale:1,duration:.7,ease:"back.out(1.5)"},24.9)
   .fromTo('#url',{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:E},25.4);
 
+
+// ---------- presenter: jointed rig from bang-motion (MIT, starter-explainer-panggung character()) ----------
+const SVGNS='http://www.w3.org/2000/svg';
+function N(tag,a={},p){const n=document.createElementNS(SVGNS,tag);for(const k in a)n.setAttribute(k,a[k]);p.appendChild(n);return n;}
+const G=(a,p)=>N('g',a,p),RR=(x,y,w,h,f,rx,p)=>N('rect',{x,y,width:w,height:h,rx,fill:f},p),EL=(cx,cy,rx,ry,f,p)=>N('ellipse',{cx,cy,rx,ry,fill:f},p),
+ PA=(d,f,p)=>N('path',{d,fill:f},p),LN=(d,st,w,p)=>N('path',{d,fill:'none',stroke:st,'stroke-width':w,'stroke-linecap':'round','stroke-linejoin':'round'},p);
+const sh=(hex,f)=>{const n=parseInt(hex.slice(1),16);const r=Math.round(((n>>16)&255)*f),g=Math.round(((n>>8)&255)*f),b=Math.round((n&255)*f);return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)};
+function J(el,tx=0,ty=0){const j={el,tx,ty,x:0,y:0,r:0,apply(){el.setAttribute('transform',`translate(${j.tx+j.x},${j.ty+j.y}) rotate(${j.r})`)}};j.apply();return j}
+const SKIN='#E6AE8A',HAIR='#3A2520',SHIRT='#2C2F4A',PANTS='#5B5F7A';
+const place=G({transform:'translate(175,1800) scale(1.3)'},$('#presG'));
+EL(0,4,80,16,'#3A1A2A',place).setAttribute('opacity',.12);
+const rootEl=G({},place),P={root:J(rootEl)};
+for(const side of ['R','L']){const sx=side==='L'?-26:26,dk=side==='R'?.86:1;const tEl=G({},rootEl);J(tEl,sx,-214);RR(-24,-10,48,118,sh(PANTS,dk),21,tEl);
+  const sEl=G({},tEl);J(sEl,0,102);RR(-21,-8,42,108,sh(PANTS,dk),18,sEl);}
+const tEl=G({},rootEl);P.torso=J(tEl,0,-214);
+// long hair behind the head
+const hairBack=G({},tEl);const hb=J(hairBack,0,-160);PA('M -86 -120 C -96 -200 96 -200 86 -120 L 92 30 C 60 52 -60 52 -92 30 Z',HAIR,hairBack);
+const arm=(side,front)=>{const s=side==='L'?-1:1,aEl=G({},tEl),a=J(aEl,50*s,-126);RR(-17,-16,34,98,front?SHIRT:sh(SHIRT,.8),16,aEl);
+  const fEl=G({},aEl),f=J(fEl,0,78);RR(-15,-12,30,90,front?SKIN:sh(SKIN,.92),14,fEl);const hEl=G({},fEl);J(hEl,0,74);EL(0,4,17,21,front?SKIN:sh(SKIN,.92),hEl);
+  P[side+'arm']=a;P[side+'fore']=f};
+arm('R',false);
+PA('M -48 -152 C -64 -144 -70 -112 -66 -76 L -58 8 C -28 22 32 22 60 8 L 67 -76 C 71 -112 60 -144 45 -152 Z',SHIRT,tEl);
+PA('M -20 -150 L 0 -118 L 20 -150 Z','#F4EDE4',tEl);                    // collar
+N('circle',{cx:30,cy:-96,r:10,fill:'#D0176F'},tEl);                       // Nodstage pin
+RR(-15,-178,30,40,SKIN,12,tEl);
+arm('L',true);
+const hEl=G({},tEl);P.head=J(hEl,0,-160);
+EL(-72,-70,13,20,SKIN,hEl);EL(72,-70,13,20,SKIN,hEl);
+PA('M -74 -120 C -74 -180 74 -180 74 -120 L 74 -60 C 74 -6 -74 -6 -74 -60 Z',SKIN,hEl);
+PA('M -80 -100 C -88 -186 88 -186 80 -100 C 60 -140 10 -150 -30 -126 C -50 -116 -66 -106 -80 -100 Z',HAIR,hEl);   // side-swept fringe
+const eyes=G({},hEl);P.eyes=J(eyes,0,-86);EL(-28,0,8,9,'#1B1C21',eyes);EL(28,0,8,9,'#1B1C21',eyes);
+LN('M -42 -106 C -34 -112 -22 -112 -15 -108','#2A1A16',4,hEl);LN('M 15 -108 C 22 -112 34 -112 42 -104','#2A1A16',4,hEl);
+EL(-44,-62,13,8,'#F2A0A8',hEl).setAttribute('opacity',.6);EL(44,-62,13,8,'#F2A0A8',hEl).setAttribute('opacity',.6);
+const mouth=EL(0,-40,16,4,'#7A2E3A',hEl);
+// poses: [Larm, Lfore, Rarm, Rfore, head, torso]  (L = front arm, screen left; R = back arm, screen right)
+const POSE={rest:[8,-6,-8,6,0,0],wave:[8,-6,-125,-45,-4,-2],point:[10,-8,-118,-14,6,2],present:[42,-28,-42,28,0,0],
+  talk:[22,-40,-14,10,3,0]};
+const PS=[[0,'rest'],[.35,'wave'],[2.5,'rest'],[3.1,'point'],[7.4,'talk'],[8.6,'point'],[11.7,'talk'],[14.1,'point'],[16.6,'present'],[19.5,'point'],[21.6,'talk'],[22.6,'present'],[26.4,'rest']];
+let prev=POSE.rest;
+PS.forEach(([t,name],k)=>{const v=POSE[name],js=[P.Larm,P.Lfore,P.Rarm,P.Rfore,P.head,P.torso];
+  js.forEach((j,i)=>tl.to(j,{r:v[i],duration:.45,ease:'back.out(1.4)',onUpdate:()=>{j.apply();hb.r=P.head.r;hb.apply()}},t));
+  if(name==='wave')for(let w=0;w<4;w++)tl.to(P.Rfore,{r:w%2?-70:-30,duration:.22,ease:"sine.inOut",onUpdate:()=>P.Rfore.apply()},t+.45+w*.22);
+});
+function presenter(t){
+  const a=(window.AMP||[])[Math.round(t*30)]||0;mouth.setAttribute('ry',3+a*14);mouth.setAttribute('rx',16-a*3);
+  P.eyes.el.setAttribute('transform',`translate(0,-86) scale(1,${(t%3.6)<.12?.08:1})`);
+  P.root.y=Math.sin(t*2.2)*2;P.root.apply();                    // breathing
+}
 // ---------- background: a pure function of time ----------
 function bg(t){
   const b=(id,x,y,ax,ay,f,p)=>{const e=document.getElementById(id);e.style.transform=`translate(${x+ax*Math.sin(t*f+p)}px,${y+ay*Math.cos(t*f*.8+p)}px)`};
@@ -292,7 +347,7 @@ function bg(t){
   document.getElementById('grain').style.transform=`translate(${-(Math.floor(t*12)%5)*9}px,${-(Math.floor(t*12)%7)*6}px)`;
 }
 window.DURATION=28.6;
-window.seek=t=>{tl.time(t);bg(t)};
+window.seek=t=>{tl.time(t);bg(t);presenter(t)};
 window.ready=document.fonts.ready.then(()=>{seek(0);return true});
 if(!/clean/.test(location.search)){const t0=performance.now();(function loop(){seek(((performance.now()-t0)/1000)%DURATION);requestAnimationFrame(loop)})()}
 </script></body></html>
