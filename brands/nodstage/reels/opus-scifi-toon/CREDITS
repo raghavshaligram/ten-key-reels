@@ -1,0 +1,5 @@
+Style: "Sci-Fi Sitcom Toon" from Lemo-Opuscar by Lemomo (github.com/lemomo-ai/lemo-opuscar), MIT / CC BY 4.0. toon.js and lib.js reused from its demo engine; eye/mouth/hand helpers and the portal adapted from its chars.js / worlds.js. Cast, worlds and story are original.
+Voices: Kokoro TTS (Apache 2.0): am_puck, af_jessica, bm_fable. Word timings: faster-whisper.
+Fonts (OFL): Baloo 2, VT323, Bungee (via @fontsource).
+Music and sound effects: synthesized in mix.py.
+Design proof: a screenshot of the Nodstage app (sample data). Logo: Nodstage.
