@@ -38,7 +38,7 @@
     <clipPath id="frameClip"><rect width="1080" height="1920"/></clipPath>
   </defs>
   <g clip-path="url(#frameClip)">
-    <g id="cam"><g id="world"></g></g>
+    <g id="cam"><g id="world"></g><g id="pres" filter="url(#boil)"></g></g>
     <g id="hud"></g>
     <g id="wipe"></g>
     <rect id="flash" width="1080" height="1920" fill="#FFFFFF" opacity="0"/>
@@ -48,6 +48,7 @@
 <canvas id="paper" width="1080" height="1920"></canvas>
 <canvas id="fx" width="1080" height="1920"></canvas>
 
+<script src="amp.js"></script>
 <script>
 const NS = 'http://www.w3.org/2000/svg';
 // five inks + paper: navy carries outlines/text; magenta (Nodstage) is the overprint shadow; yellow highlights; red is for stamps; cobalt for grounds
@@ -108,22 +109,26 @@ const radial = (cx, cy, R, pw = 1.2) => (x, y) => Math.pow(clamp(1 - Math.hypot(
 const edge = (R = 1100, pw = 1.6) => (x, y) => Math.pow(clamp(Math.hypot((x - 540) * 1.6, y - 960) / R - 0.35), pw) * 1.3;
 function bg(parent, color) { return el('rect', { width: W, height: H, fill: color }, parent); }
 
-// caption bar (two lines max), keyword parts in highlight ink
-function caption(parent, lines, { x = 540, y = 1335, size = 40 } = {}) {
+// the presenter's speech bubble carries the spoken line (keyword in magenta)
+function caption(parent, lines, { x = 400, y = 1335, size = 36 } = {}) {
   const g = el('g', {}, parent), inner = el('g', {}, g);
   const lw = lines.map(parts => parts.reduce((a, [s]) => a + measure(s, size, F.sans), 0));
-  const w = Math.max(...lw), padX = 32, lh = size * 1.32, hgt = lh * lines.length + size * 0.75;
-  el('rect', { x: -w / 2 - padX + 8, y: -hgt / 2 + 8, width: w + padX * 2, height: hgt, rx: 16, fill: C.mag, class: 'mul' }, inner);
-  el('rect', { x: -w / 2 - padX, y: -hgt / 2, width: w + padX * 2, height: hgt, rx: 16, fill: C.navy }, inner);
+  const w = Math.max(...lw), padX = 30, lh = size * 1.3, hgt = lh * lines.length + size * 0.8;
+  const tail = `M0 ${hgt * .55} L-46 ${hgt * .78} L0 ${hgt * .36} Z`;
+  el('rect', { x: 10, y: 10, width: w + padX * 2, height: hgt, rx: 26, fill: C.mag, class: 'mul' }, inner);
+  el('path', { d: tail, fill: C.cream, stroke: C.navy, 'stroke-width': 6, 'stroke-linejoin': 'round' }, inner);
+  el('rect', { x: 0, y: 0, width: w + padX * 2, height: hgt, rx: 26, fill: C.cream, stroke: C.navy, 'stroke-width': 6 }, inner);
+  el('path', { d: `M3 ${hgt * .38} L3 ${hgt * .53}`, stroke: C.cream, 'stroke-width': 8 }, inner);
   lines.forEach((parts, i) => {
-    const tt = el('text', { x: -lw[i] / 2, y: -hgt / 2 + size * 0.4 + lh * (i + .62), 'font-size': size, 'font-family': F.sans }, inner);
-    parts.forEach(([s, col]) => { const sp = el('tspan', { fill: col || C.cream }, tt); sp.textContent = s; });
+    const tt = el('text', { x: padX, y: size * 0.4 + lh * (i + .72), 'font-size': size, 'font-family': F.sans }, inner);
+    parts.forEach(([s, col]) => { const sp = el('tspan', { fill: col ? C.mag : C.navy }, tt); sp.textContent = s; });
   });
+  inner.setAttribute('transform', `translate(0 ${-hgt / 2})`);
   return { g, x, y };
 }
 function captionAnim(c, t, t0) {
-  if (t < t0) { op(c.g, 0); return; } const p = seg(t, t0, t0 + 0.4);
-  op(c.g, seg(t, t0, t0 + 0.12)); tf(c.g, c.x, c.y + 40 * (1 - E.out(p)), lerp(0.8, 1, E.back(p)), -1.0 * (1 - p) - 0.5);
+  if (t < t0) { op(c.g, 0); return; } const p = seg(t, t0, t0 + 0.35);
+  op(c.g, 1); tf(c.g, c.x - 40 * (1 - E.out(p)), c.y, lerp(0.3, 1, E.back(p)), 0);
 }
 function stampEl(parent, str, { size = 120, color = C.red, padX = 40, padY = 20, border = 11 } = {}) {
   const g = el('g', {}, parent), inner = el('g', { filter: 'url(#stampInk)' }, g);
@@ -164,13 +169,95 @@ function chip(parent, label, value, { x = 60, y = 300, dark = false } = {}) {
 }
 const LW = 6;
 
+
+// ============================================================
+// Inspector Nod: the Nodstage pin as the case officer (chunky ink outline, flat fills, glossy eyes)
+// ============================================================
+const P = {};
+function buildPresenter() {
+  const root = document.getElementById('pres');
+  P.root = el('g', {}, root);
+  P.shadow = el('ellipse', { cx: 0, cy: 0, rx: 92, ry: 16, fill: C.navy, opacity: .28, class: 'mul' }, P.root);
+  P.body = el('g', {}, P.root);
+  const pin = 'M -112 -300 A 112 112 0 1 1 112 -300 C 112 -228 46 -160 0 -72 C -46 -160 -112 -228 -112 -300 Z';
+  el('path', { d: pin, fill: C.mag, stroke: C.navy, 'stroke-width': 7, 'stroke-linejoin': 'round' }, P.body);
+  const cid = 'pinclip'; const cp = el('clipPath', { id: cid }, P.body); el('path', { d: pin }, cp);
+  halftone(el('g', { 'clip-path': `url(#${cid})` }, P.body), { x0: -130, y0: -430, w: 260, h: 380, step: 16, angle: 45, color: '#8E0B4B', cls: 'mul', maxK: .55, f: (x, y) => 0.15 + 0.85 * seg(y, -330, -110) * seg(x, -140, 90) });
+  el('path', { d: pin, fill: 'none', stroke: C.navy, 'stroke-width': 7, 'stroke-linejoin': 'round' }, P.body);
+  P.head = el('g', {}, P.body);
+  el('circle', { cx: 0, cy: -296, r: 74, fill: C.cream, stroke: C.navy, 'stroke-width': 5 }, P.head);
+  el('ellipse', { cx: -46, cy: -268, rx: 15, ry: 9, fill: '#FF9BBE' }, P.head); el('ellipse', { cx: 46, cy: -268, rx: 15, ry: 9, fill: '#FF9BBE' }, P.head);
+  P.eyes = el('g', {}, P.head); P.eyeOpen = el('g', {}, P.eyes); P.eyeHappy = el('g', {}, P.eyes);
+  for (const x of [-27, 27]) { el('ellipse', { cx: x, cy: -306, rx: 12, ry: 16, fill: C.navy }, P.eyeOpen); el('circle', { cx: x + 4, cy: -312, r: 4.5, fill: C.cream }, P.eyeOpen); el('circle', { cx: x - 3, cy: -298, r: 2, fill: C.cream }, P.eyeOpen);
+    el('path', { d: `M${x - 12} -302 Q${x} -318 ${x + 12} -302`, fill: 'none', stroke: C.navy, 'stroke-width': 6, 'stroke-linecap': 'round' }, P.eyeHappy); }
+  P.mouthO = el('ellipse', { cx: 0, cy: -262, rx: 13, ry: 4, fill: '#7A1E3A', stroke: C.navy, 'stroke-width': 4 }, P.head);
+  P.mouthC = el('path', { d: 'M -14 -266 Q 0 -254 14 -266', fill: 'none', stroke: C.navy, 'stroke-width': 5, 'stroke-linecap': 'round' }, P.head);
+  // deerstalker
+  const hat = el('g', {}, P.head), HT = '#C9A877';
+  el('path', { d: 'M -150 -372 Q -120 -352 -78 -366 L -86 -384 Q -124 -392 -150 -372 Z', fill: HT, stroke: C.navy, 'stroke-width': 5, 'stroke-linejoin': 'round' }, hat);
+  el('path', { d: 'M 150 -372 Q 120 -352 78 -366 L 86 -384 Q 124 -392 150 -372 Z', fill: HT, stroke: C.navy, 'stroke-width': 5, 'stroke-linejoin': 'round' }, hat);
+  el('path', { d: 'M -96 -368 Q -98 -456 0 -462 Q 98 -456 96 -368 Q 0 -350 -96 -368 Z', fill: HT, stroke: C.navy, 'stroke-width': 6, 'stroke-linejoin': 'round' }, hat);
+  el('path', { d: 'M -80 -402 Q 0 -390 80 -402 M -60 -440 Q 0 -432 60 -440 M -40 -458 L -40 -364 M 40 -458 L 40 -364', fill: 'none', stroke: '#9C7C4C', 'stroke-width': 4 }, hat);
+  el('circle', { cx: 0, cy: -464, r: 9, fill: HT, stroke: C.navy, 'stroke-width': 4 }, hat);
+  // hands + props
+  P.hand = {};
+  for (const k of ['L', 'R']) { const h = el('g', {}, P.root); el('circle', { r: 30, fill: C.mag, stroke: C.navy, 'stroke-width': 6 }, h); P.hand[k] = h; }
+  P.stamp = el('g', {}, P.hand.R);
+  el('rect', { x: -13, y: -92, width: 26, height: 64, rx: 12, fill: '#C9A877', stroke: C.navy, 'stroke-width': 5 }, P.stamp);
+  el('circle', { cx: 0, cy: -98, r: 19, fill: '#C9A877', stroke: C.navy, 'stroke-width': 5 }, P.stamp);
+  el('rect', { x: -48, y: 20, width: 96, height: 30, rx: 6, fill: C.red, stroke: C.navy, 'stroke-width': 5 }, P.stamp);
+  P.hand.R.appendChild(P.hand.R.firstChild); // the fist sits over the handle
+  P.glass = el('g', {}, P.hand.L);
+  el('rect', { x: -9, y: -10, width: 18, height: 80, rx: 8, fill: C.navy, transform: 'rotate(30)' }, P.glass);
+  el('circle', { cx: 28, cy: -64, r: 52, fill: 'rgba(255,244,226,.35)', stroke: C.navy, 'stroke-width': 9 }, P.glass);
+  el('path', { d: 'M 6 -88 Q 20 -102 38 -98', fill: 'none', stroke: C.cream, 'stroke-width': 6, 'stroke-linecap': 'round' }, P.glass);
+  P.hand.L.appendChild(P.hand.L.firstChild);
+}
+// hand targets (relative to the feet) per pose; tilt of the body
+const POSE = { rest: [[-150, -190], [150, -190], 0], wave: [[-150, -190], [175, -430], -3], point: [[-150, -190], [205, -390], 6],
+  talk: [[-170, -250], [150, -200], 2], magnify: [[-150, -330], [150, -190], -4], think: [[-62, -232], [150, -190], -6],
+  present: [[-200, -270], [200, -270], 0], cheer: [[-160, -460], [160, -460], 0], up: [[-150, -190], [150, -480], -2], down: [[-150, -190], [150, -250], 3] };
+const SCHED = [[2.4, 'wave'], [3.2, 'point'], [5.2, 'talk'], [7.75, 'magnify'], [11.85, 'think'], [14.0, 'point'], [16.85, 'point'], [19.75, 'talk'], [21.95, 'present'], [25.05, 'cheer'], [26.4, 'rest']];
+const PSTAMPS = [4.42, 7.0, 13.45, 15.85, 18.92, 21.12, 24.15];
+function baseAt(t) { let a = SCHED[0], b = SCHED[0]; for (const s of SCHED) if (s[0] <= t) { a = b; b = s; } return [a[1], b[1], E.out(seg(t, b[0], b[0] + .35))]; }
+function presAt(t) {
+  let [pa, pb, k] = baseAt(t);
+  let A = POSE[pa], B = POSE[pb];
+  let L = [lerp(A[0][0], B[0][0], k), lerp(A[0][1], B[0][1], k)], R = [lerp(A[1][0], B[1][0], k), lerp(A[1][1], B[1][1], k)], tilt = lerp(A[2], B[2], k), stamp = 0, sq = 1;
+  for (const s of PSTAMPS) {
+    if (t >= s - .6 && t < s + .5) { stamp = 1;
+      const up = E.out(seg(t, s - .6, s - .25)), dn = E.in(seg(t, s - .09, s)), back = E.io(seg(t, s + .2, s + .5));
+      const U = POSE.up[1], D = POSE.down[1];
+      let x = lerp(R[0], U[0], up), y = lerp(R[1], U[1], up); x = lerp(x, D[0], dn); y = lerp(y, D[1], dn);
+      R = [lerp(x, R[0], back), lerp(y, R[1], back)];
+      const af = t - s; if (af >= 0 && af < .3) sq = 1 - .08 * Math.exp(-af * 10) * Math.cos(af * 30);
+    } }
+  return { L, R, tilt, stamp, sq, pose: pb };
+}
+function presenterRender(t) {
+  const on = t >= 2.4; show(P.root, on); if (!on) return;
+  const p = presAt(t), enterP = E.back(seg(t, 2.4, 2.8));
+  const bob = Math.sin(t * 2.2) * 6, X = 190, Y = 1600;
+  tf(P.root, X, lerp(Y + 500, Y, enterP));
+  P.body.setAttribute('transform', `translate(0 ${bob}) rotate(${p.tilt} 0 -80) translate(0 -80) scale(${(1 / p.sq).toFixed(3)} ${p.sq.toFixed(3)}) translate(0 80)`);
+  let rx = p.R[0], ry = p.R[1]; if (p.pose === 'wave' && t < 3.2) rx += Math.sin(t * 11) * 22 * seg(t, 2.6, 2.8);
+  tf(P.hand.L, p.L[0], p.L[1] + bob + Math.sin(t * 2.1) * 4); tf(P.hand.R, rx, ry + bob + Math.sin(t * 2.1 + 1) * 4);
+  show(P.stamp, p.stamp); show(P.glass, t >= 7.95 && t < 11.75);
+  P.shadow.setAttribute('rx', 92 - bob);
+  const a = (window.AMP || [])[Math.round(t * 30)] || 0; show(P.mouthO, a > .08); show(P.mouthC, a <= .08);
+  P.mouthO.setAttribute('ry', 4 + a * 15); P.mouthO.setAttribute('rx', 13 - a * 2);
+  const happy = (t > 16.0 && t < 16.8) || t > 25.1; show(P.eyeHappy, happy); show(P.eyeOpen, !happy);
+  const bl = [3.6, 6.4, 10.2, 13.0, 17.6, 20.4, 23.2].some(b => t >= b && t < b + .12);
+  P.eyeOpen.setAttribute('transform', bl ? 'translate(0 -306) scale(1 .1) translate(0 306)' : '');
+}
 // ============================================================
 const world = document.getElementById('world'), cam = document.getElementById('cam'), hud = document.getElementById('hud');
 const wipe = document.getElementById('wipe'), flash = document.getElementById('flash'), fade = document.getElementById('fade');
 const scenes = [];
 function scene(t0, t1, build) { const g = el('g', {}, world); const s = { g, t0, t1 }; s.update = build(g, s); scenes.push(s); return s; }
 // a scene's camera: slow push for scrutiny, or a pull back
-function camOf(g, t, t0, t1, s0, s1, cx = 540, cy = 900) { const s = lerp(s0, s1, E.io(seg(t, t0, t1))); g.setAttribute('transform', `translate(${cx * (1 - s)} ${cy * (1 - s)}) scale(${s})`); }
+const K = 0.86;
+function camOf(g, t, t0, t1, s0, s1, cx = 540, cy = 900) { const s = lerp(s0, s1, E.io(seg(t, t0, t1))); g.setAttribute('transform', `translate(${540 * (1 - K)} ${232 * (1 - K)}) scale(${K}) translate(${cx * (1 - s)} ${cy * (1 - s)}) scale(${s})`); }
 function enter(g, t, t0, x, y, rot = 0, from = 1300) { if (t < t0) { op(g, 0); return; } op(g, 1); const p = E.back(seg(t, t0, t0 + 0.45)); tf(g, x, lerp(from, y, p), 1, rot * p); }
 function headline(g, lines, { y = 420, size = 84, fill = C.navy, shadow = C.mag } = {}) {
   return lines.map((s, i) => chars(g, s, { x: 64, y: y + i * size * 1.06, size, family: F.slab, fill, shadow: { fill: shadow, dx: 7, dy: 7 } }));
@@ -224,7 +311,7 @@ function buildAll() {
     const m2 = el('ellipse', { cx: 330, cy: 445, rx: 115, ry: 62, fill: 'none', stroke: C.mag, 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-dasharray': 560, 'stroke-dashoffset': 560, transform: 'rotate(4 330 445)' }, ex);
     const note = txt(ex, 'Hannah · video call', { x: 40, y: 560, 'font-size': 52, 'font-family': F.hand, 'font-weight': 700, fill: C.mag });
     const st = stampEl(camG, 'BOOKED', { size: 130 });
-    const cap = caption(g, [[['Hannah books a call from your '], ['booking page.', C.yellow]]]);
+    const cap = caption(g, [[['Hannah books a call']], [['from your '], ['booking page.', 1]]]);
     return (t) => {
       camOf(camG, t, 2.5, 5.05, 1, 1.04);
       hl.forEach((c, i) => charsPop(c, t, 2.62 + i * .2));
@@ -259,7 +346,7 @@ function buildAll() {
     const sigClip = el('clipPath', { id: 'sigc' }, ex); const sigR = el('rect', { x: 80, y: 540, width: 0, height: 120 }, sigClip);
     txt(el('g', { 'clip-path': 'url(#sigc)' }, ex), 'Hannah Brooks', { x: 84, y: 628, 'font-size': 78, 'font-family': F.hand, 'font-weight': 700, fill: C.blue });
     const st = stampEl(camG, 'ACCEPTED', { size: 112 });
-    const cap = caption(g, [[['You send the proposal, and she '], ['accepts it.', C.yellow]]]);
+    const cap = caption(g, [[['You send the proposal,']], [['and she '], ['accepts it.', 1]]]);
     return (t) => {
       camOf(camG, t, 5.05, 7.65, 1, 1.04);
       hl.forEach((c) => charsPop(c, t, 5.17));
@@ -292,7 +379,7 @@ function buildAll() {
     el('path', { d: 'M44 4 L96 4', stroke: C.cream, 'stroke-width': 8 }, bub);
     txt(bub, 'HANNAH:', { x: 26, y: 50, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.mag });
     txt(bub, 'Price per cup in the hero?', { x: 26, y: 112, 'font-size': 50, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
-    const cap = caption(g, [[['She leaves comments '], ['right on the design.', C.yellow]]]);
+    const cap = caption(g, [[['She leaves comments']], [['right on the design.', 1]]]);
     return (t) => {
       camOf(camG, t, 7.9, 11.8, 1, 1.07, 400, 760);
       hl.forEach((c) => charsPop(c, t, 7.77));
@@ -336,8 +423,8 @@ function buildAll() {
     const tick = el('path', { d: 'M50 640 L66 656 L92 618', fill: 'none', stroke: C.mag, 'stroke-width': 9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': 80, 'stroke-dashoffset': 80 }, co);
     txt(co, 'Approved by client', { x: 120, y: 652, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
     const app = stampEl(camG, 'APPROVED', { size: 128, color: C.mag });
-    const capA = caption(g, [[['Then she asks for something '], ['extra.', C.yellow]]]);
-    const capB = caption(g, [[['It becomes a '], ['change order,', C.yellow]], [['and she approves it.']]]);
+    const capA = caption(g, [[['Then she asks for']], [['something '], ['extra.', 1]]]);
+    const capB = caption(g, [[['It becomes a']], [['change order,', 1]], [['and she approves it.']]]);
     return (t) => {
       // tension: dots crowd in until the approval, then the magenta bloom
       const tense = seg(t, 11.8, 15.7);
@@ -379,7 +466,7 @@ function buildAll() {
     txt(ex, 'DUE', { x: 40, y: 480, 'font-size': 52, 'font-family': F.sans, fill: C.navy });
     txt(ex, '$1,725', { x: 660, y: 500, 'font-size': 130, 'font-family': F.bagel, fill: C.navy, 'text-anchor': 'end' });
     const st = stampEl(camG, 'PAID', { size: 190 });
-    const cap = caption(g, [[['The invoice already includes it. '], ['Paid.', C.yellow]]]);
+    const cap = caption(g, [[['The invoice already']], [['includes it. '], ['Paid.', 1]]]);
     return (t) => {
       camOf(camG, t, 16.75, 19.65, 1.03, 1, 540, 900);
       hl.forEach((c, i) => charsPop(c, t, 16.87 + i * .15));
@@ -410,7 +497,7 @@ function buildAll() {
     txt(env, 'TO: HANNAH BROOKS', { x: 220, y: 380, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
     txt(env, 'Fernhill Coffee Co.', { x: 220, y: 424, 'font-size': 28, 'font-family': F.mono, 'font-weight': 500, fill: C.navy });
     const st = stampEl(camG, 'SENT', { size: 150 });
-    const cap = caption(g, [[['Then you ask her for a '], ['testimonial.', C.yellow]]]);
+    const cap = caption(g, [[['Then you ask her']], [['for a '], ['testimonial.', 1]]]);
     return (t) => {
       camOf(camG, t, 19.65, 21.95, 1, 1.04);
       hl.forEach((c) => charsPop(c, t, 19.77));
@@ -445,7 +532,7 @@ function buildAll() {
       el('circle', { cx: 200, cy: 30, r: 16, fill: C.red, stroke: C.navy, 'stroke-width': 4 }, c);
       return c; });
     const st = stampEl(camG, 'CASE CLOSED', { size: 110 });
-    const cap = caption(g, [[['From the first inquiry to the '], ['final payment.', C.yellow]]]);
+    const cap = caption(g, [[['From the first inquiry']], [['to the '], ['final payment.', 1]]]);
     return (t) => {
       camOf(camG, t, 21.95, 23.6, 1.35, 1, 270, 640);   // pull back from exhibit 01 to the whole board
       hl.forEach((c, i) => charsPop(c, t, 22.05 + i * .25));
@@ -539,14 +626,14 @@ function render(t) {
   let fl = 0; if (t >= 15.85 && t < 16.0) fl = 0.5 * (1 - (t - 15.85) / 0.15); if (t >= 7.85 && t < 8.1) fl = Math.max(fl, 0.4 * (1 - (t - 7.85) / 0.25));
   op(flash, fl);
   op(fade, seg(t, 28.15, 28.6) * 0.0);
-  hudUpdate(t); wipeUpdate(t); drawFx(frame);
+  presenterRender(t); hudUpdate(t); wipeUpdate(t); drawFx(frame);
 }
 async function init() {
   const fams = ['400 50px "Alfa Slab One"', '400 50px "Bagel Fat One"', '800 50px "JetBrains Mono"', '500 50px "JetBrains Mono"', '400 50px "Archivo Black"', '700 50px "Caveat"'];
   const sample = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$,.+-:·→—?!\'';
   await Promise.all(fams.map(f => document.fonts.load(f, sample))); await document.fonts.ready;
   await Promise.all([...document.images].map(i => i.decode?.().catch(() => {})));
-  buildPaper(); buildAll();
+  buildPaper(); buildAll(); buildPresenter();
   const imgs = [...document.querySelectorAll('image')].map(im => new Promise(res => { const i = new Image(); i.onload = res; i.onerror = res; i.src = im.getAttribute('href'); }));
   await Promise.all(imgs);
   render(parseFloat(new URLSearchParams(location.search).get('t') || '0'));

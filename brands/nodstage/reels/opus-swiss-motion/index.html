@@ -8,6 +8,7 @@
 html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#EAE9E5}
 canvas{display:block}
 </style></head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="amp.js"></script>
 <script>
 // Swiss Motion grammar after Lemo-Opuscar's swiss-motion style (MIT / CC BY 4.0): one ease, snaps land on beats, clip reveals, one signal colour.
 const W=1080,H=1920,cv=document.getElementById('c'),X=cv.getContext('2d');
@@ -76,7 +77,7 @@ function hannahRow(){let v=HAN[0][1];for(let i=1;i<HAN.length;i++){const [t1,v1]
 HAN.forEach(h=>ev(h[0],'block',.45));
 
 // ---------- push into one module: the stage's detail page grows out of its row ----------
-const BOX={x:ML,y:470,w:MR-ML,h:930};
+const CS=.88,BOX={x:ML,y:470,w:936,h:930*CS},PADX=936*(1-CS)/2;          // panels shrink to make room for the presenter below
 const DET=[ // [open-land, close-start, row index (slot), draw]
  [3.25,4.5,0,dBooking],[5.5,7.25,1,dProposal],[8.0,11.75,2,dFeedback],[14.9,16.25,3,dChange],[17.25,19.25,4,dInvoice],[20.0,21.5,5,dTestimonial]];
 DET.forEach(d=>{ev(d[0]-E8,'slide',.7);ev(d[1],'slide',.5)});
@@ -89,7 +90,7 @@ function details(){
     const r={x:lerp(a.x,BOX.x,p),y:lerp(a.y,BOX.y,p),w:lerp(a.w,BOX.w,p),h:lerp(a.h,BOX.h,p)};
     X.save();X.beginPath();X.rect(r.x,r.y,r.w,r.h);X.clip();
     X.fillStyle=PAPER;X.fillRect(r.x,r.y,r.w,r.h);
-    const s=r.w/BOX.w;X.translate(r.x,r.y);X.scale(s,s);
+    const s=r.w/936*CS;X.translate(r.x+r.w*(1-CS)/2,r.y);X.scale(s,s);
     if(p>.35)fn(T-tO,tO);                                        // content only once the module is open enough to read
     X.restore();
     X.strokeStyle=INK;X.lineWidth=3;X.strokeRect(r.x,r.y,r.w,r.h);
@@ -151,7 +152,7 @@ ev(8.6,'block',.5);ev(10.75,'block',.5);ev(8.75,'slide',.35);ev(10.5,'slide',.35
 function exception(){
   if(T<11.75||T>=14.0)return;
   // start: pin 2 on screen (module still open at 11.75), fly linear with one eighth pause, grow
-  const s0={x:BOX.x+(468+(PB.x-(PB.x+60))*1.25),y:BOX.y+(392+(PB.y-(PB.y-90))*1.25)};
+  const s0={x:BOX.x+PADX+CS*(468-60*1.25),y:BOX.y+CS*(392+90*1.25)};
   const mid={x:640,y:1030},end={x:BX,y:ROW0+3*RH+22};
   let x,y,sz;
   if(T<13.6){const a=seg(T,11.75,12.6),b=seg(T,12.85,13.6);                 // linear, pause 12.6–12.85
@@ -238,8 +239,43 @@ function endCard(){
 }
 wordEvents('run your studio',24.85);wordEvents('with nodstage.',25.05);ev(24.25,'slide',.8);ev(26.0,'thunk',.6);ev(26.4,'block',.4);
 function corner(){if(T<2.6||T>24.6)return;const st=Math.min(6,1+Math.floor(hannahRow()+(T>13.6&&T<16.75?0:0)));
-  X.font=F(600,22);X.fillStyle=G2;X.fillText(`stage ${String(Math.round(hannahRow())+1).padStart(2,'0')}/06  ·  grid 6 × ${RH}  ·  120 bpm`,ML,1418);}
+  X.font=F(600,22);X.fillStyle=G2;X.fillText(`stage ${String(Math.round(hannahRow())+1).padStart(2,'0')}/06  ·  grid 6 × ${RH}  ·  120 bpm`,440,1418);}
 
+
+// ---------- the presenter: a figure built from grid primitives (circle, trapezoid, bars), black with one magenta collar ----------
+const PZ={rest:{R:[8,4],L:[8,4],tilt:0},wave:{R:[158,-30],L:[8,4],tilt:-4},point:{R:[118,22],L:[14,10],tilt:5},
+  stop:{R:[176,0],L:[18,20],tilt:-6,open:1},present:{R:[64,28],L:[64,28],tilt:0}};
+const PS=[[0,'rest'],[.3,'wave'],[2.6,'point'],[11.75,'stop'],[13.9,'point'],[22.0,'present'],[26.6,'rest']];
+const FILLS=[4.75,7.5,12.0,16.5,19.5,21.75];
+function poseAt(t){let a=PS[0],b=PS[0];for(const p of PS){if(p[0]<=t){a=b;b=p}}return [PZ[a[1]],PZ[b[1]],E(seg(t,b[0],b[0]+.3)),t-b[0],b[1]]}
+FILLS.forEach(f=>ev(f,'block',.2));
+function presenter(t){
+  const [A,B,k,lt,name]=poseAt(t),mix=(a,b)=>a+(b-a)*k;
+  const amp=(window.AMP||[])[Math.round(t*30)]||0;
+  const ox=196,sy=1440+Math.sin(t*2.2)*2;                               // shoulder line
+  // a re-point on the beat each time a row fills
+  let jab=0;for(const f of FILLS){const d=t-f;if(d>-.25&&d<.35)jab=Math.max(jab,Math.sin(Math.PI*clamp((d+.25)/.6)))}
+  X.save();
+  // body: trapezoid, magenta collar bar
+  X.fillStyle=INK;X.beginPath();X.moveTo(ox-80,sy);X.lineTo(ox+80,sy);X.lineTo(ox+58,sy+230);X.lineTo(ox-58,sy+230);X.closePath();X.fill();
+  X.fillStyle=SIG;X.fillRect(ox-40,sy,80,16);
+  // arms: two bars each, square caps, hand = square
+  const arm=(side,P0,P1)=>{const s=side==='R'?1:-1;let a1=mix(P0[0],P1[0]),a2=mix(P0[1],P1[1]);
+    if(side==='R'&&name==='wave')a2+=Math.sin(lt*9)*24*clamp(lt/.3);
+    if(side==='R'&&name==='point')a2-=jab*28;
+    const r1=a1*Math.PI/180,r2=(a1+a2)*Math.PI/180,x0=ox+s*76,y0=sy+12;
+    const x1=x0+s*Math.sin(r1)*88,y1=y0+Math.cos(r1)*88,x2=x1+s*Math.sin(r2)*82,y2=y1+Math.cos(r2)*82;
+    X.strokeStyle=INK;X.lineWidth=24;X.lineCap='butt';X.lineJoin='miter';X.beginPath();X.moveTo(x0,y0);X.lineTo(x1,y1);X.lineTo(x2,y2);X.stroke();
+    const hs=side==='R'&&(name==='stop'&&k>.5)?44:30;X.fillStyle=INK;X.fillRect(x2-hs/2,y2-hs/2,hs,hs);};
+  arm('L',A.L,B.L);arm('R',A.R,B.R);
+  // head: circle, eyes = two white squares that blink, mouth = a white bar opened by the voice
+  const tilt=mix(A.tilt||0,B.tilt||0),hx=ox,hy=sy-70-amp*5;
+  X.translate(hx,hy);X.rotate(tilt*Math.PI/180);
+  X.fillStyle=INK;X.beginPath();X.arc(0,0,54,0,Math.PI*2);X.fill();
+  const bl=((t+.4)%3.3)<.12?.15:1;X.fillStyle=PAPER;X.fillRect(-22,-16,12,14*bl);X.fillRect(12,-16,12,14*bl);
+  const mh=4+amp*24;X.fillRect(-16,16,32,mh);
+  X.restore();
+}
 let T=0;
 function render(t){T=t;X.fillStyle=PAGE;X.fillRect(0,0,W,H);
   hook();
@@ -253,6 +289,7 @@ function render(t){T=t;X.fillStyle=PAGE;X.fillRect(0,0,W,H);
     details();exception();heads();ending();corner();
   }
   endCard();
+  presenter(t);
 }
 window.DURATION=28.6;window.EV=EV;
 window.seek=t=>render(t);

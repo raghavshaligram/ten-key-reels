@@ -1,0 +1,262 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Nodstage · Swiss</title>
+<style>
+@font-face{font-family:Archivo;font-weight:500;font-display:block;src:url(archivo-latin-500-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:600;font-display:block;src:url(archivo-latin-600-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;font-display:block;src:url(archivo-latin-700-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:800;font-display:block;src:url(archivo-latin-800-normal.woff2)}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#EAE9E5}
+canvas{display:block}
+</style></head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Swiss Motion grammar after Lemo-Opuscar's swiss-motion style (MIT / CC BY 4.0): one ease, snaps land on beats, clip reveals, one signal colour.
+const W=1080,H=1920,cv=document.getElementById('c'),X=cv.getContext('2d');
+const PAGE='#EAE9E5',PAPER='#FFFFFF',INK='#111111',G1='#D3D1CB',G2='#8E8C86',G3='#C9C7C1',SIG='#D0176F';
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),lerp=(a,b,t)=>a+(b-a)*t,seg=(t,a,b)=>clamp((t-a)/(b-a));
+function cb(x1,y1,x2,y2){const bx=u=>3*(1-u)*(1-u)*u*x1+3*(1-u)*u*u*x2+u*u*u,by=u=>3*(1-u)*(1-u)*u*y1+3*(1-u)*u*u*y2+u*u*u;
+ return t=>{if(t<=0)return 0;if(t>=1)return 1;let lo=0,hi=1,u=t;for(let i=0;i<30;i++){const x=bx(u);if(Math.abs(x-t)<1e-6)break;if(x<t)lo=u;else hi=u;u=(lo+hi)/2}return by(u)}}
+const E=cb(.7,0,.2,1),BEAT=.5,E8=.25,E16=.125;
+const snap=(t,t1,d=E8)=>E(seg(t,t1-d,t1));
+function steps(t,a,b,n){const p=seg(t,a,b)*n,i=Math.floor(p);if(i>=n)return 1;return (i+E(p-i))/n}
+const F=(w,s)=>`${w} ${s}px Archivo`;
+const ML=72,MR=1008,CW=(MR-ML)/6;              // six columns, 156 px
+const img=new Image();img.src='proof.png';const logo=new Image();logo.src='logo.png';
+const EV=[];const ev=(t,type,v=1)=>EV.push({t:+t.toFixed(3),type,v});
+
+// ---------- text: words rise out of a clip rect, leave upward ----------
+function words(str,x,y,size,weight,color,tIn,tOut,step=.0625,opt={}){
+  X.font=F(weight,size);X.letterSpacing=(size>=90?-.02*size:0)+'px';
+  let cx=x;const sp=X.measureText(' ').width;
+  str.split(' ').forEach((w,i)=>{const wd=X.measureText(w).width,ti=tIn+i*step;
+    const pin=snap(T,ti+E16,E16),pout=tOut==null?0:snap(T,tOut+E8,E8);
+    if(pin>0&&pout<1){X.save();X.beginPath();X.rect(cx-4,y-size*1.02,wd+size*.3,size*1.3);X.clip();
+      X.fillStyle=(opt.colorOf&&opt.colorOf(w))||color;X.fillText(w,cx,y+(1-pin)*size*1.1-pout*size*1.2);X.restore();}
+    cx+=wd+sp;});
+  X.letterSpacing='0px';return cx-x;}
+function wordEvents(str,tIn,step=.0625){str.split(' ').forEach((w,i)=>ev(tIn+i*step+E16,'clack',.35))}
+// line grows along its length (linear)
+function hline(x0,x1,y,t0,t1,col=INK,w=2){const p=seg(T,t0,t1);if(p<=0)return;X.fillStyle=col;X.fillRect(x0,y-w/2,(x1-x0)*p,w)}
+function vline(x,y0,y1,t0,t1,col=G1,w=2){const p=seg(T,t0,t1);if(p<=0)return;X.fillStyle=col;X.fillRect(x-w/2,y0,w,(y1-y0)*p)}
+
+// ---------- the timetable: one row per stage of one client ----------
+const ROW0=500,RH=128,BX=400;
+const ROWS=[ // [label, value, fillAt, slotBefore, slotAfter(insert)]
+ {k:'booking',v:'thu 9 oct · 10:00',fill:4.75,idx:[[0,0]]},
+ {k:'proposal',v:'accepted · $6,800',fill:7.5,idx:[[0,1]]},
+ {k:'feedback',v:'2 notes on the design',fill:12.0,idx:[[0,2]]},
+ {k:'change order',v:'+$225 · approved',fill:16.5,idx:[[0,3]],extra:true},
+ {k:'invoice',v:'paid · $1,725',fill:19.5,idx:[[0,3],[13.6,4]]},
+ {k:'testimonial',v:'request sent',fill:21.75,idx:[[0,4],[13.725,5]]}];
+ROWS.forEach(r=>{ev(r.fill,'tss',.6);ev(r.fill+.25,'thunk',.5)});
+ev(13.6,'slide',.5);ev(13.725,'slide',.4);
+function rowY(r){let v=r.idx[0][1];for(let i=1;i<r.idx.length;i++){const [t1,v1]=r.idx[i];v=lerp(v,v1,snap(T,t1+E8,E8*1.5))}return ROW0+v*RH}
+function timetable(){
+  // the frame grid: six columns grow from the client dot on sixteenths
+  for(let i=0;i<=6;i++)vline(ML+i*CW,230,1440,2.0+i*E16*.5,2.5+i*E16*.5,G1,2);
+  ROWS.forEach((r,i)=>{
+    if(r.extra&&T<13.6)return;                                  // the sixth row doesn't exist until the extra request
+    const y=rowY(r),tA=r.extra?13.85:2.55+i*E16;
+    hline(ML,MR,y,tA,tA+.25,INK,2);
+    const pin=snap(T,tA+.375,E16);if(pin<=0)return;
+    X.save();X.beginPath();X.rect(ML,y,MR-ML,RH);X.clip();const dy=(1-pin)*60;
+    X.fillStyle=G2;X.font=F(600,24);X.fillText(String(r.extra?'03+':'0'+(i<3?i+1:i)).padStart(2,'0'),ML,y+40+dy);
+    X.fillStyle=r.extra?SIG:INK;X.font=F(800,42);X.fillText(r.k,ML,y+94+dy);
+    // the module: empty grey outline until the stage is done, then a bar wipes in
+    X.fillStyle=G3;X.fillRect(BX,y+22+dy,MR-BX,84);X.fillStyle=PAGE;X.fillRect(BX+3,y+25+dy,MR-BX-6,78);
+    if(r.extra&&T>=14.0&&T<r.fill){X.fillStyle=SIG;X.fillRect(BX,y+22,MR-BX,84);X.fillStyle=PAPER;X.font=F(700,34);X.fillText('+$225 · awaiting approval',BX+26,y+76)}
+    const pf=seg(T,r.fill,r.fill+E8);if(pf>0){X.fillStyle=r.extra?SIG:INK;X.fillRect(BX,y+22,(MR-BX)*pf,84);
+      if(pf>=1){const pt=snap(T,r.fill+.375,E16);X.save();X.beginPath();X.rect(BX,y+22,MR-BX,84);X.clip();
+        X.fillStyle=PAPER;X.font=F(700,34);X.fillText(r.v,BX+26,y+76+(1-pt)*50);X.restore()}}
+    X.restore();});
+  X.fillStyle=INK;
+}
+// Hannah = the one magenta square; she steps down the rows on the beat
+const HAN=[[2.75,0],[5.0,1],[7.5,2],[16.75,4],[19.5,5]];
+function hannahRow(){let v=HAN[0][1];for(let i=1;i<HAN.length;i++){const [t1,v1]=HAN[i];v=lerp(v,v1,snap(T,t1,E8))}return v}
+HAN.forEach(h=>ev(h[0],'block',.45));
+
+// ---------- push into one module: the stage's detail page grows out of its row ----------
+const BOX={x:ML,y:470,w:MR-ML,h:930};
+const DET=[ // [open-land, close-start, row index (slot), draw]
+ [3.25,4.5,0,dBooking],[5.5,7.25,1,dProposal],[8.0,11.75,2,dFeedback],[14.9,16.25,3,dChange],[17.25,19.25,4,dInvoice],[20.0,21.5,5,dTestimonial]];
+DET.forEach(d=>{ev(d[0]-E8,'slide',.7);ev(d[1],'slide',.5)});
+function rectFor(slot){const y=ROW0+slot*RH;return {x:BX,y:y+22,w:MR-BX,h:84}}
+function details(){
+  for(const [tO,tC,slot,fn] of DET){
+    const pOpen=snap(T,tO,E8*2),pClose=snap(T,tC+E8*2,E8*2);
+    if(pOpen<=0||pClose>=1)continue;
+    const p=pOpen*(1-pClose),a=rectFor(slot);
+    const r={x:lerp(a.x,BOX.x,p),y:lerp(a.y,BOX.y,p),w:lerp(a.w,BOX.w,p),h:lerp(a.h,BOX.h,p)};
+    X.save();X.beginPath();X.rect(r.x,r.y,r.w,r.h);X.clip();
+    X.fillStyle=PAPER;X.fillRect(r.x,r.y,r.w,r.h);
+    const s=r.w/BOX.w;X.translate(r.x,r.y);X.scale(s,s);
+    if(p>.35)fn(T-tO,tO);                                        // content only once the module is open enough to read
+    X.restore();
+    X.strokeStyle=INK;X.lineWidth=3;X.strokeRect(r.x,r.y,r.w,r.h);
+  }
+}
+// detail helpers in box coords (936 × 930)
+function note(s,x,y,t0,col=G2,size=24){if(T<t0)return;words(s,x,y,size,600,col,t0,null,.03)}
+function numeral(str,x,y,size,t0,dur,col=INK){const p=steps(T,t0,t0+dur,4);if(p<=0)return;
+  X.save();X.beginPath();X.rect(x-10,y-size*.82,1000,size*.92);X.clip();X.font=F(800,size);X.letterSpacing=(-.04*size)+'px';X.fillStyle=col;
+  X.fillText(str,x,y+(1-p)*size*.8);X.letterSpacing='0px';X.restore()}
+function cursorAt(x,y,press){X.fillStyle=SIG;const s=press?30:36;X.fillRect(x-s/2,y-s/2,s,s)}
+function button(label,x,y,w,t0,tClick,done){const pw=seg(T,t0,t0+E8);if(pw<=0)return;
+  X.fillStyle=done&&T>tClick?SIG:INK;X.fillRect(x,y,w*pw,96);
+  if(pw>=1){X.fillStyle=PAPER;X.font=F(700,36);X.fillText(T>tClick&&done?done:label,x+30,y+62)}}
+
+function dBooking(lt){                                            // a date is a giant numeral, the rest are notes
+  const t0=3.25;note('01 — booking page · northbeam studio',36,70,t0);
+  hline(36,900,96,t0,t0+.25,INK,2);
+  numeral('9',20,560,560,t0+.05,.5);
+  words('thu',360,240,72,800,INK,t0+.2);words('october',360,320,72,800,INK,t0+.27);
+  // the slots: a column of modules, one is chosen
+  ['9:00','10:00','11:30','2:00'].forEach((s,i)=>{const y=380+i*96,on=i===1&&T>3.95,pin=snap(T,t0+.35+i*E16,E16);if(pin<=0)return;
+    X.fillStyle=on?INK:PAGE;X.fillRect(360,y,(540)*pin,80);X.fillStyle=on?PAPER:INK;X.font=F(700,40);if(pin>=1)X.fillText(s,384,y+55);
+    if(i===1&&T>3.95){X.font=F(600,24);X.fillText('am · 30 min call',520,y+52)}});
+  button('book the call',360,790,540,t0+.6,4.45,'booked');
+  const cx=lerp(lerp(860,700,snap(T,3.95)),760,snap(T,4.45)),cy=lerp(lerp(900,460,snap(T,3.95)),838,snap(T,4.45));
+  cursorAt(cx,cy,Math.abs(T-3.95)<.08||Math.abs(T-4.45)<.08);
+}
+ev(3.95,'click',.7);ev(4.45,'click',.7);
+function dProposal(lt){const t0=5.5;note('02 — proposal · website refresh · for fernhill coffee co.',36,70,t0);hline(36,900,96,t0,t0+.25);
+  const L=[['discovery and moodboard','800'],['design: homepage and shop','2,400'],['build: shopify theme','3,600']];
+  L.forEach(([a,b],i)=>{const y=180+i*96,ti=t0+.2+i*E8;hline(36,780,y+30,ti,ti+.25,G3,2);words(a,36,y,38,700,INK,ti);
+    if(T>ti){X.font=F(700,38);const w=X.measureText(b).width;words(b,780-w,y,38,700,INK,ti+.06)}});
+  numeral('$6,800',30,700,250,t0+.8,.5);note('total · 3 stages · 6 weeks',40,760,t0+1.1);
+  button('accept proposal',36,800,560,t0+1.0,6.75,'accepted');
+  const cx=lerp(860,420,snap(T,6.75)),cy=lerp(940,848,snap(T,6.75));cursorAt(cx,cy,Math.abs(T-6.75)<.08);
+}
+ev(6.75,'click',.7);ev(6.3,'thunk',.6);
+// the proof: a real Nodstage screen in a module, pins as numbered black squares
+const PA={x:318,y:202},PB={x:181,y:711};
+function dFeedback(lt){const t0=8.0;
+  // camera inside the module: push into pin 1, then pan to pin 2 (precise ease, on beats)
+  const z=lerp(lerp(1,1.32,snap(T,8.75,E8*2)),1.25,snap(T,10.5,E8*2));
+  const fx=lerp(lerp(468,PA.x,snap(T,8.75,E8*2)),PB.x+60,snap(T,10.5,E8*2)),fy=lerp(lerp(392,PA.y+80,snap(T,8.75,E8*2)),PB.y-90,snap(T,10.5,E8*2));
+  X.save();X.beginPath();X.rect(0,0,936,785);X.clip();
+  X.translate(468,392);X.scale(z,z);X.translate(-fx,-fy);
+  if(img.complete)X.drawImage(img,0,0,936,785);
+  [[PA,'1',8.6],[PB,'2',10.75]].forEach(([p,n,tp])=>{const pi=snap(T,tp,E16);if(pi<=0)return;
+    const out=n==='2'&&T>11.75;if(out)return;                    // pin 2 leaves the grid (drawn by the exception)
+    X.fillStyle=INK;const s=52*pi;X.fillRect(p.x-s/2,p.y-s/2,s,s);if(pi>=1){X.fillStyle=PAPER;X.font=F(800,30);X.fillText(n,p.x-9,p.y+11)}});
+  X.restore();
+  // museum-label captions under the image
+  hline(0,936,800,t0+.2,t0+.45,INK,2);
+  if(T<10.6){note('01 — hannah brooks',36,840,8.9,G2,24);words('“could we show the price per cup in the hero?”',36,896,34,700,INK,9.0,10.45,.04)}
+  else{note('02 — hannah brooks',36,840,10.9,G2,24);words('“add a subscribe button under each bag.”',36,896,34,700,INK,11.0,null,.04)}
+}
+ev(8.6,'block',.5);ev(10.75,'block',.5);ev(8.75,'slide',.35);ev(10.5,'slide',.35);
+// ---------- the exception: the extra request leaves the grid, linear and unsnapped ----------
+function exception(){
+  if(T<11.75||T>=14.0)return;
+  // start: pin 2 on screen (module still open at 11.75), fly linear with one eighth pause, grow
+  const s0={x:BOX.x+(468+(PB.x-(PB.x+60))*1.25),y:BOX.y+(392+(PB.y-(PB.y-90))*1.25)};
+  const mid={x:640,y:1030},end={x:BX,y:ROW0+3*RH+22};
+  let x,y,sz;
+  if(T<13.6){const a=seg(T,11.75,12.6),b=seg(T,12.85,13.6);                 // linear, pause 12.6–12.85
+    x=T<12.85?lerp(s0.x,mid.x,a):lerp(mid.x,mid.x+90,b);y=T<12.85?lerp(s0.y,mid.y,a):lerp(mid.y,mid.y-120,b);sz=lerp(52,140,seg(T,11.75,13.6));
+    X.fillStyle=SIG;X.fillRect(x-sz/2,y-sz/2,sz,sz);
+    const col=((x-ML)/CW).toFixed(2),row=((y-ROW0)/RH).toFixed(2),off=T>11.95;
+    X.font=F(600,24);X.fillStyle=off?SIG:G2;X.fillText(`col ${col}  row ${row}  · ${off?'off grid':'on grid'}`,x-sz/2,y+sz/2+40);
+  }else{                                                                       // Nodstage snaps it into the new row
+    const p=snap(T,14.0,.4),sx=mid.x+90,sy=mid.y-120;
+    const w=lerp(140,MR-BX,p),h=lerp(140,84,p),cx=lerp(sx,BX+(MR-BX)/2,p),cy=lerp(sy,ROW0+3*RH+64,p);
+    X.fillStyle=SIG;X.fillRect(cx-w/2,cy-h/2,w,h);
+    if(p>=1){X.fillStyle=PAPER;X.font=F(700,34);X.fillText('+$225 · change order',BX+26,ROW0+3*RH+76)}
+    X.font=F(600,24);X.fillStyle=INK;if(p>=1)X.fillText('col 2.10  row 3.00  · on grid',BX,ROW0+3*RH+140);
+  }
+}
+ev(11.75,'glide',1);ev(14.0,'stamp',1);
+function dChange(lt){const t0=14.9;note('03+ — change order · requested by hannah',36,70,t0);hline(36,900,96,t0,t0+.25);
+  numeral('+225',20,470,330,t0+.05,.5,SIG);
+  words('subscribe button',36,560,56,800,INK,t0+.3);words('under each bag',36,630,56,800,INK,t0+.36);
+  note('extra design and build · not in the proposal',36,690,t0+.5);
+  button('approve',36,760,560,t0+.55,15.75,'approved');
+  const cx=lerp(860,400,snap(T,15.75)),cy=lerp(930,808,snap(T,15.75));cursorAt(cx,cy,Math.abs(T-15.75)<.08);
+}
+ev(15.75,'click',.7);ev(15.35,'thunk',.6);
+function dInvoice(lt){const t0=17.25;note('04 — invoice inv-0012 · website refresh: design stage',36,70,t0);hline(36,900,96,t0,t0+.25);
+  const row=(a,b,y,ti,col)=>{words(a,36,y,40,700,col,ti);if(T>ti){X.font=F(800,64);const w=X.measureText(b).width;words(b,780-w,y+8,64,800,col,ti+.06)}};
+  row('design: homepage and shop','1,500',220,t0+.2,INK);
+  row('change order 03+','+ 225',340,t0+.45,SIG);
+  hline(36,780,400,t0+.7,t0+.95,INK,4);
+  numeral('1,725',20,700,270,t0+.9,.5);
+  if(T>18.75){const p=snap(T,18.9,E16);X.save();X.beginPath();X.rect(36,730,600,110);X.clip();X.fillStyle=INK;X.fillRect(36,730,340*p,96);
+    X.fillStyle=PAPER;X.font=F(800,56);if(p>=1)X.fillText('paid',66,798);X.restore()}
+}
+ev(18.15,'thunk',.6);ev(18.9,'stamp',.8);
+function dTestimonial(lt){const t0=20.0;note('05 — testimonial request · to hannah brooks',36,70,t0);hline(36,900,96,t0,t0+.25);
+  words('would you share',36,230,72,800,INK,t0+.15);words('a few words about',36,320,72,800,INK,t0+.25);words('working with us?',36,410,72,800,INK,t0+.35);
+  note('sent from the project, after the final payment',36,480,t0+.5);
+  button('send request',36,560,560,t0+.5,20.85,'sent');
+  const p=seg(T,20.9,21.4);if(p>0){X.fillStyle=SIG;X.fillRect(596,606,(900-596)*p,4)}   // the request leaves, linear
+  const cx=lerp(860,420,snap(T,20.85)),cy=lerp(900,608,snap(T,20.85));cursorAt(cx,cy,Math.abs(T-20.85)<.08);
+}
+ev(20.85,'click',.7);ev(20.9,'glide2',.6);
+
+// ---------- headlines (the subtitles are part of the layout) ----------
+const HEADS=[[2.75,4.75,'01 / booking','hannah books a call.'],[5.0,7.5,'02 / proposal','the proposal, accepted.'],
+ [7.6,11.75,'03 / feedback','notes, right on the design.'],[11.9,13.85,'03+ / extra','something extra?'],[13.95,16.6,'03+ / change order','now it’s a change order.'],
+ [16.75,19.5,'04 / invoice','the invoice already has it.'],[19.6,21.85,'05 / testimonial','then, a testimonial.']];
+HEADS.forEach(([a,b,l,s])=>wordEvents(s,a+.06));
+function heads(){
+  for(const [a,b,l,s] of HEADS){if(T<a||T>b+.4)continue;
+    words(l,ML,262,26,600,G2,a,b,.03);
+    X.font=F(800,88);X.letterSpacing='-1.76px';const fit=Math.min(88,88*780/X.measureText(s).width);X.letterSpacing='0px';const size=Math.round(fit);words(s,ML,370,size,800,INK,a+.06,b,.0625,{colorOf:w=>/extra|change|order/.test(w)&&a>11?SIG:null})}
+}
+
+// ---------- hook and end ----------
+function hook(){
+  const pd=snap(T,.25,E8);if(pd>0&&T<2.6){X.fillStyle=SIG;X.fillRect(ML,260,40*pd,40*pd)}        // one client: one square
+  words('one client,',ML,520,150,800,INK,.35,2.35,.0625);words('start to finish.',ML,680,150,800,INK,.5,2.35,.0625);
+  if(T<2.6)words('one studio · one client · five stages · one workspace',ML,760,26,600,G2,.9,2.35,.03);
+  // extreme scale contrast: a giant light numeral behind
+  if(T<2.6){const p=steps(T,.6,1.6,4);X.save();X.beginPath();X.rect(0,820,W,700);X.clip();X.font=F(800,820);X.letterSpacing='-30px';X.fillStyle='#DCDAD4';
+    X.fillText('1',ML-40,1460+(1-p)*700-snap(T,2.6,E8)*800);X.letterSpacing='0px';X.restore()}
+}
+wordEvents('one client,',.35);wordEvents('start to finish.',.5);ev(.25,'block',.6);ev(1.0,'thunk',.4);
+function ending(){
+  if(T<21.9)return;
+  // pull out: the whole timetable, then a vertical scroll down the column to the end card
+  words('from the first inquiry',ML,330,74,800,INK,22.05,24.45,.0625);words('to the final payment.',ML,412,74,800,INK,22.4,24.45,.0625);
+}
+wordEvents('from the first inquiry',22.05);wordEvents('to the final payment.',22.4);
+function endCard(){
+  if(T<24.4)return;const y0=1920*(1-snap(T,24.75,.5));            // the page arrives from below, the camera scrolls with it
+  X.save();X.translate(0,y0);
+  X.fillStyle=PAGE;X.fillRect(0,0,W,H);
+  for(let i=0;i<=6;i++){X.fillStyle=G1;X.fillRect(ML+i*CW-1,230,2,1210)}
+  X.fillStyle=SIG;X.fillRect(ML,260,40,40);
+  words('run your studio',ML,520,110,800,INK,24.85,null,.0625);words('with nodstage.',ML,640,110,800,INK,25.05,null,.0625);
+  const pw=seg(T,25.6,25.85);X.fillStyle=PAPER;X.fillRect(ML,760,(MR-ML)*pw,300);
+  if(pw>=1&&logo.complete){const p=snap(T,26.0,E8);X.save();X.beginPath();X.rect(ML,760,MR-ML,300);X.clip();X.drawImage(logo,ML+40,800+(1-p)*200,472*1.3,112*1.3);X.restore()}
+  if(T>26.2){X.fillStyle=INK;X.fillRect(ML,1060,(MR-ML)*seg(T,26.2,26.45),2)}
+  words('nodstage.com',ML,1140,56,700,INK,26.4,null);
+  note('booking · proposals · feedback · change orders · invoices · testimonials',ML,1200,26.7,G2,24);
+  X.restore();
+}
+wordEvents('run your studio',24.85);wordEvents('with nodstage.',25.05);ev(24.25,'slide',.8);ev(26.0,'thunk',.6);ev(26.4,'block',.4);
+function corner(){if(T<2.6||T>24.6)return;const st=Math.min(6,1+Math.floor(hannahRow()+(T>13.6&&T<16.75?0:0)));
+  X.font=F(600,22);X.fillStyle=G2;X.fillText(`stage ${String(Math.round(hannahRow())+1).padStart(2,'0')}/06  ·  grid 6 × ${RH}  ·  120 bpm`,ML,1418);}
+
+let T=0;
+function render(t){T=t;X.fillStyle=PAGE;X.fillRect(0,0,W,H);
+  hook();
+  if(t>=2.0&&t<24.8){
+    // pull-out at the end: the timetable scales down on a beat, then the page scrolls away
+    const po=snap(t,22.25,E8*2),sc=lerp(1,.9,po);
+    X.save();X.translate(ML,ROW0);X.scale(sc,sc);X.translate(-ML,-ROW0+po*30);
+    timetable();
+    if(t>2.75&&t<11.75||t>16.6&&t<24.8||t>14.1&&t<14.9){const hr=hannahRow(),y=ROW0+hr*RH+64;if(!(t>11.75&&t<16.6)){X.fillStyle=SIG;X.fillRect(BX-64,y-18,36,36)}}
+    X.restore();
+    details();exception();heads();ending();corner();
+  }
+  endCard();
+}
+window.DURATION=28.6;window.EV=EV;
+window.seek=t=>render(t);
+window.ready=Promise.all([document.fonts.load(F(500,40)),document.fonts.load(F(600,40)),document.fonts.load(F(700,40)),document.fonts.load(F(800,40)),
+  new Promise(r=>img.complete?r():img.onload=r),new Promise(r=>logo.complete?r():logo.onload=r)]).then(()=>{render(0);return true});
+if(!/clean/.test(location.search)){const t0=performance.now();(function loop(){render(((performance.now()-t0)/1000)%28.6);requestAnimationFrame(loop)})()}
+</script></body></html>
