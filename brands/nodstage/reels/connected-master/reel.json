@@ -1,0 +1,714 @@
+{
+ "title": "Nodstage: one connected workspace (master)",
+ "voice": "am_puck",
+ "speed": 1.0,
+ "lines": [
+  [
+   "How many apps does it take to run a creative agency?",
+   0.35,
+   "am_puck",
+   1.0
+  ],
+  [
+   "Depends. What do you need to do?",
+   0.35,
+   "af_jessica",
+   1.0
+  ],
+  [
+   "Find clients. Manage projects. Talk to clients. Get designs approved. Chase payments.",
+   0.35,
+   "am_puck",
+   1.06
+  ],
+  [
+   "So... a lot of apps?",
+   0.3,
+   "af_jessica",
+   0.95
+  ],
+  [
+   "Way too many.",
+   0.45,
+   "am_puck",
+   0.95
+  ],
+  [
+   "Your leads are in a CRM. Your projects are in a project management tool. Feedback lives in email or a separate proofing app. Client conversations are somewhere else. And proposals, invoices and payments? More tools.",
+   0.35,
+   "bm_fable",
+   1.02
+  ],
+  [
+   "And none of them seem to know what's happening in the others.",
+   0.4,
+   "am_puck",
+   1.0
+  ],
+  [
+   "What if they were all connected?",
+   0.45,
+   "af_jessica",
+   0.97
+  ],
+  [
+   "Meet Nodstage. One connected workspace built around how creative studios actually work.",
+   0.4,
+   "bm_fable",
+   0.98
+  ],
+  [
+   "Start with your leads. Manage inquiries, discovery calls, follow-ups and proposals. When a deal is won, turn it into a project.",
+   0.4,
+   "bm_fable",
+   1.02
+  ],
+  [
+   "Manage projects, tasks, deadlines and your team's workload. Give clients their own branded portal. Share files and proofs, collect visual feedback, manage revisions and get approvals.",
+   0.4,
+   "bm_fable",
+   1.04
+  ],
+  [
+   "Keep conversations and video messages together. Manage your calendar, change orders, invoices and payments. Automate repetitive work, use intake forms and templates, track performance and request testimonials.",
+   0.4,
+   "bm_fable",
+   1.05
+  ],
+  [
+   "So I don't need to keep jumping between all those tools?",
+   0.3,
+   "am_puck",
+   1.0
+  ],
+  [
+   "That's the whole point.",
+   0.45,
+   "af_jessica",
+   0.95
+  ],
+  [
+   "Less switching. Less chasing. One connected workflow.",
+   0.4,
+   "bm_fable",
+   0.95
+  ],
+  [
+   "Nodstage is coming soon. Join the waitlist for early access.",
+   0.3,
+   "bm_fable",
+   0.97
+  ]
+ ],
+ "phrases": [
+  [
+   5,
+   "How many apps does it"
+  ],
+  [
+   6,
+   "take to run a creative agency?"
+  ],
+  [
+   1,
+   "Depends."
+  ],
+  [
+   6,
+   "What do you need to do?"
+  ],
+  [
+   2,
+   "Find clients."
+  ],
+  [
+   2,
+   "Manage projects."
+  ],
+  [
+   3,
+   "Talk to clients."
+  ],
+  [
+   3,
+   "Get designs approved."
+  ],
+  [
+   2,
+   "Chase payments."
+  ],
+  [
+   5,
+   "So... a lot of apps?"
+  ],
+  [
+   3,
+   "Way too many."
+  ],
+  [
+   6,
+   "Your leads are in a CRM."
+  ],
+  [
+   4,
+   "Your projects are in"
+  ],
+  [
+   4,
+   "a project management tool."
+  ],
+  [
+   4,
+   "Feedback lives in email"
+  ],
+  [
+   5,
+   "or a separate proofing app."
+  ],
+  [
+   2,
+   "Client conversations"
+  ],
+  [
+   3,
+   "are somewhere else."
+  ],
+  [
+   2,
+   "And proposals,"
+  ],
+  [
+   3,
+   "invoices and payments?"
+  ],
+  [
+   2,
+   "More tools."
+  ],
+  [
+   5,
+   "And none of them seem"
+  ],
+  [
+   4,
+   "to know what's happening"
+  ],
+  [
+   3,
+   "in the others."
+  ],
+  [
+   3,
+   "What if they"
+  ],
+  [
+   3,
+   "were all connected?"
+  ],
+  [
+   3,
+   "Meet Nodstage."
+  ],
+  [
+   3,
+   "One connected workspace"
+  ],
+  [
+   3,
+   "built around how"
+  ],
+  [
+   4,
+   "creative studios actually work."
+  ],
+  [
+   4,
+   "Start with your leads."
+  ],
+  [
+   2,
+   "Manage inquiries,"
+  ],
+  [
+   2,
+   "discovery calls,"
+  ],
+  [
+   3,
+   "follow-ups and proposals."
+  ],
+  [
+   5,
+   "When a deal is won,"
+  ],
+  [
+   5,
+   "turn it into a project."
+  ],
+  [
+   3,
+   "Manage projects, tasks,"
+  ],
+  [
+   5,
+   "deadlines and your team's workload."
+  ],
+  [
+   3,
+   "Give clients their"
+  ],
+  [
+   3,
+   "own branded portal."
+  ],
+  [
+   4,
+   "Share files and proofs,"
+  ],
+  [
+   3,
+   "collect visual feedback,"
+  ],
+  [
+   2,
+   "manage revisions"
+  ],
+  [
+   3,
+   "and get approvals."
+  ],
+  [
+   2,
+   "Keep conversations"
+  ],
+  [
+   4,
+   "and video messages together."
+  ],
+  [
+   3,
+   "Manage your calendar,"
+  ],
+  [
+   2,
+   "change orders,"
+  ],
+  [
+   3,
+   "invoices and payments."
+  ],
+  [
+   3,
+   "Automate repetitive work,"
+  ],
+  [
+   5,
+   "use intake forms and templates,"
+  ],
+  [
+   2,
+   "track performance"
+  ],
+  [
+   3,
+   "and request testimonials."
+  ],
+  [
+   5,
+   "So I don't need to"
+  ],
+  [
+   3,
+   "keep jumping between"
+  ],
+  [
+   3,
+   "all those tools?"
+  ],
+  [
+   4,
+   "That's the whole point."
+  ],
+  [
+   2,
+   "Less switching."
+  ],
+  [
+   2,
+   "Less chasing."
+  ],
+  [
+   3,
+   "One connected workflow."
+  ],
+  [
+   5,
+   "Nodstage is coming soon."
+  ],
+  [
+   6,
+   "Join the waitlist for early access."
+  ]
+ ],
+ "scenes": [
+  0,
+  38,
+  85,
+  104,
+  125,
+  151,
+  178,
+  193,
+  200
+ ],
+ "marks": {
+  "apps": 2,
+  "agency": 10,
+  "depends": 11,
+  "find": 18,
+  "manage1": 20,
+  "talk": 22,
+  "getd": 25,
+  "chase": 28,
+  "lot": 30,
+  "way": 35,
+  "crm": 43,
+  "pm": 49,
+  "email": 55,
+  "proofing": 59,
+  "conv": 62,
+  "proposals": 67,
+  "invoices": 68,
+  "payments": 70,
+  "tools": 71,
+  "none": 73,
+  "seem": 77,
+  "others": 84,
+  "what": 85,
+  "connected": 90,
+  "meet": 91,
+  "one": 94,
+  "start": 104,
+  "inquiries": 109,
+  "discovery": 110,
+  "followups": 112,
+  "proposalsB": 114,
+  "won": 119,
+  "turn": 120,
+  "projectB": 124,
+  "manageP": 125,
+  "tasks": 127,
+  "deadlines": 128,
+  "workload": 132,
+  "give": 133,
+  "portal": 138,
+  "share": 139,
+  "proofs": 142,
+  "feedback": 145,
+  "revisions": 147,
+  "approvals": 150,
+  "keep": 151,
+  "video": 154,
+  "calendar": 159,
+  "co": 160,
+  "invoicesC": 162,
+  "paymentsC": 164,
+  "automate": 165,
+  "intake": 169,
+  "templates": 172,
+  "track": 173,
+  "testimonials": 177,
+  "so": 178,
+  "tools2": 188,
+  "thats": 189,
+  "less1": 193,
+  "less2": 195,
+  "onewf": 197,
+  "ns2": 200,
+  "join": 205,
+  "access": 210
+ },
+ "tail": 2.2,
+ "run": null,
+ "pointer": null,
+ "sfx": [
+  [
+   "find-0.05",
+   "pop",
+   640
+  ],
+  [
+   "manage1-0.05",
+   "pop",
+   720
+  ],
+  [
+   "talk-0.05",
+   "pop",
+   800
+  ],
+  [
+   "getd-0.05",
+   "pop",
+   880
+  ],
+  [
+   "chase-0.05",
+   "pop",
+   960
+  ],
+  [
+   "lot-0.08",
+   "whoosh",
+   0.25
+  ],
+  [
+   "way-0.08",
+   "whoosh",
+   0.25
+  ],
+  [
+   "crm-0.10",
+   "pop",
+   600
+  ],
+  [
+   "pm-0.10",
+   "pop",
+   660
+  ],
+  [
+   "email-0.10",
+   "pop",
+   720
+  ],
+  [
+   "proofing-0.10",
+   "pop",
+   780
+  ],
+  [
+   "conv-0.10",
+   "pop",
+   840
+  ],
+  [
+   "proposals-0.10",
+   "pop-small"
+  ],
+  [
+   "invoices-0.10",
+   "pop",
+   900
+  ],
+  [
+   "payments-0.10",
+   "pop-small"
+  ],
+  [
+   "tools-0.10",
+   "pop-small"
+  ],
+  [
+   "none",
+   "pop-small"
+  ],
+  [
+   "seem",
+   "pop-small"
+  ],
+  [
+   "others-0.10",
+   "buzz"
+  ],
+  [
+   "connected-0.45",
+   "whoosh",
+   0.5
+  ],
+  [
+   "connected-0.02",
+   "click"
+  ],
+  [
+   "meet",
+   "win"
+  ],
+  [
+   "start-0.15",
+   "whoosh",
+   0.3
+  ],
+  [
+   "inquiries",
+   "pop",
+   900
+  ],
+  [
+   "discovery-0.10",
+   "whoosh",
+   0.25
+  ],
+  [
+   "followups",
+   "pop",
+   1000
+  ],
+  [
+   "proposalsB-0.10",
+   "whoosh",
+   0.25
+  ],
+  [
+   "won",
+   "win"
+  ],
+  [
+   "projectB-0.10",
+   "pop",
+   900
+  ],
+  [
+   "manageP-0.15",
+   "whoosh",
+   0.3
+  ],
+  [
+   "tasks",
+   "pop",
+   900
+  ],
+  [
+   "deadlines",
+   "pop",
+   950
+  ],
+  [
+   "workload-0.20",
+   "whoosh",
+   0.25
+  ],
+  [
+   "portal-0.10",
+   "pop",
+   900
+  ],
+  [
+   "share-0.10",
+   "whoosh",
+   0.25
+  ],
+  [
+   "feedback",
+   "pop",
+   1000
+  ],
+  [
+   "revisions",
+   "pop",
+   900
+  ],
+  [
+   "approvals",
+   "click"
+  ],
+  [
+   "approvals+0.08",
+   "pop",
+   1100
+  ],
+  [
+   "keep-0.15",
+   "whoosh",
+   0.3
+  ],
+  [
+   "video-0.05",
+   "pop",
+   800
+  ],
+  [
+   "calendar-0.10",
+   "pop",
+   850
+  ],
+  [
+   "co-0.10",
+   "pop",
+   900
+  ],
+  [
+   "invoicesC-0.10",
+   "pop",
+   950
+  ],
+  [
+   "paymentsC",
+   "win"
+  ],
+  [
+   "automate-0.10",
+   "pop",
+   800
+  ],
+  [
+   "intake-0.10",
+   "pop",
+   850
+  ],
+  [
+   "templates-0.10",
+   "pop",
+   900
+  ],
+  [
+   "track-0.10",
+   "pop",
+   950
+  ],
+  [
+   "testimonials",
+   "pop",
+   1000
+  ],
+  [
+   "so-0.08",
+   "whoosh",
+   0.25
+  ],
+  [
+   "thats-0.08",
+   "whoosh",
+   0.2
+  ],
+  [
+   "less1-0.10",
+   "whoosh",
+   0.3
+  ],
+  [
+   "less1+0.10",
+   "pop",
+   900
+  ],
+  [
+   "less2+0.10",
+   "pop",
+   1000
+  ],
+  [
+   "onewf+0.10",
+   "win"
+  ],
+  [
+   "ns2-0.20",
+   "whoosh",
+   0.6
+  ],
+  [
+   "join",
+   "pop",
+   1000
+  ]
+ ]
+}
