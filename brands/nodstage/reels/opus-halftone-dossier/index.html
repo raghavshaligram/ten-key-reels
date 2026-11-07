@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Client File</title>
+<!-- Style: "Halftone Dossier" from Lemo-Opuscar by Lemomo (MIT / CC BY 4.0). Helpers adapted from its demo engine. -->
+<style>
+  @font-face{font-family:'Alfa Slab One';src:url(slab.woff2);font-display:block}
+  @font-face{font-family:'Bagel Fat One';src:url(bagel.woff2);font-display:block}
+  @font-face{font-family:'JetBrains Mono';font-weight:800;src:url(mono800.woff2);font-display:block}
+  @font-face{font-family:'JetBrains Mono';font-weight:500;src:url(mono500.woff2);font-display:block}
+  @font-face{font-family:'Archivo Black';src:url(sans.woff2);font-display:block}
+  @font-face{font-family:'Caveat';font-weight:700;src:url(hand.woff2);font-display:block}
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #F4ECDD; }
+  svg, canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  #paper { mix-blend-mode: multiply; pointer-events: none; }
+  #fx { pointer-events: none; }
+  .mul { mix-blend-mode: multiply; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <filter id="boil" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence id="boilT" type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="4" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -22 15.2" result="gm"/>
+      <feComposite in="d" in2="gm" operator="in"/>
+    </filter>
+    <filter id="stampInk" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="11" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="3" seed="21" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 5.9" result="gm"/>
+      <feComposite in="d" in2="gm" operator="in"/>
+    </filter>
+    <clipPath id="frameClip"><rect width="1080" height="1920"/></clipPath>
+  </defs>
+  <g clip-path="url(#frameClip)">
+    <g id="cam"><g id="world"></g></g>
+    <g id="hud"></g>
+    <g id="wipe"></g>
+    <rect id="flash" width="1080" height="1920" fill="#FFFFFF" opacity="0"/>
+    <rect id="fade" width="1080" height="1920" fill="#1D2340" opacity="0"/>
+  </g>
+</svg>
+<canvas id="paper" width="1080" height="1920"></canvas>
+<canvas id="fx" width="1080" height="1920"></canvas>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+// five inks + paper: navy carries outlines/text; magenta (Nodstage) is the overprint shadow; yellow highlights; red is for stamps; cobalt for grounds
+const C = { paper:'#F4ECDD', navy:'#1D2340', mag:'#D0176F', yellow:'#FFC628', red:'#E8384F', blue:'#2E55D6', cream:'#FFF4E2', night:'#18203F', night2:'#2A3568', pinkT:'#FFD3E4' };
+const F = { slab:"'Alfa Slab One'", bagel:"'Bagel Fat One'", mono:"'JetBrains Mono'", sans:"'Archivo Black'", hand:"'Caveat'" };
+const FPS = 30, DUR = 28.6, W = 1080, H = 1920;
+
+function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function txt(parent, str, attrs) { const e = el('text', attrs, parent); e.textContent = str; return e; }
+function tf(e, x = 0, y = 0, s = 1, r = 0, sy) { e.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${r.toFixed(2)}) scale(${s.toFixed(4)} ${(sy ?? s).toFixed(4)})`); }
+function op(e, o) { e.setAttribute('opacity', Math.max(0, Math.min(1, o)).toFixed(3)); }
+function show(e, v) { e.style.display = v ? '' : 'none'; }
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, p) => a + (b - a) * p;
+const E = { out: p => 1 - Math.pow(1 - p, 3), in: p => p * p * p, io: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  back: p => { const c = 1.9; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); } };
+const pop = (t, t0, d = 0.35) => t < t0 ? 0 : E.back(seg(t, t0, t0 + d));
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const mctx = document.createElement('canvas').getContext('2d');
+function measure(str, size, family, weight = 400) { mctx.font = `${weight} ${size}px ${family}`; return mctx.measureText(str).width; }
+
+function chars(parent, str, o) {
+  const { x, y, size, family, weight = 400, fill = C.navy, anchor = 'start', ls = 0, shadow, stroke, sw = 0 } = o;
+  const g = el('g', {}, parent); const arr = [...str];
+  const widths = arr.map(c => measure(c, size, family, weight));
+  const total = widths.reduce((a, b) => a + b, 0) + ls * (arr.length - 1);
+  let cx = anchor === 'middle' ? x - total / 2 : anchor === 'end' ? x - total : x;
+  const items = arr.map((ch, i) => {
+    const cg = el('g', {}, g);
+    const base = { x: 0, y: 0, 'font-size': size, 'font-family': family, 'font-weight': weight, 'text-anchor': 'middle' };
+    if (shadow) txt(cg, ch, { ...base, x: shadow.dx, y: shadow.dy, fill: shadow.fill, class: 'mul' });
+    const st = stroke ? { stroke, 'stroke-width': sw, 'paint-order': 'stroke', 'stroke-linejoin': 'round' } : {};
+    txt(cg, ch, { ...base, fill, ...st });
+    const it = { g: cg, x: cx + widths[i] / 2, y, w: widths[i], size }; cx += widths[i] + ls; tf(cg, it.x, it.y); return it;
+  });
+  return { g, items, total };
+}
+function charsPop(c, t, t0, stagger = 0.03, d = 0.36, from = 60) {
+  c.items.forEach((it, i) => {
+    const s = t0 + i * stagger, p = seg(t, s, s + d), h = it.size * 0.35;
+    if (t < s) { op(it.g, 0); return; } op(it.g, 1);
+    const sc = E.back(p), sq = 1 + 0.25 * Math.sin(p * Math.PI) * (1 - p);
+    it.g.setAttribute('transform', `translate(${it.x} ${it.y + from * (1 - E.out(p))}) translate(0 ${-h}) scale(${(sc / sq).toFixed(3)} ${(sc * sq).toFixed(3)}) translate(0 ${h})`);
+  });
+}
+function halftone(parent, { x0 = 0, y0 = 0, w = W, h = H, step = 22, angle = 15, color, f, maxK = 0.62, cls }) {
+  const a = angle * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a), n = Math.ceil(Math.hypot(w, h) / step / 2) + 2; let d = '';
+  for (let i = -n; i <= n; i++) for (let j = -n; j <= n; j++) {
+    const u = i * step, v = j * step, x = x0 + w / 2 + u * ca - v * sa, y = y0 + h / 2 + u * sa + v * ca;
+    if (x < x0 - step || x > x0 + w + step || y < y0 - step || y > y0 + h + step) continue;
+    const s = clamp(f(x, y)); if (s < 0.05) continue; const r = s * step * maxK;
+    d += `M${(x - r).toFixed(1)} ${y.toFixed(1)}a${r.toFixed(1)} ${r.toFixed(1)} 0 1 0 ${(2 * r).toFixed(1)} 0a${r.toFixed(1)} ${r.toFixed(1)} 0 1 0 ${(-2 * r).toFixed(1)} 0`;
+  }
+  const a2 = { d, fill: color }; if (cls) a2.class = cls; return el('path', a2, parent);
+}
+const radial = (cx, cy, R, pw = 1.2) => (x, y) => Math.pow(clamp(1 - Math.hypot(x - cx, y - cy) / R), pw);
+const edge = (R = 1100, pw = 1.6) => (x, y) => Math.pow(clamp(Math.hypot((x - 540) * 1.6, y - 960) / R - 0.35), pw) * 1.3;
+function bg(parent, color) { return el('rect', { width: W, height: H, fill: color }, parent); }
+
+// caption bar (two lines max), keyword parts in highlight ink
+function caption(parent, lines, { x = 540, y = 1335, size = 40 } = {}) {
+  const g = el('g', {}, parent), inner = el('g', {}, g);
+  const lw = lines.map(parts => parts.reduce((a, [s]) => a + measure(s, size, F.sans), 0));
+  const w = Math.max(...lw), padX = 32, lh = size * 1.32, hgt = lh * lines.length + size * 0.75;
+  el('rect', { x: -w / 2 - padX + 8, y: -hgt / 2 + 8, width: w + padX * 2, height: hgt, rx: 16, fill: C.mag, class: 'mul' }, inner);
+  el('rect', { x: -w / 2 - padX, y: -hgt / 2, width: w + padX * 2, height: hgt, rx: 16, fill: C.navy }, inner);
+  lines.forEach((parts, i) => {
+    const tt = el('text', { x: -lw[i] / 2, y: -hgt / 2 + size * 0.4 + lh * (i + .62), 'font-size': size, 'font-family': F.sans }, inner);
+    parts.forEach(([s, col]) => { const sp = el('tspan', { fill: col || C.cream }, tt); sp.textContent = s; });
+  });
+  return { g, x, y };
+}
+function captionAnim(c, t, t0) {
+  if (t < t0) { op(c.g, 0); return; } const p = seg(t, t0, t0 + 0.4);
+  op(c.g, seg(t, t0, t0 + 0.12)); tf(c.g, c.x, c.y + 40 * (1 - E.out(p)), lerp(0.8, 1, E.back(p)), -1.0 * (1 - p) - 0.5);
+}
+function stampEl(parent, str, { size = 120, color = C.red, padX = 40, padY = 20, border = 11 } = {}) {
+  const g = el('g', {}, parent), inner = el('g', { filter: 'url(#stampInk)' }, g);
+  const w = measure(str, size, F.sans) + padX * 2, h = size * 1.08 + padY * 2;
+  el('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 20, fill: 'none', stroke: color, 'stroke-width': border }, inner);
+  el('rect', { x: -w / 2 + border * 1.8, y: -h / 2 + border * 1.8, width: w - border * 3.6, height: h - border * 3.6, rx: 10, fill: 'none', stroke: color, 'stroke-width': border * 0.35 }, inner);
+  txt(inner, str, { x: 0, y: size * 0.36, 'font-size': size, 'font-family': F.sans, fill: color, 'text-anchor': 'middle' });
+  return { g, w, h };
+}
+function stampAnim(s, t, t0, x, y, rot) {
+  if (t < t0 - 0.09) { op(s.g, 0); return; }
+  const p = seg(t, t0 - 0.09, t0), after = Math.max(0, t - t0), bounce = 1 + 0.05 * Math.sin(after * 30) * Math.exp(-after * 9);
+  op(s.g, p < 1 ? 0.3 + 0.7 * p : 0.93); tf(s.g, x, y, lerp(2.6, 1, E.in(p)) * bounce, rot);
+}
+// flat paper card with ink outline and an overprint offset shadow
+function card(parent, w, h, { fill = C.cream, rx = 14, shadow = C.mag, lw = 6 } = {}) {
+  const g = el('g', {}, parent);
+  el('rect', { x: 12, y: 12, width: w, height: h, rx, fill: shadow, class: 'mul' }, g);
+  el('rect', { x: 0, y: 0, width: w, height: h, rx, fill, stroke: C.navy, 'stroke-width': lw }, g);
+  return g;
+}
+// giant exhibit numeral, flat yellow with a navy halftone overprint clipped to the glyph, bleeding off the right edge
+let clipN = 0;
+function bigNum(parent, str, { x = 1130, y = 1250, size = 620, fill = C.yellow, dots = C.mag } = {}) {
+  const g = el('g', {}, parent), id = 'nclip' + (clipN++);
+  const cp = el('clipPath', { id }, g); txt(cp, str, { x, y, 'font-size': size, 'font-family': F.bagel, 'text-anchor': 'end' });
+  txt(g, str, { x, y, 'font-size': size, 'font-family': F.bagel, 'text-anchor': 'end', fill });
+  const hg = el('g', { 'clip-path': `url(#${id})` }, g);
+  halftone(hg, { x0: 300, y0: y - size, w: 900, h: size + 60, step: 22, angle: 45, color: dots, cls: 'mul', maxK: .55, f: (px, py) => 0.15 + 0.85 * clamp((py - (y - size * .8)) / (size * .8)) });
+  return g;
+}
+function chip(parent, label, value, { x = 60, y = 300, dark = false } = {}) {
+  const g = el('g', {}, parent); const wa = measure(label, 26, F.mono, 800), wb = measure(value, 26, F.mono, 800);
+  el('rect', { x, y: y - 30, width: wa + wb + 52, height: 46, rx: 10, fill: dark ? C.cream : C.navy }, g);
+  txt(g, label, { x: x + 16, y: y + 2, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: dark ? C.red : C.yellow });
+  txt(g, value, { x: x + 36 + wa, y: y + 2, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: dark ? C.navy : C.cream });
+  return g;
+}
+const LW = 6;
+
+// ============================================================
+const world = document.getElementById('world'), cam = document.getElementById('cam'), hud = document.getElementById('hud');
+const wipe = document.getElementById('wipe'), flash = document.getElementById('flash'), fade = document.getElementById('fade');
+const scenes = [];
+function scene(t0, t1, build) { const g = el('g', {}, world); const s = { g, t0, t1 }; s.update = build(g, s); scenes.push(s); return s; }
+// a scene's camera: slow push for scrutiny, or a pull back
+function camOf(g, t, t0, t1, s0, s1, cx = 540, cy = 900) { const s = lerp(s0, s1, E.io(seg(t, t0, t1))); g.setAttribute('transform', `translate(${cx * (1 - s)} ${cy * (1 - s)}) scale(${s})`); }
+function enter(g, t, t0, x, y, rot = 0, from = 1300) { if (t < t0) { op(g, 0); return; } op(g, 1); const p = E.back(seg(t, t0, t0 + 0.45)); tf(g, x, lerp(from, y, p), 1, rot * p); }
+function headline(g, lines, { y = 420, size = 84, fill = C.navy, shadow = C.mag } = {}) {
+  return lines.map((s, i) => chars(g, s, { x: 64, y: y + i * size * 1.06, size, family: F.slab, fill, shadow: { fill: shadow, dx: 7, dy: 7 } }));
+}
+
+function buildAll() {
+  // ---------------- S0 title: the client file opens (0 – 2.5) ----------------
+  scene(0, 2.5, (g) => {
+    bg(g, C.blue);
+    halftone(g, { step: 26, angle: 30, color: C.night2, cls: 'mul', maxK: .6, f: edge(1000, 1.3) });
+    const inner = el('g', {}, g);
+    txt(inner, 'CLIENT FILE · NS-0412', { x: 70, y: 330, 'font-size': 34, 'font-family': F.mono, 'font-weight': 800, fill: C.yellow, 'letter-spacing': 3 });
+    const one = chars(inner, 'ONE', { x: 60, y: 600, size: 280, family: F.bagel, fill: C.cream, shadow: { fill: C.navy, dx: 12, dy: 12 } });
+    const cli = chars(inner, 'CLIENT,', { x: 60, y: 850, size: 230, family: F.bagel, fill: C.cream, shadow: { fill: C.navy, dx: 12, dy: 12 } });
+    const sub = chars(inner, 'start to finish', { x: 70, y: 990, size: 92, family: F.slab, fill: C.yellow, shadow: { fill: C.mag, dx: 7, dy: 7 } });
+    // the folder rises into frame
+    const fold = el('g', {}, inner);
+    el('path', { d: 'M0 60 L0 40 Q0 20 20 20 L300 20 Q320 20 330 0 L420 0 Q440 0 440 20 L440 60 Z', fill: '#E8A92A', stroke: C.navy, 'stroke-width': LW }, fold);
+    el('rect', { x: 12, y: 72, width: 900, height: 330, rx: 18, fill: C.mag, class: 'mul' }, fold);
+    el('rect', { x: 0, y: 60, width: 900, height: 330, rx: 18, fill: C.yellow, stroke: C.navy, 'stroke-width': LW }, fold);
+    el('rect', { x: 60, y: 120, width: 560, height: 110, rx: 8, fill: C.cream, stroke: C.navy, 'stroke-width': 4 }, fold);
+    txt(fold, 'FERNHILL COFFEE CO.', { x: 84, y: 168, 'font-size': 34, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(fold, 'contact: Hannah Brooks', { x: 84, y: 210, 'font-size': 26, 'font-family': F.mono, 'font-weight': 500, fill: C.navy });
+    halftone(fold, { x0: 0, y0: 240, w: 900, h: 150, step: 20, angle: 20, color: '#E8A92A', cls: 'mul', maxK: .5, f: (x, y) => seg(y, 250, 390) });
+    return (t) => {
+      charsPop(one, t, 0.12, 0.12, 0.3, 500); charsPop(cli, t, 0.55, 0.07, 0.3, 500); charsPop(sub, t, 1.25, 0.03, 0.3, 60);
+      enter(fold, t, 1.05, 90, 1080, -1.5, 1900);
+    };
+  });
+
+  // ---------------- S1 exhibit 01: booking (2.5 – 5.05) ----------------
+  scene(2.5, 5.05, (g) => {
+    halftone(g, { step: 24, angle: 15, color: C.blue, cls: 'mul', maxK: .45, f: edge(1150, 1.6) });
+    const camG = el('g', {}, g);
+    bigNum(camG, '01');
+    const hl = headline(camG, ['She books a call.']);
+    const ex = el('g', {}, camG), sh = el('g', { filter: 'url(#boil)' }, ex);
+    card(sh, 860, 600);
+    el('rect', { x: 0, y: 0, width: 860, height: 110, rx: 14, fill: C.navy }, sh);
+    txt(ex, 'BOOK A CALL · OCT', { x: 40, y: 72, 'font-size': 40, 'font-family': F.mono, 'font-weight': 800, fill: C.cream });
+    const days = [['MON', 6], ['TUE', 7], ['WED', 8], ['THU', 9], ['FRI', 10]];
+    days.forEach(([d, n], i) => { const x = 40 + i * 160;
+      el('rect', { x, y: 150, width: 140, height: 200, rx: 12, fill: i === 3 ? C.yellow : C.paper, stroke: C.navy, 'stroke-width': 4 }, sh);
+      txt(ex, d, { x: x + 70, y: 200, 'font-size': 30, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' });
+      txt(ex, String(n), { x: x + 70, y: 310, 'font-size': 100, 'font-family': F.bagel, fill: C.navy, 'text-anchor': 'middle' }); });
+    ['9:00', '10:00', '11:30', '2:00'].forEach((s, i) => { const x = 40 + i * 200;
+      el('rect', { x, y: 400, width: 180, height: 90, rx: 12, fill: C.cream, stroke: C.navy, 'stroke-width': 4 }, sh);
+      txt(ex, s, { x: x + 90, y: 460, 'font-size': 40, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'middle' }); });
+    // magenta marker circles: Thursday, then 10:00
+    const m1 = el('ellipse', { cx: 590, cy: 250, rx: 98, ry: 128, fill: 'none', stroke: C.mag, 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-dasharray': 720, 'stroke-dashoffset': 720, transform: 'rotate(-8 590 250)' }, ex);
+    const m2 = el('ellipse', { cx: 330, cy: 445, rx: 115, ry: 62, fill: 'none', stroke: C.mag, 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-dasharray': 560, 'stroke-dashoffset': 560, transform: 'rotate(4 330 445)' }, ex);
+    const note = txt(ex, 'Hannah · video call', { x: 40, y: 560, 'font-size': 52, 'font-family': F.hand, 'font-weight': 700, fill: C.mag });
+    const st = stampEl(camG, 'BOOKED', { size: 130 });
+    const cap = caption(g, [[['Hannah books a call from your '], ['booking page.', C.yellow]]]);
+    return (t) => {
+      camOf(camG, t, 2.5, 5.05, 1, 1.04);
+      hl.forEach((c, i) => charsPop(c, t, 2.62 + i * .2));
+      enter(ex, t, 2.75, 110, 560, -1.5);
+      m1.setAttribute('stroke-dashoffset', 720 * (1 - E.out(seg(t, 3.0, 3.35))));
+      m2.setAttribute('stroke-dashoffset', 560 * (1 - E.out(seg(t, 3.55, 3.85))));
+      op(note, seg(t, 3.9, 4.1));
+      stampAnim(st, t, 4.42, 640, 1020, -9);
+      captionAnim(cap, t, 2.85);
+    };
+  });
+
+  // ---------------- S2 exhibit 02: proposal (5.05 – 7.65) ----------------
+  scene(5.05, 7.65, (g) => {
+    halftone(g, { step: 24, angle: 20, color: C.mag, cls: 'mul', maxK: .35, f: edge(1150, 1.6) });
+    const camG = el('g', {}, g);
+    bigNum(camG, '02');
+    const hl = headline(camG, ['She says yes.']);
+    const ex = el('g', {}, camG), sh = el('g', { filter: 'url(#boil)' }, ex);
+    card(sh, 820, 700, { fill: '#FFFDF6' });
+    txt(ex, 'PROPOSAL', { x: 44, y: 96, 'font-size': 64, 'font-family': F.slab, fill: C.navy });
+    txt(ex, 'Website refresh · Fernhill Coffee Co.', { x: 44, y: 146, 'font-size': 28, 'font-family': F.mono, 'font-weight': 500, fill: C.navy });
+    [['Discovery + moodboard', '$800'], ['Design: home + shop', '$2,400'], ['Build: Shopify theme', '$3,600']].forEach(([a, b], i) => {
+      const y = 230 + i * 70; txt(ex, a, { x: 44, y, 'font-size': 32, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+      txt(ex, b, { x: 776, y, 'font-size': 32, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'end' });
+      el('line', { x1: 44, x2: 776, y1: y + 22, y2: y + 22, stroke: C.navy, 'stroke-width': 2, 'stroke-dasharray': '4 8' }, ex); });
+    txt(ex, 'TOTAL', { x: 44, y: 470, 'font-size': 40, 'font-family': F.sans, fill: C.navy });
+    txt(ex, '$6,800', { x: 776, y: 480, 'font-size': 84, 'font-family': F.bagel, fill: C.navy, 'text-anchor': 'end' });
+    el('line', { x1: 44, x2: 520, y1: 640, y2: 640, stroke: C.navy, 'stroke-width': 4 }, sh);
+    txt(ex, 'x', { x: 44, y: 630, 'font-size': 34, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    // the signature writes itself on
+    const sigClip = el('clipPath', { id: 'sigc' }, ex); const sigR = el('rect', { x: 80, y: 540, width: 0, height: 120 }, sigClip);
+    txt(el('g', { 'clip-path': 'url(#sigc)' }, ex), 'Hannah Brooks', { x: 84, y: 628, 'font-size': 78, 'font-family': F.hand, 'font-weight': 700, fill: C.blue });
+    const st = stampEl(camG, 'ACCEPTED', { size: 112 });
+    const cap = caption(g, [[['You send the proposal, and she '], ['accepts it.', C.yellow]]]);
+    return (t) => {
+      camOf(camG, t, 5.05, 7.65, 1, 1.04);
+      hl.forEach((c) => charsPop(c, t, 5.17));
+      enter(ex, t, 5.3, 130, 540, 1.2);
+      sigR.setAttribute('width', 460 * E.io(seg(t, 6.15, 6.85)));
+      stampAnim(st, t, 7.0, 560, 1120, -8);
+      captionAnim(cap, t, 5.4);
+    };
+  });
+
+  // ---------------- S3 exhibit 03: feedback on the design (7.65 – 11.8) ----------------
+  scene(7.65, 11.8, (g) => {
+    halftone(g, { step: 24, angle: 25, color: C.blue, cls: 'mul', maxK: .45, f: edge(1150, 1.6) });
+    const camG = el('g', {}, g);
+    bigNum(camG, '03');
+    const hl = headline(camG, ['Notes on the work.']);
+    const ex = el('g', {}, camG);
+    card(ex, 884, 760, { fill: '#FFFFFF', rx: 6 });
+    el('image', { href: 'proof.png', x: 22, y: 22, width: 840, height: 705, preserveAspectRatio: 'xMidYMid slice' }, ex);
+    halftone(ex, { x0: 22, y0: 22, w: 840, h: 705, step: 18, angle: 45, color: C.blue, cls: 'mul', maxK: .28, f: (x, y) => 0.1 + 0.25 * seg(y, 300, 900) });
+    el('rect', { x: 22, y: 22, width: 840, height: 705, fill: 'none', stroke: C.navy, 'stroke-width': 3 }, ex);
+    // tape strips
+    [[-30, -14, -32], [800, -12, 28]].forEach(([x, y, r]) => el('rect', { x, y, width: 150, height: 52, fill: C.yellow, opacity: .85, class: 'mul', transform: `rotate(${r} ${x + 75} ${y + 26})` }, ex));
+    // comment pins
+    const pins = [[318, 222, '1'], [205, 690, '2']].map(([x, y, n]) => { const p = el('g', {}, ex);
+      el('circle', { r: 36, fill: C.mag, stroke: C.navy, 'stroke-width': 5 }, p); txt(p, n, { y: 13, 'font-size': 38, 'font-family': F.sans, fill: C.cream, 'text-anchor': 'middle' }); return { p, x, y }; });
+    const bub = el('g', {}, ex);
+    el('path', { d: 'M40 0 L60 -40 L100 0 Z', fill: C.cream, stroke: C.navy, 'stroke-width': 5, 'stroke-linejoin': 'round' }, bub);
+    el('rect', { x: 0, y: 0, width: 600, height: 150, rx: 22, fill: C.cream, stroke: C.navy, 'stroke-width': 5 }, bub);
+    el('path', { d: 'M44 4 L96 4', stroke: C.cream, 'stroke-width': 8 }, bub);
+    txt(bub, 'HANNAH:', { x: 26, y: 50, 'font-size': 26, 'font-family': F.mono, 'font-weight': 800, fill: C.mag });
+    txt(bub, 'Price per cup in the hero?', { x: 26, y: 112, 'font-size': 50, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    const cap = caption(g, [[['She leaves comments '], ['right on the design.', C.yellow]]]);
+    return (t) => {
+      camOf(camG, t, 7.9, 11.8, 1, 1.07, 400, 760);
+      hl.forEach((c) => charsPop(c, t, 7.77));
+      enter(ex, t, 7.85, 98, 520, -1.2);
+      pins.forEach((q, i) => { const s = pop(t, i ? 9.6 : 8.55); tf(q.p, q.x, q.y, s); op(q.p, s > 0 ? 1 : 0); });
+      const b = pop(t, 8.85, .4); op(bub, t >= 8.85 ? 1 : 0); tf(bub, 250, 300, b);
+      captionAnim(cap, t, 8.0);
+    };
+  });
+
+  // ---------------- S4 exhibit 04: the extra request (11.8 – 16.75) — the peak ----------------
+  scene(11.8, 16.75, (g) => {
+    bg(g, C.night);
+    const halo = halftone(g, { step: 24, angle: 30, color: C.night2, maxK: .66, f: edge(950, 1.1) });
+    const bloom = el('g', {}, g);
+    halftone(bloom, { step: 24, angle: 45, color: C.mag, maxK: .62, f: radial(540, 900, 900, 1.3) });
+    const camG = el('g', {}, g);
+    const num = bigNum(camG, '04', { fill: C.night2, dots: C.mag });
+    const hl = headline(camG, ['Something extra.'], { fill: C.cream, shadow: C.mag });
+    // the sticky note: Hannah's extra ask
+    const note = el('g', {}, camG), nsh = el('g', { filter: 'url(#boil)' }, note);
+    el('rect', { x: 14, y: 14, width: 720, height: 500, fill: '#0B0F22' }, nsh);
+    el('rect', { x: 0, y: 0, width: 720, height: 500, fill: C.yellow, stroke: C.navy, 'stroke-width': LW }, nsh);
+    txt(note, 'Add a Subscribe', { x: 44, y: 150, 'font-size': 78, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    txt(note, 'button under', { x: 44, y: 240, 'font-size': 78, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    txt(note, 'each bag?', { x: 44, y: 330, 'font-size': 78, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    txt(note, '— Hannah', { x: 420, y: 440, 'font-size': 56, 'font-family': F.hand, 'font-weight': 700, fill: C.mag });
+    const oos = stampEl(camG, 'OUT OF SCOPE', { size: 86 });
+    // the same request, now a change order
+    const co = el('g', {}, camG), csh = el('g', { filter: 'url(#boil)' }, co);
+    card(csh, 800, 760, { fill: C.cream });
+    el('rect', { x: 0, y: 0, width: 800, height: 100, rx: 14, fill: C.mag }, csh);
+    txt(co, 'CHANGE ORDER · CO-03', { x: 40, y: 66, 'font-size': 40, 'font-family': F.mono, 'font-weight': 800, fill: C.cream });
+    txt(co, 'Subscribe button', { x: 40, y: 190, 'font-size': 62, 'font-family': F.slab, fill: C.navy });
+    txt(co, 'under each bag', { x: 40, y: 262, 'font-size': 62, 'font-family': F.slab, fill: C.navy });
+    const amt = el('g', {}, co); const cid = 'amtc';
+    const acp = el('clipPath', { id: cid }, amt); txt(acp, '+$225', { x: 40, y: 540, 'font-size': 228, 'font-family': F.bagel });
+    txt(amt, '+$225', { x: 40, y: 540, 'font-size': 228, 'font-family': F.bagel, fill: C.yellow, stroke: C.navy, 'stroke-width': 6, 'paint-order': 'stroke' });
+    halftone(el('g', { 'clip-path': `url(#${cid})` }, amt), { x0: 30, y0: 300, w: 760, h: 260, step: 20, angle: 45, color: C.mag, cls: 'mul', maxK: .5, f: (x, y) => 0.1 + 0.9 * seg(y, 380, 560) });
+    el('rect', { x: 40, y: 610, width: 56, height: 56, rx: 8, fill: C.cream, stroke: C.navy, 'stroke-width': 5 }, co);
+    const tick = el('path', { d: 'M50 640 L66 656 L92 618', fill: 'none', stroke: C.mag, 'stroke-width': 9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': 80, 'stroke-dashoffset': 80 }, co);
+    txt(co, 'Approved by client', { x: 120, y: 652, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    const app = stampEl(camG, 'APPROVED', { size: 128, color: C.mag });
+    const capA = caption(g, [[['Then she asks for something '], ['extra.', C.yellow]]]);
+    const capB = caption(g, [[['It becomes a '], ['change order,', C.yellow]], [['and she approves it.']]]);
+    return (t) => {
+      // tension: dots crowd in until the approval, then the magenta bloom
+      const tense = seg(t, 11.8, 15.7);
+      halo.setAttribute('transform', `translate(${540 * (1 - (1 + .06 * tense))} ${960 * (1 - (1 + .06 * tense))}) scale(${1 + .06 * tense})`);
+      const bl = E.out(seg(t, 15.85, 16.4)); op(bloom, bl * .55); tf(bloom, 540 * (1 - (0.6 + .4 * bl)), 900 * (1 - (0.6 + .4 * bl)), 0.6 + .4 * bl);
+      camOf(camG, t, 11.9, 15.7, 1, 1.06, 540, 900);
+      hl.forEach((c) => charsPop(c, t, 11.92));
+      // note on, stamped, then flips into the change order (a card turn) at 13.95
+      const flip = seg(t, 13.85, 14.15);
+      if (t < 13.85) { enter(note, t, 12.1, 170, 560, 3.5); } else { op(note, flip < .5 ? 1 : 0); tf(note, 170 + 360 * (1 - Math.cos(flip * Math.PI)) * 0, 560, 1, 3.5, 1); note.setAttribute('transform', `translate(${170 + 360} 560) scale(${Math.max(.02, 1 - flip * 2)} 1) translate(-360 0) rotate(3.5)`); }
+      if (t < 14.05) stampAnim(oos, t, 13.45, 520, 820, -10); else op(oos.g, 0);
+      if (t < 14.0) op(co, 0); else { const q = seg(t, 14.0, 14.3); op(co, 1); co.setAttribute('transform', `translate(${130 + 400} 520) scale(${Math.max(.02, E.back(q))} 1) translate(-400 0)`); }
+      tick.setAttribute('stroke-dashoffset', 80 * (1 - E.out(seg(t, 15.55, 15.75))));
+      stampAnim(app, t, 15.85, 560, 1130, -9);
+      captionAnim(capA, t, 12.0); if (t >= 13.95) op(capA.g, 0);
+      captionAnim(capB, t, 14.0);
+    };
+  });
+
+  // ---------------- S5 exhibit 05: the invoice (16.75 – 19.65) ----------------
+  scene(16.75, 19.65, (g) => {
+    halftone(g, { step: 24, angle: 15, color: C.blue, cls: 'mul', maxK: .45, f: edge(1150, 1.6) });
+    const camG = el('g', {}, g);
+    bigNum(camG, '05');
+    const hl = headline(camG, ['Already on', 'the invoice.']);
+    const ex = el('g', {}, camG), sh = el('g', { filter: 'url(#boil)' }, ex);
+    let zz = 'M0 0 L700 0 L700 640'; for (let x = 700; x > 0; x -= 35) zz += ` L${x - 17.5} 668 L${x - 35} 640`; zz += ' Z';
+    el('path', { d: zz, fill: C.mag, class: 'mul', transform: 'translate(12 12)' }, sh);
+    el('path', { d: zz, fill: '#FFFDF6', stroke: C.navy, 'stroke-width': LW, 'stroke-linejoin': 'round' }, sh);
+    txt(ex, 'INVOICE  INV-0012', { x: 40, y: 80, 'font-size': 38, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(ex, 'Northbeam Studio → Fernhill', { x: 40, y: 126, 'font-size': 28, 'font-family': F.mono, 'font-weight': 500, fill: C.navy });
+    txt(ex, 'Design stage', { x: 40, y: 220, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(ex, '$1,500', { x: 660, y: 220, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'end' });
+    const l2 = el('g', {}, ex);
+    el('rect', { x: 28, y: 252, width: 644, height: 66, rx: 6, fill: C.yellow, class: 'mul' }, l2);
+    txt(l2, 'Change order CO-03', { x: 40, y: 298, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(l2, '$225', { x: 660, y: 298, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'text-anchor': 'end' });
+    el('line', { x1: 40, x2: 660, y1: 360, y2: 360, stroke: C.navy, 'stroke-width': 4, 'stroke-dasharray': '10 10' }, ex);
+    txt(ex, 'DUE', { x: 40, y: 480, 'font-size': 52, 'font-family': F.sans, fill: C.navy });
+    txt(ex, '$1,725', { x: 660, y: 500, 'font-size': 130, 'font-family': F.bagel, fill: C.navy, 'text-anchor': 'end' });
+    const st = stampEl(camG, 'PAID', { size: 190 });
+    const cap = caption(g, [[['The invoice already includes it. '], ['Paid.', C.yellow]]]);
+    return (t) => {
+      camOf(camG, t, 16.75, 19.65, 1.03, 1, 540, 900);
+      hl.forEach((c, i) => charsPop(c, t, 16.87 + i * .15));
+      enter(ex, t, 17.0, 190, 600, 1.5);
+      const p = E.back(seg(t, 17.45, 17.85)); op(l2, t >= 17.45 ? 1 : 0); tf(l2, 500 * (1 - p), 0);
+      stampAnim(st, t, 18.92, 560, 1030, -11);
+      captionAnim(cap, t, 17.1);
+    };
+  });
+
+  // ---------------- S6 exhibit 06: testimonial request (19.65 – 21.95) ----------------
+  scene(19.65, 21.95, (g) => {
+    halftone(g, { step: 24, angle: 20, color: C.mag, cls: 'mul', maxK: .35, f: edge(1150, 1.6) });
+    const camG = el('g', {}, g);
+    bigNum(camG, '06');
+    const hl = headline(camG, ['Then, a kind word.']);
+    const ex = el('g', {}, camG);
+    const letter = el('g', {}, ex), lsh = el('g', { filter: 'url(#boil)' }, letter);
+    el('rect', { x: 60, y: -260, width: 700, height: 420, rx: 8, fill: '#FFFDF6', stroke: C.navy, 'stroke-width': 5 }, lsh);
+    txt(letter, 'Hi Hannah, would you share', { x: 100, y: -170, 'font-size': 50, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    txt(letter, 'a few words about the', { x: 100, y: -110, 'font-size': 50, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    txt(letter, 'refresh? Thank you!', { x: 100, y: -50, 'font-size': 50, 'font-family': F.hand, 'font-weight': 700, fill: C.navy });
+    const env = el('g', {}, ex), esh = el('g', { filter: 'url(#boil)' }, env);
+    el('rect', { x: 12, y: 12, width: 820, height: 480, rx: 10, fill: C.mag, class: 'mul' }, esh);
+    el('rect', { x: 0, y: 0, width: 820, height: 480, rx: 10, fill: '#F2D9A0', stroke: C.navy, 'stroke-width': LW }, esh);
+    el('path', { d: 'M0 0 L410 270 L820 0', fill: 'none', stroke: C.navy, 'stroke-width': LW, 'stroke-linejoin': 'round' }, esh);
+    el('path', { d: 'M0 480 L330 220 M820 480 L490 220', fill: 'none', stroke: C.navy, 'stroke-width': 4 }, esh);
+    txt(env, 'TO: HANNAH BROOKS', { x: 220, y: 380, 'font-size': 36, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+    txt(env, 'Fernhill Coffee Co.', { x: 220, y: 424, 'font-size': 28, 'font-family': F.mono, 'font-weight': 500, fill: C.navy });
+    const st = stampEl(camG, 'SENT', { size: 150 });
+    const cap = caption(g, [[['Then you ask her for a '], ['testimonial.', C.yellow]]]);
+    return (t) => {
+      camOf(camG, t, 19.65, 21.95, 1, 1.04);
+      hl.forEach((c) => charsPop(c, t, 19.77));
+      // the letter slides down into the envelope, the envelope is stamped, then flies off
+      const fly = E.in(seg(t, 21.45, 21.9));
+      enter(ex, t, 19.85, 130 + fly * 900, 720 - fly * 500, -2 - fly * 12);
+      const dn = E.io(seg(t, 20.25, 20.75)); op(letter, t < 20.8 ? 1 : 0); tf(letter, 0, dn * 330);
+      stampAnim(st, t, 21.12, 640, 1020 - fly * 500 , -10); if (t > 21.45) tf(st.g, 640 + fly * 900, 1020 - fly * 500, 1, -10 - fly * 12);
+      captionAnim(cap, t, 19.9);
+    };
+  });
+
+  // ---------------- S7 the whole file, pinned (21.95 – 25.0) ----------------
+  scene(21.95, 25.0, (g) => {
+    bg(g, '#E9DCC3');
+    halftone(g, { step: 24, angle: 30, color: '#C9A877', cls: 'mul', maxK: .5, f: edge(1050, 1.2) });
+    const camG = el('g', {}, g);
+    const hl = headline(camG, ['From first inquiry', 'to final payment.'], { y: 395, size: 76 });
+    const L = [['01', 'BOOKED', C.red], ['02', 'ACCEPTED', C.red], ['03', 'NOTED', C.blue], ['04', 'APPROVED', C.mag], ['05', 'PAID', C.red], ['06', 'SENT', C.red]];
+    const pos = L.map((_, i) => [70 + (i % 2) * 480, 560 + Math.floor(i / 2) * 250]);
+    // red string through the exhibits, in order
+    let sd = ''; pos.forEach(([x, y], i) => { sd += (i ? ' L' : 'M') + (x + 200) + ' ' + (y + 30); });
+    const str = el('path', { d: sd, fill: 'none', stroke: C.red, 'stroke-width': 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, camG);
+    const sLen = pos.reduce((a, p, i) => i ? a + Math.hypot(p[0] - pos[i - 1][0], p[1] - pos[i - 1][1]) : 0, 0);
+    str.setAttribute('stroke-dasharray', sLen);
+    const cards = L.map(([n, w, col], i) => { const c = el('g', {}, camG), cs = el('g', { filter: 'url(#boil)' }, c);
+      card(cs, 400, 200, { fill: i === 3 ? C.yellow : C.cream });
+      txt(c, n, { x: 28, y: 150, 'font-size': 130, 'font-family': F.bagel, fill: C.navy, opacity: .9 });
+      const s = el('g', { filter: 'url(#stampInk)', transform: 'translate(270 110) rotate(-9)' }, c);
+      const ww = measure(w, 40, F.sans) + 28; el('rect', { x: -ww / 2, y: -34, width: ww, height: 68, rx: 10, fill: 'none', stroke: col, 'stroke-width': 6 }, s);
+      txt(s, w, { y: 14, 'font-size': 40, 'font-family': F.sans, fill: col, 'text-anchor': 'middle' });
+      el('circle', { cx: 200, cy: 30, r: 16, fill: C.red, stroke: C.navy, 'stroke-width': 4 }, c);
+      return c; });
+    const st = stampEl(camG, 'CASE CLOSED', { size: 110 });
+    const cap = caption(g, [[['From the first inquiry to the '], ['final payment.', C.yellow]]]);
+    return (t) => {
+      camOf(camG, t, 21.95, 23.6, 1.35, 1, 270, 640);   // pull back from exhibit 01 to the whole board
+      hl.forEach((c, i) => charsPop(c, t, 22.05 + i * .25));
+      cards.forEach((c, i) => { const t0 = 22.05 + i * .17; const p = E.back(seg(t, t0, t0 + .35)); op(c, t >= t0 ? 1 : 0); tf(c, pos[i][0], pos[i][1] + 60 * (1 - p), lerp(.7, 1, p), (i % 2 ? 2 : -2)); });
+      str.setAttribute('stroke-dashoffset', sLen * (1 - E.io(seg(t, 22.4, 23.75))));
+      stampAnim(st, t, 24.15, 540, 890, -7);
+      captionAnim(cap, t, 22.1);
+    };
+  });
+
+  // ---------------- S8 end card (25.0 – 28.6) ----------------
+  scene(25.0, 28.6, (g) => {
+    bg(g, C.mag);
+    halftone(g, { step: 26, angle: 30, color: '#9E0E55', cls: 'mul', maxK: .62, f: edge(950, 1.1) });
+    const rays = el('g', {}, g);
+    halftone(rays, { step: 26, angle: 45, color: '#F0479A', maxK: .62, f: radial(540, 900, 650, 1.4) });
+    const l1 = chars(g, 'Run your studio', { x: 540, y: 560, size: 92, family: F.slab, fill: C.cream, anchor: 'middle', shadow: { fill: C.navy, dx: 7, dy: 7 } });
+    const l2 = chars(g, 'with', { x: 540, y: 670, size: 92, family: F.slab, fill: C.cream, anchor: 'middle', shadow: { fill: C.navy, dx: 7, dy: 7 } });
+    const lg = el('g', {}, g); const lgi = el('g', {}, lg);
+    el('rect', { x: -318, y: -98, width: 660, height: 200, rx: 30, fill: C.navy }, lgi);
+    el('rect', { x: -330, y: -110, width: 660, height: 200, rx: 30, fill: '#FFFFFF', stroke: C.navy, 'stroke-width': LW }, lgi);
+    el('image', { href: 'logo.png', x: -276, y: -76, width: 552, height: 131 }, lgi);
+    const url = chars(g, 'nodstage.com', { x: 540, y: 1130, size: 56, family: F.mono, weight: 800, fill: C.yellow, anchor: 'middle' });
+    return (t) => {
+      charsPop(l1, t, 25.15, 0.03); charsPop(l2, t, 25.45, 0.04);
+      const p = pop(t, 25.8, .45); op(lg, p > 0 ? 1 : 0); tf(lg, 540, 870, p, -2 * (1 - p));
+      charsPop(url, t, 26.3, 0.025, .3, 30);
+      tf(rays, 0, 0); op(rays, .35 + .1 * Math.sin(t * 2));
+    };
+  });
+
+  // ---------------- HUD ----------------
+  const hg = el('g', {}, hud);
+  const caseT = txt(hg, 'CASE NS-0412 · FERNHILL COFFEE CO.', { x: 62, y: 262, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: C.navy, 'letter-spacing': 1 });
+  const chips = [[2.5, 'EXHIBIT 01', 'BOOKING'], [5.05, 'EXHIBIT 02', 'PROPOSAL'], [7.65, 'EXHIBIT 03', 'FEEDBACK'], [11.8, 'EXHIBIT 04', 'THE EXTRA'], [16.75, 'EXHIBIT 05', 'INVOICE'], [19.65, 'EXHIBIT 06', 'TESTIMONIAL'], [21.95, 'SUMMARY', 'ALL EXHIBITS']];
+  const chipEls = chips.map(([t0, a, b], i) => ({ t0, t1: chips[i + 1] ? chips[i + 1][0] : 25.0, l: chip(hg, a, b, { y: 312 }), d: chip(hg, a, b, { y: 312, dark: true }), dark: t0 === 11.8 }));
+  const rec = el('circle', { cx: 790, cy: 254, r: 10, fill: C.red }, hg);
+  const recT = txt(hg, 'OCT 2026', { x: 810, y: 263, 'font-size': 24, 'font-family': F.mono, 'font-weight': 800, fill: C.navy });
+  hudUpdate = (t) => {
+    const on = t >= 2.5 && t < 25.0; show(hg, on); if (!on) return;
+    const dark = t >= 11.8 && t < 16.75; caseT.setAttribute('fill', dark ? C.cream : C.navy); recT.setAttribute('fill', dark ? C.cream : C.navy);
+    chipEls.forEach(c => { const v = t >= c.t0 && t < c.t1; show(c.l, v && !dark); show(c.d, v && dark); });
+    op(rec, Math.floor(t * 2) % 2 ? 0.25 : 1);
+  };
+
+  // ---------------- dot wipe between exhibits ----------------
+  const dotsG = el('g', {}, wipe), wipeDots = [];
+  for (let y = 0; y <= H + 80; y += 80) for (let x = 0; x <= W + 80; x += 80) wipeDots.push({ el: el('circle', { cx: x, cy: y, r: 0 }, dotsG), x, y });
+  const WIPES = [[2.5, C.yellow], [5.05, C.mag], [7.65, C.blue], [11.8, C.night], [16.75, C.yellow], [19.65, C.mag], [21.95, C.blue], [25.0, C.mag]];
+  wipeUpdate = (t) => {
+    const w = WIPES.find(([b]) => Math.abs(t - b) < 0.22); show(dotsG, !!w); if (!w) return;
+    dotsG.setAttribute('fill', w[1]); const u = (t - w[0] + 0.22) / 0.44;
+    wipeDots.forEach(d => { const delay = (d.x / W * 0.4 + d.y / H * 0.6) * 0.35; const p = clamp((u - delay) / 0.65); d.el.setAttribute('r', (Math.sin(p * Math.PI) * 62).toFixed(1)); });
+  };
+}
+let hudUpdate = () => {}, wipeUpdate = () => {};
+
+function buildPaper() {
+  const cv = document.getElementById('paper'), ctx = cv.getContext('2d'), r = rng(3);
+  const small = document.createElement('canvas'); small.width = 54; small.height = 96;
+  const sctx = small.getContext('2d'), sim = sctx.createImageData(54, 96);
+  for (let i = 0; i < sim.data.length; i += 4) { const v = 242 + r() * 13; sim.data[i] = sim.data[i + 1] = sim.data[i + 2] = v; sim.data[i + 3] = 255; }
+  sctx.putImageData(sim, 0, 0); ctx.imageSmoothingEnabled = true; ctx.drawImage(small, 0, 0, W, H);
+  const base = ctx.getImageData(0, 0, W, H);
+  for (let i = 0; i < base.data.length; i += 4) { const n = (r() - 0.5) * 26; base.data[i] = clamp(base.data[i] + n, 0, 255); base.data[i + 1] = clamp(base.data[i + 1] + n, 0, 255); base.data[i + 2] = clamp(base.data[i + 2] + n - 4, 0, 255); }
+  ctx.putImageData(base, 0, 0);
+  const gr = ctx.createRadialGradient(540, 960, 500, 540, 960, 1250); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(1, 'rgba(120,100,80,0.35)');
+  ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = 'rgba(140,120,100,0.18)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0, 960); ctx.lineTo(W, 962); ctx.stroke();
+}
+function drawFx(frame) {
+  const cv = document.getElementById('fx'), ctx = cv.getContext('2d'); ctx.clearRect(0, 0, W, H);
+  const r = rng(1000 + Math.floor(frame / 2));
+  ctx.fillStyle = 'rgba(255,248,235,0.75)'; for (let i = 0; i < 520; i++) { ctx.beginPath(); ctx.arc(r() * W, r() * H, 0.6 + r() * 1.8, 0, 7); ctx.fill(); }
+  ctx.fillStyle = 'rgba(29,35,64,0.25)'; for (let i = 0; i < 90; i++) { ctx.beginPath(); ctx.arc(r() * W, r() * H, 0.6 + r() * 1.3, 0, 7); ctx.fill(); }
+}
+
+// stamps shake the camera; the approval also flashes
+const STAMPS = [4.42, 7.0, 13.45, 15.85, 18.92, 21.12, 24.15];
+const SHAKES = [[4.42, 12, .3], [7.0, 12, .3], [13.45, 10, .28], [15.85, 26, .45], [18.92, 18, .35], [21.12, 10, .28], [24.15, 16, .35]];
+const boilT = document.getElementById('boilT');
+function render(t) {
+  const frame = Math.round(t * FPS);
+  boilT.setAttribute('seed', 1 + (Math.floor(t * 10) % 40));
+  for (const s of scenes) { const on = t >= s.t0 && t < s.t1; show(s.g, on); if (on) s.update(t); }
+  let dx = 0, dy = 0;
+  for (const [t0, a, d] of SHAKES) if (t >= t0 && t < t0 + d) { const k = 1 - (t - t0) / d; dx += a * k * k * Math.sin(t * 91 + t0); dy += a * k * k * Math.cos(t * 77 + t0 * 3); }
+  const groove = (t < 11.8) || (t >= 16.75 && t < 25);
+  const pulse = groove ? 1 + 0.006 * Math.exp(-((t % 0.5) / 0.07)) : 1;
+  cam.setAttribute('transform', `translate(${(dx + 540 * (1 - pulse)).toFixed(2)} ${(dy + 960 * (1 - pulse)).toFixed(2)}) scale(${pulse.toFixed(4)})`);
+  let fl = 0; if (t >= 15.85 && t < 16.0) fl = 0.5 * (1 - (t - 15.85) / 0.15); if (t >= 7.85 && t < 8.1) fl = Math.max(fl, 0.4 * (1 - (t - 7.85) / 0.25));
+  op(flash, fl);
+  op(fade, seg(t, 28.15, 28.6) * 0.0);
+  hudUpdate(t); wipeUpdate(t); drawFx(frame);
+}
+async function init() {
+  const fams = ['400 50px "Alfa Slab One"', '400 50px "Bagel Fat One"', '800 50px "JetBrains Mono"', '500 50px "JetBrains Mono"', '400 50px "Archivo Black"', '700 50px "Caveat"'];
+  const sample = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$,.+-:·→—?!\'';
+  await Promise.all(fams.map(f => document.fonts.load(f, sample))); await document.fonts.ready;
+  await Promise.all([...document.images].map(i => i.decode?.().catch(() => {})));
+  buildPaper(); buildAll();
+  const imgs = [...document.querySelectorAll('image')].map(im => new Promise(res => { const i = new Image(); i.onload = res; i.onerror = res; i.src = im.getAttribute('href'); }));
+  await Promise.all(imgs);
+  render(parseFloat(new URLSearchParams(location.search).get('t') || '0'));
+  window.READY = true;
+}
+window.DUR = DUR; window.render = render; window.seek = render;
+window.ready = init().then(() => true);
+</script>
+</body>
+</html>
