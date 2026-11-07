@@ -1,0 +1,195 @@
+{
+ "title": "Practice before the real 10-key test (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Applying for data entry jobs? Your first ten-key score shouldn't be the real one.",
+   0.5
+  ],
+  [
+   "Practice first.",
+   0.45
+  ],
+  [
+   "Here's what that looks like: sixty seconds on the live test, typed one number at a time.",
+   0.45
+  ],
+  [
+   "At the end you see your net K P H, your accuracy, and how many entries you got right.",
+   0.5
+  ],
+  [
+   "Now you know where you stand.",
+   0.5
+  ],
+  [
+   "You can try a ten-key practice minute at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Applying for [data entry] jobs?",
+  "Your first [10-key score]",
+  "shouldn't be the [real one.]",
+  "[Practice] first.",
+  "Here's what that looks like:",
+  "[60 seconds] on the live test,",
+  "typed [one number] at a time.",
+  "At the end you see",
+  "your [net KPH,]",
+  "your [accuracy,]",
+  "and how many entries you got [right.]",
+  "Now you know [where you stand.]",
+  "You can try a [10-key] practice minute",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  14,
+  16,
+  33,
+  50,
+  56
+ ],
+ "marks": {
+  "jobs": 4,
+  "score": 8,
+  "real": 12,
+  "practice": 14,
+  "sixty": 21,
+  "typed": 27,
+  "end": 33,
+  "net": 39,
+  "acc": 42,
+  "entries": 46,
+  "right": 49,
+  "know": 52,
+  "stand": 55,
+  "try": 58,
+  "at": 63
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "jobs",
+   "pop",
+   400
+  ],
+  [
+   "score-0.1",
+   "pop",
+   800
+  ],
+  [
+   "real-0.05",
+   "buzz"
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.05",
+   "pop",
+   700
+  ],
+  [
+   "practice+0.1",
+   "scribble",
+   0.45
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S2+0.1",
+   "pop",
+   600
+  ],
+  [
+   "sixty",
+   "clicks",
+   2.0
+  ],
+  [
+   "typed+0.2",
+   "pop",
+   700
+  ],
+  [
+   "S3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.1",
+   "pop",
+   700
+  ],
+  [
+   "net-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "acc-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "entries-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "S4+0.2",
+   "ticks",
+   0.8
+  ],
+  [
+   "stand-0.05",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "try+0.2",
+   "pop",
+   600
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
