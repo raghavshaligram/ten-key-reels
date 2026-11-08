@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(../../node_modules/@fontsource/archivo/files/archivo-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Lora;font-weight:600;src:url(../../node_modules/@fontsource/lora/files/lora-latin-600-normal.woff2)}
+@font-face{font-family:Lora;font-weight:700;src:url(../../node_modules/@fontsource/lora/files/lora-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--mag:#D0176F;--ink:#1B1C21;--gold:#F2C14E;--pink:#FF9CCB}
+*{box-sizing:border-box;margin:0;padding:0}html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+#c{position:absolute;left:0;top:0;width:1080px;height:1920px}
+/* caption block: positions matched to the reference (label ~y100, line ~y150-215, panel from y318) */
+#band{position:absolute;left:0;top:0;width:1080px;height:360px;background:linear-gradient(180deg,rgba(26,18,22,.97) 0%,rgba(26,18,22,.9) 70%,rgba(26,18,22,0) 100%)}
+#who{left:0;top:98px;width:1080px;text-align:center;font:800 26px/1 Inter;letter-spacing:.04em}
+#line{left:20px;top:138px;width:1040px;text-align:center;font:700 72px/1.1 Lora;color:#fff;white-space:nowrap;text-shadow:0 4px 18px rgba(0,0,0,.5)}
+/* the app panel */
+#dw{left:38px;top:318px;width:1004px;background:#1F1A1F;border-radius:34px;padding:18px 18px 18px;border:2px solid #3B3239;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+#dw .top{height:56px;border:2px solid #7A3A5A;border-radius:14px;background:#2A2027;font:600 29px/52px Inter;color:#C9B9C3;text-align:center}#dw .top b{color:var(--pink)}
+#dw .row{display:flex;align-items:center;gap:14px;margin:18px 4px 6px}
+#dw .row b{font:800 30px/1 Inter;background:#E9B3CD;color:#2A1020;padding:10px 18px;border-radius:999px;white-space:nowrap}
+#dw .pg{display:flex;gap:14px;flex:1}#dw .pg span{flex:1;height:18px;border-radius:9px;background:#3B3239;overflow:hidden}#dw .pg span i{display:block;height:100%;width:0;background:#E9B3CD;border-radius:9px}
+#dw .ttl{font:700 64px/1.1 Lora;color:#fff;margin:4px 6px 12px;white-space:nowrap}
+#dw .chrome{height:42px;background:#F1EDE8;border-radius:14px 14px 0 0;display:flex;align-items:center;gap:9px;padding:0 16px}
+#dw .chrome i{width:13px;height:13px;border-radius:50%}#dw .chrome u{margin:0 auto;text-decoration:none;font:600 20px/1 Inter;color:#5A5158;background:#fff;padding:7px 60px;border-radius:9px}
+#dw canvas{display:block;border-radius:0 0 14px 14px}
+/* hook stickers, app windows */
+.ic{display:flex;flex-direction:column;align-items:center;gap:10px;font:800 30px/1 Inter;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.ic div{width:140px;height:140px;border-radius:30px;display:grid;place-items:center;box-shadow:0 14px 30px rgba(0,0,0,.45);border:4px solid rgba(255,255,255,.85)}
+.win{width:480px;background:#fff;border-radius:18px;box-shadow:0 22px 50px rgba(0,0,0,.5);overflow:hidden;font:600 27px/1.3 Inter;color:#2A2D35}
+.win .tb{height:50px;background:#E9E6E2;display:flex;align-items:center;gap:8px;padding:0 14px;font:800 28px/1 Inter;color:#1B1C21}
+.win .tb i{width:12px;height:12px;border-radius:50%;background:#C9C3BC}.win .tb span{margin-left:10px}
+.win .bd{padding:14px 18px 18px}.win .sk{height:16px;border-radius:8px;background:#ECE8E4;margin:10px 0}
+.nt{background:#fff;border-radius:999px;padding:14px 24px 14px 14px;font:700 28px/1 Inter;color:#1B1C21;display:flex;align-items:center;gap:12px;box-shadow:0 14px 30px rgba(0,0,0,.45);white-space:nowrap}
+.nt i{font-style:normal;width:44px;height:44px;border-radius:50%;color:#fff;font:800 22px/44px Inter;text-align:center}
+#cnt{font:800 64px/1 Archivo;color:#1B1C21;background:#F2C14E;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;border:5px solid #1B1C21}
+/* end screen */
+#endc{position:absolute;inset:0;background:radial-gradient(900px 900px at 50% 42%,#3A2533 0%,#1B1519 72%);opacity:0;text-align:center;color:#fff}
+#endc .lg{margin:420px auto 0;display:inline-block;background:#fff;border-radius:30px;padding:30px 44px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+#endc h3{font:700 66px/1.18 Lora;margin-top:64px}
+#endc .cta{display:inline-block;margin-top:66px;background:var(--mag);border-radius:999px;padding:30px 64px;font:800 50px/1 Inter;letter-spacing:.04em;box-shadow:0 18px 40px rgba(208,23,111,.45)}
+#endc p{font:600 40px/1 Inter;color:#D9C6D1;margin-top:40px}
+</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div id="hook"></div>
+<div class="el" id="cnt" style="left:380px;top:1290px">1</div>
+<div id="wins"></div>
+<div class="el" id="dw"><div class="top">nodstage · <b>one workspace</b> · for creative studios</div>
+  <div class="row"><b id="chip">MEET</b><div class="pg"><span><i id="g0"></i></span><span><i id="g1"></i></span><span><i id="g2"></i></span></div></div>
+  <div class="ttl" id="ttl">Nodstage</div>
+  <div class="chrome"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><u id="url">nodstage</u></div>
+  <canvas id="cv" width="968" height="560"></canvas></div>
+<div id="endc"><div class="lg"><img src="logo.png" style="width:470px;display:block"></div>
+  <h3>Your entire studio.<br>One connected workspace.</h3><div class="cta">START FREE</div><p>No card needed · nodstage.com</p></div>
+<div id="band"></div><div class="el" id="who"></div><div class="el" id="line"></div>
+<script src="../../node_modules/three/build/three.min.js"></script>
+<script src="../../engine/lib.js"></script>
+<script>
+const TL = __TIMELINE__; const S = TL.scenes, W = TL.words, END = TL.end;
+const RM = (k) => k < 0 ? -k : (k >= 43 ? -1 : 0) + RM0(k);
+const RM0 = (k) => k <= 95 ? k : k <= 104 ? 96 : k <= 197 ? k - 9 : k <= 208 ? 189 : k <= 230 ? k - 20 : k <= 236 ? 213 : k - 21;
+const tw = (k) => TL.wt[Math.min(TL.wt.length - 1, RM(k))][1];
