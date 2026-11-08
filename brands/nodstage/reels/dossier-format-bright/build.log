@@ -1,0 +1,11 @@
+voice: cached
+voice check, read it against the script:
+    Nod, round 5, she wants round 5. Of the logo. Of the logo and the invoice is still in a spreadsheet. Let's fix the whole thing, it's called Nod Stage. A lead books a call from your booking page, you send the proposal, she accepts it online. No PDF ping pong. None. Share the proof in her portal, she comments right on the design. Not in a 12 email thread. Not anymore. In round 5. If it's beyond the scope, send a change order, she approves it and it gets billed. Billed. Billed. The invoice goes out from the same project, then ask her for a testimonial. So it's all in one place. From the first inquiry to the final payment. Should I thank you? Start free at NodStage .com.
+  $ cd "/tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright" && HTML=build.html node "/tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/engine/render.cjs" video frames 46.52
+frames 1396
+  $ ffmpeg -v error -y -framerate 30 -i /tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright/frames/f%
+  $ ffmpeg -v error -y -i /tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright/vo.wav -i /tmp/claude-0
+  $ ffmpeg -v error -y -i /tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright/video.tmp.mp4 -i /tmp/c
+video: /tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright/out.mp4 46.52 s
+  $ cd "/tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright" && HTML=build.html node "/tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/engine/render.cjs" stills . 1.2 8.78 11.78 19.22 25.88 33.68 38.16
+contact sheet: /tmp/claude-0/-home-claude/fb5acdd3-6985-5115-930f-f450ba3d78cd/scratchpad/tkr-test/nodstage/dossier-format-bright/sheet.jpg

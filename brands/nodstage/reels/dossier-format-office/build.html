@@ -1,0 +1,369 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Archivo;font-weight:800;src:url(../../node_modules/@fontsource/archivo/files/archivo-latin-800-normal.woff2)}
+@font-face{font-family:Archivo;font-weight:700;src:url(../../node_modules/@fontsource/archivo/files/archivo-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Lora;font-weight:600;src:url(../../node_modules/@fontsource/lora/files/lora-latin-600-normal.woff2)}
+@font-face{font-family:Lora;font-weight:700;src:url(../../node_modules/@fontsource/lora/files/lora-latin-700-normal.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--mag:#D0176F;--ink:#1B1C21;--cream:#FBF6EE;--yel:#F4D23C;--pink:#FF8BC1}
+*{box-sizing:border-box;margin:0;padding:0}html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+#c{position:absolute;left:0;top:0;width:1080px;height:1920px}
+#band{position:absolute;left:0;top:0;width:1080px;height:400px;background:linear-gradient(180deg,#FBF6EE 0%,#FBF6EE 74%,rgba(251,246,238,0) 100%)}
+#who{left:0;top:232px;width:1080px;text-align:center;font:800 24px/1 Inter;letter-spacing:.16em}
+#line{left:40px;top:262px;width:1000px;text-align:center;font:700 58px/1.12 Lora;color:#1B1C21;white-space:nowrap}
+#line b{color:var(--mag);font-weight:700}
+/* the app panel */
+#dw{left:70px;top:340px;width:940px;background:#FFFFFF;border-radius:30px;padding:12px 16px 16px;border:2px solid #E6DDD5;box-shadow:0 24px 60px rgba(120,80,60,.22)}
+#dw .top{font:600 20px/1 Inter;color:#7A7178;text-align:center;padding:4px 0 11px}#dw .top b{color:var(--mag)}
+#dw .pg{display:flex;gap:10px;margin:0 4px 12px}#dw .pg span{flex:1;height:9px;border-radius:5px;background:#EEE7E1}#dw .pg span.on{background:var(--mag)}#dw .pg span.done{background:#EAA7C7}
+#dw .hd{display:flex;align-items:center;gap:16px;padding:0 4px 12px}
+#dw .hd b{font:600 22px/1 Mono;background:var(--mag);color:#fff;padding:8px 11px;border-radius:7px;letter-spacing:.06em}
+#dw .hd span{font:800 46px/1 Archivo;color:#1B1C21;letter-spacing:-.01em}
+#dw .chrome{height:36px;background:#F1EDE8;border-radius:12px 12px 0 0;display:flex;align-items:center;gap:8px;padding:0 14px}
+#dw .chrome i{width:11px;height:11px;border-radius:50%;background:#D7CFC7}#dw .chrome u{margin:0 auto;text-decoration:none;font:600 17px/1 Inter;color:#7A7178;background:#fff;padding:5px 40px;border-radius:7px}
+#dw canvas{display:block;border-radius:0 0 12px 12px}
+/* stickers */
+.stk{font:800 34px/1 Inter;color:var(--ink);background:#fff;border-radius:18px;padding:16px 24px;box-shadow:0 14px 34px rgba(0,0,0,.45);display:flex;align-items:center;gap:14px;white-space:nowrap}
+.stk i{font-style:normal;width:52px;height:52px;border-radius:13px;color:#fff;font:800 24px/52px Inter;text-align:center}
+.stk em{font-style:normal;color:#8A8189;font-weight:600;font-size:24px}
+#s1{background:var(--yel);font:800 120px/1 Archivo;padding:18px 34px;border-radius:24px;letter-spacing:-.02em;border:6px solid var(--ink)}
+#s1 small{display:block;font:800 26px/1 Inter;letter-spacing:.14em;margin-bottom:6px}
+#s5 s{text-decoration:none;position:relative}#s5 .x{position:absolute;left:-6px;right:-6px;top:50%;height:7px;background:var(--mag);border-radius:4px;transform-origin:0 50%}
+/* end card */
+#endc{position:absolute;inset:0;background:radial-gradient(900px 900px at 50% 38%,#FFF6F0 0%,#F9DCE7 80%);opacity:0;text-align:center;color:#1B1C21}
+#endc .disc{margin:470px auto 0;width:320px;height:320px;border-radius:50%;background:#FFFFFF;border:3px solid #EBC9D8;display:flex;align-items:center;justify-content:center}
+#endc .disc div{background:#fff;border-radius:22px;padding:22px 24px;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+#endc h2{font:800 84px/1 Inter;letter-spacing:-.02em;margin-top:56px}
+#endc h2 span{background:var(--mag);color:#fff;border-radius:16px;padding:6px 20px;margin-left:14px}
+#endc p{font:600 38px/1 Inter;color:#6A5F66;margin-top:32px}
+#endc ul{list-style:none;margin:30px auto 0;display:inline-block;text-align:left;font:700 46px/1.65 Inter}
+#endc li::before{content:"✓";display:inline-block;width:54px;height:54px;border-radius:50%;background:#2FBF71;color:#fff;font:800 32px/54px Inter;text-align:center;margin-right:20px}
+#endc .h{position:absolute;left:0;width:1080px;top:1360px;font:600 32px/1 Inter;color:#8A7A84}
+</style></head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div class="el stk" id="s1" style="left:120px;top:430px"><div><small>REVISION</small>ROUND 5</div></div>
+<div class="el stk" id="s2" style="left:560px;top:520px"><i style="background:#E0803A">Ai</i>logo_FINAL_v5.ai</div>
+<div class="el stk" id="s3" style="left:110px;top:760px"><i style="background:#1F7A4A">X</i>invoice.xlsx<em>still</em></div>
+<div class="el stk" id="s4" style="left:520px;top:880px"><i style="background:#5B6BD6">@</i>12 emails<em>re: re: logo</em></div>
+<div class="el" id="dw"><div class="top">nodstage · <b>one workspace</b> for creative studios</div>
+  <div class="pg"><span id="g0"></span><span id="g1"></span><span id="g2"></span><span id="g3"></span></div>
+  <div class="hd"><b id="chip">NODSTAGE</b><span id="ttl">Meet Nodstage</span></div>
+  <div class="chrome"><i></i><i></i><i></i><u id="url">Nodstage</u></div>
+  <canvas id="cv" width="908" height="560"></canvas></div>
+<div class="el stk" id="s5" style="left:470px;top:880px"><i style="background:#5B6BD6">@</i><s>12-email thread<span class="x" id="s5x"></span></s></div>
+<div class="el stk" id="s6" style="left:600px;top:870px"><div style="font:800 64px/1 Archivo">ROUND 5</div></div>
+<div id="endc"><div class="disc"><div><img src="logo.png" style="width:236px;display:block"></div></div>
+  <h2>Comment<span>STUDIO</span></h2><p>and I'll DM you:</p><ul><li>The Nodstage link</li><li>Free plan to start</li></ul><div class="h">@nodstage</div></div>
+<div id="band"></div><div class="el" id="who"></div><div class="el" id="line"></div>
+<script src="../../node_modules/three/build/three.min.js"></script>
+<script src="../../engine/lib.js"></script>
+<script>
+const TL = {"caps": [{"t": 0.0, "text": "Nod."}, {"t": 0.56, "text": "Round five."}, {"t": 1.2, "text": "She wants [round five.]"}, {"t": 2.84, "text": "Of the logo?"}, {"t": 4.28, "text": "Of the logo."}, {"t": 4.8, "text": "And the invoice is still"}, {"t": 5.94, "text": "in a [spreadsheet.]"}, {"t": 7.58, "text": "Let's fix the whole thing."}, {"t": 8.72, "text": "It's called [Nodstage.]"}, {"t": 10.58, "text": "A lead books a call"}, {"t": 11.34, "text": "from your [booking page.]"}, {"t": 12.54, "text": "You send the [proposal.]"}, {"t": 13.56, "text": "She accepts it [online.]"}, {"t": 15.36, "text": "No PDF [ping-pong?]"}, {"t": 17.26, "text": "None."}, {"t": 18.02, "text": "Share the proof"}, {"t": 18.72, "text": "in her [portal.]"}, {"t": 19.4, "text": "She comments"}, {"t": 19.88, "text": "right on the [design.]"}, {"t": 21.62, "text": "Not in a"}, {"t": 21.9, "text": "[12-email] thread?"}, {"t": 23.3, "text": "Not anymore."}, {"t": 24.68, "text": "And [round five?]"}, {"t": 25.5, "text": "If it's beyond the scope,"}, {"t": 27.32, "text": "send a [change order.]"}, {"t": 28.28, "text": "She approves it,"}, {"t": 28.9, "text": "and it gets [billed.]"}, {"t": 30.6, "text": "[Billed?]"}, {"t": 31.4, "text": "[Billed.]"}, {"t": 32.48, "text": "The invoice goes out"}, {"t": 33.52, "text": "from the [same project.]"}, {"t": 34.88, "text": "Then ask her"}, {"t": 35.46, "text": "for a [testimonial.]"}, {"t": 36.96, "text": "So it's all"}, {"t": 37.42, "text": "in [one place?]"}, {"t": 38.72, "text": "From the first inquiry"}, {"t": 39.62, "text": "to the [final payment.]"}, {"t": 41.58, "text": "Should I thank you?"}, {"t": 42.96, "text": "Start free at"}, {"t": 43.66, "text": "[nodstage.com]"}], "scenes": [0.0, 7.58, 10.58, 18.02, 24.68, 32.48, 36.96, 42.96], "words": {"five": 0.56, "logo": 3.2, "spreadsheet": 6.18, "fix": 7.58, "whole": 8.16, "nodstage": 9.12, "lead": 10.68, "call": 11.16, "booking": 11.68, "sendp": 12.54, "proposal": 13.0, "accepts": 13.68, "online": 14.14, "pdf": 15.36, "none": 17.26, "share": 18.02, "proof": 18.56, "portal": 19.0, "comments": 19.54, "design": 20.54, "notin": 21.62, "email": 21.9, "anymore": 23.3, "round5": 24.68, "beyond": 26.46, "scope": 26.92, "changeorder": 27.56, "approves": 28.38, "billed": 29.36, "billedq": 30.6, "billeda": 31.4, "invoice": 32.7, "goes": 33.02, "same": 33.78, "project": 34.0, "ask": 34.88, "testimonial": 35.74, "so": 36.96, "oneplace": 37.52, "from": 38.72, "inquiry": 39.28, "payment": 40.32, "should": 41.58, "thank": 41.86, "start": 42.96, "url": 43.66}, "end": 46.52, "wt": [["Nod,", 0.0, 0.54], ["round", 0.56, 0.72], ["5,", 0.72, 1.04], ["she", 1.2, 1.32], ["wants", 1.32, 1.5], ["round", 1.5, 1.66], ["5.", 1.66, 2.3], ["Of", 2.84, 3.0], ["the", 3.0, 3.2], ["logo.", 3.2, 3.54], ["Of", 4.28, 4.38], ["the", 4.38, 4.48], ["logo", 4.48, 4.8], ["and", 4.8, 5.1], ["the", 5.1, 5.22], ["invoice", 5.22, 5.52], ["is", 5.52, 5.72], ["still", 5.72, 5.94], ["in", 5.94, 6.08], ["a", 6.08, 6.18], ["spreadsheet.", 6.18, 6.54], ["Let's", 7.58, 7.84], ["fix", 7.84, 7.94], ["the", 7.94, 8.16], ["whole", 8.16, 8.32], ["thing,", 8.32, 8.6], ["it's", 8.72, 8.92], ["called", 8.92, 9.12], ["Nod", 9.12, 9.4], ["Stage.", 9.4, 9.68], ["A", 10.58, 10.68], ["lead", 10.68, 10.82], ["books", 10.82, 11.02], ["a", 11.02, 11.16], ["call", 11.16, 11.34], ["from", 11.34, 11.54], ["your", 11.54, 11.68], ["booking", 11.68, 11.9], ["page,", 11.9, 12.32], ["you", 12.54, 12.68], ["send", 12.68, 12.86], ["the", 12.86, 13.0], ["proposal,", 13.0, 13.34], ["she", 13.56, 13.68], ["accepts", 13.68, 13.96], ["it", 13.96, 14.14], ["online.", 14.14, 14.52], ["No", 15.36, 15.5], ["PDF", 15.5, 15.82], ["ping", 15.82, 16.08], ["pong.", 16.08, 16.42], ["None.", 17.26, 17.34], ["Share", 18.02, 18.4], ["the", 18.4, 18.56], ["proof", 18.56, 18.72], ["in", 18.72, 18.88], ["her", 18.88, 19.0], ["portal,", 19.0, 19.26], ["she", 19.4, 19.54], ["comments", 19.54, 19.88], ["right", 19.88, 20.22], ["on", 20.22, 20.4], ["the", 20.4, 20.54], ["design.", 20.54, 20.92], ["Not", 21.62, 21.7], ["in", 21.7, 21.8], ["a", 21.8, 21.9], ["12", 21.9, 22.08], ["email", 22.08, 22.26], ["thread.", 22.26, 22.68], ["Not", 23.3, 23.58], ["anymore.", 23.58, 23.86], ["In", 24.68, 24.98], ["round", 24.98, 25.12], ["5.", 25.12, 25.5], ["If", 25.5, 26.28], ["it's", 26.28, 26.46], ["beyond", 26.46, 26.74], ["the", 26.74, 26.92], ["scope,", 26.92, 27.14], ["send", 27.32, 27.42], ["a", 27.42, 27.56], ["change", 27.56, 27.78], ["order,", 27.78, 28.04], ["she", 28.28, 28.38], ["approves", 28.38, 28.68], ["it", 28.68, 28.9], ["and", 28.9, 29.02], ["it", 29.02, 29.14], ["gets", 29.14, 29.36], ["billed.", 29.36, 29.66], ["Billed.", 30.6, 30.76], ["Billed.", 31.4, 31.84], ["The", 32.48, 32.7], ["invoice", 32.7, 33.02], ["goes", 33.02, 33.3], ["out", 33.3, 33.52], ["from", 33.52, 33.64], ["the", 33.64, 33.78], ["same", 33.78, 34.0], ["project,", 34.0, 34.5], ["then", 34.88, 35.02], ["ask", 35.02, 35.28], ["her", 35.28, 35.46], ["for", 35.46, 35.6], ["a", 35.6, 35.74], ["testimonial.", 35.74, 36.4], ["So", 36.96, 37.18], ["it's", 37.18, 37.3], ["all", 37.3, 37.42], ["in", 37.42, 37.52], ["one", 37.52, 37.66], ["place.", 37.66, 37.94], ["From", 38.72, 38.86], ["the", 38.86, 39.04], ["first", 39.04, 39.28], ["inquiry", 39.28, 39.62], ["to", 39.62, 39.9], ["the", 39.9, 40.02], ["final", 40.02, 40.32], ["payment.", 40.32, 40.7], ["Should", 41.58, 41.7], ["I", 41.7, 41.86], ["thank", 41.86, 42.06], ["you?", 42.06, 42.38], ["Start", 42.96, 43.22], ["free", 43.22, 43.48], ["at", 43.48, 43.66], ["NodStage.com.", 43.66, 44.92]], "amp": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04, 0.22, 0.55, 0.8, 0.9, 1.0, 1.0, 1.0, 0.85, 0.58, 0.6, 0.88, 1.0, 1.0, 0.88, 0.57, 0.23, 0.24, 0.62, 0.92, 0.9, 0.8, 0.73, 0.66, 0.59, 0.46, 0.24, 0.15, 0.25, 0.37, 0.43, 0.52, 0.6, 0.63, 0.68, 0.7, 0.54, 0.33, 0.34, 0.5, 0.6, 0.58, 0.45, 0.26, 0.11, 0.19, 0.46, 0.64, 0.63, 0.53, 0.41, 0.31, 0.28, 0.27, 0.19, 0.09, 0.04, 0.03, 0.03, 0.03, 0.02, 0.02, 0.01, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.21, 0.48, 0.74, 0.67, 0.4, 0.28, 0.31, 0.5, 0.69, 0.63, 0.48, 0.45, 0.57, 0.72, 0.71, 0.64, 0.61, 0.54, 0.42, 0.27, 0.22, 0.3, 0.4, 0.42, 0.39, 0.38, 0.36, 0.32, 0.29, 0.22, 0.12, 0.04, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04, 0.13, 0.2, 0.42, 0.77, 0.9, 1.0, 1.0, 1.0, 1.0, 1.0, 0.81, 0.53, 0.89, 1.0, 1.0, 1.0, 0.85, 0.62, 0.36, 0.17, 0.07, 0.16, 0.43, 0.69, 0.79, 0.72, 0.53, 0.41, 0.56, 0.8, 0.86, 0.7, 0.62, 0.83, 1.0, 0.96, 0.68, 0.41, 0.29, 0.29, 0.33, 0.37, 0.41, 0.38, 0.25, 0.14, 0.33, 0.64, 0.7, 0.61, 0.58, 0.57, 0.54, 0.49, 0.4, 0.3, 0.18, 0.08, 0.23, 0.56, 0.67, 0.52, 0.28, 0.15, 0.19, 0.23, 0.22, 0.23, 0.22, 0.17, 0.12, 0.07, 0.03, 0.02, 0.02, 0.02, 0.01, 0.01, 0.01, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.13, 0.48, 0.85, 0.99, 0.8, 0.4, 0.15, 0.13, 0.15, 0.1, 0.23, 0.49, 0.43, 0.22, 0.17, 0.14, 0.25, 0.6, 0.69, 0.46, 0.42, 0.6, 0.69, 0.63, 0.52, 0.32, 0.12, 0.16, 0.42, 0.54, 0.48, 0.42, 0.38, 0.36, 0.33, 0.27, 0.32, 0.41, 0.3, 0.13, 0.13, 0.14, 0.11, 0.2, 0.47, 0.78, 0.84, 0.67, 0.48, 0.48, 0.6, 0.65, 0.62, 0.56, 0.52, 0.43, 0.26, 0.14, 0.11, 0.12, 0.2, 0.36, 0.4, 0.35, 0.35, 0.33, 0.25, 0.18, 0.18, 0.19, 0.18, 0.16, 0.12, 0.07, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.14, 0.52, 0.8, 0.76, 0.63, 0.63, 0.67, 0.61, 0.42, 0.21, 0.26, 0.48, 0.41, 0.17, 0.12, 0.24, 0.33, 0.25, 0.12, 0.15, 0.35, 0.58, 0.63, 0.6, 0.57, 0.42, 0.18, 0.11, 0.22, 0.36, 0.42, 0.44, 0.45, 0.38, 0.23, 0.28, 0.47, 0.34, 0.1, 0.11, 0.25, 0.33, 0.31, 0.21, 0.13, 0.2, 0.36, 0.43, 0.39, 0.35, 0.31, 0.23, 0.19, 0.19, 0.21, 0.2, 0.16, 0.1, 0.05, 0.01, 0.04, 0.22, 0.49, 0.54, 0.33, 0.17, 0.35, 0.7, 0.7, 0.54, 0.51, 0.47, 0.31, 0.22, 0.37, 0.39, 0.17, 0.17, 0.46, 0.68, 0.65, 0.53, 0.37, 0.23, 0.26, 0.44, 0.51, 0.44, 0.33, 0.22, 0.18, 0.19, 0.27, 0.51, 0.65, 0.45, 0.18, 0.13, 0.14, 0.28, 0.6, 0.58, 0.25, 0.09, 0.17, 0.35, 0.5, 0.57, 0.6, 0.54, 0.44, 0.36, 0.31, 0.32, 0.38, 0.43, 0.42, 0.37, 0.31, 0.26, 0.24, 0.23, 0.25, 0.27, 0.19, 0.06, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.42, 0.83, 1.0, 1.0, 1.0, 0.66, 0.24, 0.3, 0.57, 0.86, 0.86, 0.84, 1.0, 1.0, 1.0, 0.7, 0.26, 0.08, 0.26, 0.6, 0.73, 0.64, 0.44, 0.25, 0.34, 0.67, 0.85, 0.8, 0.66, 0.47, 0.29, 0.19, 0.13, 0.09, 0.05, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.06, 0.2, 0.43, 0.65, 0.76, 0.8, 0.77, 0.68, 0.65, 0.67, 0.6, 0.48, 0.42, 0.41, 0.41, 0.41, 0.33, 0.19, 0.08, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04, 0.15, 0.24, 0.42, 0.78, 0.99, 0.9, 0.72, 0.5, 0.39, 0.35, 0.18, 0.07, 0.22, 0.45, 0.48, 0.32, 0.15, 0.24, 0.47, 0.5, 0.48, 0.46, 0.29, 0.1, 0.04, 0.17, 0.45, 0.61, 0.57, 0.46, 0.43, 0.48, 0.48, 0.41, 0.31, 0.22, 0.18, 0.22, 0.3, 0.3, 0.18, 0.16, 0.34, 0.59, 0.7, 0.62, 0.49, 0.48, 0.5, 0.44, 0.31, 0.2, 0.15, 0.13, 0.14, 0.26, 0.49, 0.6, 0.55, 0.55, 0.52, 0.36, 0.31, 0.42, 0.48, 0.45, 0.44, 0.43, 0.33, 0.23, 0.28, 0.33, 0.25, 0.26, 0.44, 0.51, 0.4, 0.29, 0.25, 0.22, 0.18, 0.17, 0.18, 0.22, 0.28, 0.26, 0.14, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04, 0.21, 0.49, 0.76, 0.88, 0.88, 0.94, 1.0, 1.0, 0.67, 0.41, 0.37, 0.58, 1.0, 1.0, 1.0, 0.65, 0.64, 0.86, 0.87, 0.83, 0.79, 0.69, 0.59, 0.47, 0.26, 0.11, 0.08, 0.15, 0.39, 0.64, 0.66, 0.53, 0.4, 0.26, 0.14, 0.08, 0.05, 0.03, 0.02, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.19, 0.47, 0.7, 0.81, 0.8, 0.66, 0.58, 0.52, 0.43, 0.51, 0.57, 0.53, 0.54, 0.51, 0.48, 0.49, 0.51, 0.47, 0.43, 0.46, 0.51, 0.51, 0.44, 0.37, 0.28, 0.21, 0.15, 0.1, 0.06, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.19, 0.48, 0.72, 0.9, 1.0, 1.0, 1.0, 1.0, 0.74, 0.32, 0.23, 0.62, 1.0, 1.0, 0.97, 0.82, 0.65, 0.53, 0.46, 0.35, 0.19, 0.08, 0.05, 0.04, 0.03, 0.03, 0.02, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.18, 0.6, 0.7, 0.49, 0.5, 0.45, 0.23, 0.13, 0.17, 0.4, 0.56, 0.56, 0.59, 0.66, 0.67, 0.64, 0.58, 0.51, 0.46, 0.42, 0.33, 0.21, 0.15, 0.12, 0.25, 0.55, 0.72, 0.68, 0.53, 0.28, 0.08, 0.06, 0.1, 0.11, 0.21, 0.45, 0.55, 0.46, 0.41, 0.36, 0.22, 0.18, 0.21, 0.25, 0.38, 0.44, 0.42, 0.43, 0.39, 0.32, 0.38, 0.5, 0.55, 0.5, 0.39, 0.34, 0.41, 0.45, 0.39, 0.31, 0.21, 0.15, 0.16, 0.19, 0.26, 0.43, 0.64, 0.59, 0.27, 0.1, 0.22, 0.44, 0.55, 0.53, 0.43, 0.3, 0.22, 0.24, 0.4, 0.58, 0.53, 0.36, 0.28, 0.35, 0.43, 0.47, 0.39, 0.2, 0.15, 0.33, 0.52, 0.45, 0.21, 0.07, 0.09, 0.09, 0.04, 0.15, 0.37, 0.43, 0.4, 0.36, 0.31, 0.31, 0.3, 0.23, 0.15, 0.11, 0.06, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.33, 0.92, 1.0, 1.0, 1.0, 1.0, 1.0, 0.78, 0.39, 0.19, 0.16, 0.14, 0.11, 0.07, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.08, 0.25, 0.37, 0.45, 0.64, 0.74, 0.7, 0.7, 0.71, 0.67, 0.62, 0.58, 0.57, 0.49, 0.32, 0.28, 0.35, 0.32, 0.19, 0.09, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.27, 0.6, 0.6, 0.52, 0.69, 0.82, 0.74, 0.57, 0.4, 0.42, 0.57, 0.6, 0.49, 0.37, 0.24, 0.14, 0.11, 0.27, 0.6, 0.73, 0.61, 0.4, 0.35, 0.56, 0.68, 0.62, 0.43, 0.17, 0.09, 0.19, 0.32, 0.4, 0.41, 0.36, 0.26, 0.16, 0.15, 0.3, 0.43, 0.43, 0.39, 0.37, 0.34, 0.23, 0.12, 0.19, 0.41, 0.51, 0.46, 0.36, 0.23, 0.17, 0.26, 0.4, 0.44, 0.37, 0.28, 0.16, 0.05, 0.03, 0.12, 0.22, 0.21, 0.11, 0.04, 0.01, 0.03, 0.11, 0.38, 0.74, 0.84, 0.71, 0.57, 0.39, 0.32, 0.46, 0.51, 0.46, 0.39, 0.26, 0.15, 0.1, 0.15, 0.37, 0.55, 0.44, 0.19, 0.06, 0.21, 0.49, 0.59, 0.43, 0.2, 0.12, 0.2, 0.37, 0.44, 0.31, 0.16, 0.12, 0.19, 0.34, 0.41, 0.44, 0.46, 0.44, 0.38, 0.31, 0.26, 0.24, 0.24, 0.25, 0.28, 0.3, 0.29, 0.27, 0.17, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.08, 0.41, 0.84, 1.0, 0.77, 0.4, 0.63, 1.0, 1.0, 1.0, 1.0, 1.0, 0.95, 0.96, 0.98, 0.95, 0.89, 0.7, 0.38, 0.19, 0.31, 0.6, 0.69, 0.57, 0.43, 0.31, 0.22, 0.19, 0.2, 0.2, 0.17, 0.1, 0.04, 0.02, 0.02, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.09, 0.33, 0.81, 1.0, 0.83, 0.74, 0.8, 0.72, 0.41, 0.14, 0.06, 0.24, 0.62, 0.76, 0.65, 0.51, 0.35, 0.2, 0.16, 0.34, 0.55, 0.52, 0.4, 0.29, 0.23, 0.35, 0.49, 0.53, 0.5, 0.49, 0.49, 0.45, 0.31, 0.19, 0.21, 0.29, 0.41, 0.47, 0.27, 0.19, 0.53, 0.78, 0.65, 0.5, 0.48, 0.47, 0.51, 0.56, 0.5, 0.31, 0.12, 0.09, 0.19, 0.31, 0.35, 0.31, 0.26, 0.26, 0.28, 0.28, 0.25, 0.21, 0.16, 0.13, 0.14, 0.15, 0.12, 0.08, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.02, 0.07, 0.28, 0.64, 1.0, 1.0, 1.0, 1.0, 0.42, 0.29, 0.77, 1.0, 1.0, 1.0, 0.86, 0.45, 0.16, 0.22, 0.53, 0.74, 0.69, 0.57, 0.45, 0.34, 0.25, 0.16, 0.1, 0.05, 0.03, 0.01, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.04, 0.13, 0.17, 0.26, 0.65, 1.0, 0.95, 0.76, 0.53, 0.26, 0.11, 0.09, 0.17, 0.36, 0.52, 0.53, 0.52, 0.65, 0.82, 0.68, 0.39, 0.33, 0.46, 0.56, 0.54, 0.49, 0.49, 0.5, 0.43, 0.27, 0.16, 0.11, 0.18, 0.42, 0.61, 0.56, 0.39, 0.27, 0.24, 0.19, 0.13, 0.29, 0.59, 0.64, 0.54, 0.51, 0.42, 0.22, 0.06, 0.05, 0.14, 0.32, 0.47, 0.49, 0.42, 0.37, 0.36, 0.34, 0.3, 0.29, 0.3, 0.29, 0.22, 0.12, 0.05, 0.02, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "pointer": [], "presFrames": 0}; const S = TL.scenes, W = TL.words, END = TL.end;
+const tw = (k) => TL.wt[k][1];
+// ---------------- 3D studio (from the 3d-follow-one-client scene, recoloured warm cream + magenta)
+const R = new THREE.WebGLRenderer({ canvas: $("c"), antialias: true, preserveDrawingBuffer: true });
+R.setSize(1080, 1920, false); R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+R.outputColorSpace = THREE.SRGBColorSpace; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.2;
+const scene = new THREE.Scene(); scene.background = new THREE.Color("#F6EEE5");
+const cam = new THREE.PerspectiveCamera(34, 1080 / 1920, .05, 100);
+const M = (c, o = {}) => new THREE.MeshStandardMaterial(Object.assign({ color: c, roughness: .85, metalness: 0 }, o));
+const box = (w, h, d, m, x, y, z, p = scene) => { const g = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); g.position.set(x, y, z); g.castShadow = g.receiveShadow = true; p.add(g); return g; };
+const tex = (draw, w = 512, h = 512) => { const c = document.createElement("canvas"); c.width = w; c.height = h; draw(c.getContext("2d"), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const wallTex = tex((g, w, h) => { g.fillStyle = "#FBF5EE"; g.fillRect(0, 0, w, h); g.strokeStyle = "#EFE3D6"; g.lineWidth = 4;
+  for (let y = 0, r = 0; y < h; y += 32, r++) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); for (let x = (r % 2 ? 48 : 0); x < w; x += 96) { g.beginPath(); g.moveTo(x, y); g.lineTo(x, y + 32); g.stroke(); } }
+  for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(160,120,100,${rnd() * .03})`; g.fillRect(rnd() * w, rnd() * h, 3, 3); } });
+wallTex.wrapS = wallTex.wrapT = THREE.RepeatWrapping; wallTex.repeat.set(3, 2);
+
+const wl = wallTex.clone(); wl.needsUpdate = true; box(.2, 6, 16, M("#fff", { map: wl }), -5, 3, -.5);
+const floorTex = tex((g, w, h) => { g.fillStyle = "#E3C9A6"; g.fillRect(0, 0, w, h); g.strokeStyle = "#D2B58F"; g.lineWidth = 3; for (let x = 0; x < w; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); } });
+floorTex.wrapS = floorTex.wrapT = THREE.RepeatWrapping; floorTex.repeat.set(4, 4);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 18), M("#fff", { map: floorTex })); floor.position.z = -2; floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+const rugTex = tex((g, w, h) => { g.fillStyle = "#F7CFDC"; g.fillRect(0, 0, w, h); g.strokeStyle = "#FFFFFF"; g.lineWidth = 14; g.strokeRect(30, 30, w - 60, h - 60); g.lineWidth = 5; g.strokeRect(56, 56, w - 112, h - 112); });
+const rug = new THREE.Mesh(new THREE.PlaneGeometry(5, 3.2), M("#fff", { map: rugTex })); rug.rotation.x = -Math.PI / 2; rug.position.set(-.2, .01, 1.2); rug.receiveShadow = true; scene.add(rug);
+const sun = new THREE.DirectionalLight("#FFF6EA", 2.4); sun.position.set(-2.5, 5, 5); sun.target.position.set(.3, 1.5, -.8); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.radius = 6;
+sun.shadow.camera.left = -5; sun.shadow.camera.right = 5; sun.shadow.camera.top = 5; sun.shadow.camera.bottom = -5; scene.add(sun, sun.target);
+for (const [x, y, z] of [[-3.1, 0, -2.4], [3.9, 0, -2.3]]) { const pot = new THREE.Mesh(new THREE.CylinderGeometry(.22, .17, .45, 16), M("#C9663F")); pot.position.set(x, .23, z); scene.add(pot);
+  for (let i = 0; i < 7; i++) { const lf = new THREE.Mesh(new THREE.SphereGeometry(.2, 10, 8), M("#4C7A4E")); lf.scale.set(.5, 1.5, .5); lf.position.set(x + Math.cos(i) * .14, .75 + (i % 3) * .14, z + Math.sin(i) * .14); lf.rotation.z = Math.cos(i) * .5; scene.add(lf); } }
+const bulbs = [];
+// ---------------- office: far window wall, mid-ground shelving + second desk, moodboard, meeting table, coffee corner
+scene.fog = new THREE.Fog("#F4ECE3", 9, 30);
+const OF = (c, o = {}) => M(c, Object.assign({ roughness: .9 }, o));
+box(14, 6, .2, M("#fff", { map: wallTex }), 0, 3, -7.6);
+const cityTex = tex((g, w, h) => { const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, "#CFE6F4"); gr.addColorStop(.75, "#EEF6FA"); gr.addColorStop(1, "#F6F1E8"); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 9; i++) { const bx = i * 60 - 10, bh = 120 + (i * 61) % 150; g.fillStyle = ["#DCE3EA", "#E6E3EE", "#E9E1DA"][i % 3]; g.fillRect(bx, h * .62 - bh, 54, bh + 40); g.fillStyle = "rgba(255,255,255,.55)"; for (let y = h * .62 - bh + 12; y < h * .62; y += 22) for (let x = bx + 8; x < bx + 46; x += 14) g.fillRect(x, y, 7, 10); }
+  g.fillStyle = "#BFD8B0"; for (let i = 0; i < 14; i++) { g.beginPath(); g.arc(i * 40 + 10, h * .66 + (i % 3) * 10, 34 + (i % 4) * 6, 0, 7); g.fill(); }
+  g.fillStyle = "#AFCFA1"; g.fillRect(0, h * .74, w, h * .26); }, 512, 512);
+for (const [x, w] of [[-3.3, 2.6], [.55, 2.7], [4.3, 2.4]]) { box(w + .2, 4.5, .1, OF("#9C8A78"), x, 3.0, -7.48);
+  const p = new THREE.Mesh(new THREE.PlaneGeometry(w, 4.3), new THREE.MeshBasicMaterial({ map: cityTex, fog: true })); p.position.set(x, 3.0, -7.42); scene.add(p);
+  box(.07, 4.3, .06, OF("#9C8A78"), x, 3.0, -7.38); box(w, .07, .06, OF("#9C8A78"), x, 2.95, -7.38); box(w, .07, .06, OF("#9C8A78"), x, 4.25, -7.38); }
+const dl = new THREE.DirectionalLight("#FFF8EE", 1.1); dl.position.set(0, 4, -9); dl.target.position.set(0, 1, 0); scene.add(dl, dl.target);
+// moodboard between the windows: swatches and printed layouts
+const moodTex = tex((g, w, h) => { g.fillStyle = "#EFE4D6"; g.fillRect(0, 0, w, h); const cs = ["#F2A9C4", "#D0176F", "#F4D9A8", "#9CC3B5", "#E7D7F0", "#C9A27A"];
+  cs.forEach((c, i) => { g.fillStyle = c; g.fillRect(30 + (i % 3) * 70, 40 + Math.floor(i / 3) * 70, 56, 56); });
+  for (let k = 0; k < 3; k++) { g.fillStyle = "#FFFFFF"; g.fillRect(260 + (k % 2) * 110, 40 + k * 140, 100, 130); g.fillStyle = "#E3D7C9"; g.fillRect(270 + (k % 2) * 110, 52 + k * 140, 80, 50); g.fillStyle = "#D8CBBE"; for (let l = 0; l < 3; l++) g.fillRect(270 + (k % 2) * 110, 112 + k * 140 + l * 12, 70 - l * 12, 5); }
+  g.fillStyle = "#FFFFFF"; g.fillRect(30, 200, 200, 260); g.fillStyle = "#F7CFDC"; g.fillRect(44, 214, 172, 120); g.fillStyle = "#D8CBBE"; for (let l = 0; l < 5; l++) g.fillRect(44, 350 + l * 18, 150 - l * 14, 7); }, 512, 512);
+box(1.0, 1.25, .05, OF("#D9C3A6"), -1.25, 2.45, -7.4); const mood = new THREE.Mesh(new THREE.PlaneGeometry(.92, 1.17), M("#fff", { map: moodTex })); mood.position.set(-1.25, 2.45, -7.37); scene.add(mood);
+// coffee corner (far left) and a meeting table with a pendant lamp (far right)
+box(1.6, .9, .6, OF("#FFFFFF"), -2.9, .45, -7.1); box(1.6, .05, .62, OF("#E3C9A6"), -2.9, .92, -7.1); box(.32, .42, .3, OF("#3A3A40"), -3.2, 1.15, -7.1);
+[["#F7CFDC", -2.7], ["#FFFFFF", -2.55], ["#E9DCCB", -2.4]].forEach(([c, x]) => { const m = new THREE.Mesh(new THREE.CylinderGeometry(.05, .045, .1, 14), OF(c)); m.position.set(x, 1.0, -7.0); scene.add(m); });
+const tableTop = new THREE.Mesh(new THREE.CylinderGeometry(.75, .75, .05, 32), OF("#E9D3B5")); tableTop.position.set(2.7, .76, -6.0); scene.add(tableTop); box(.08, .74, .08, OF("#CDB494"), 2.7, .38, -6.0);
+for (const a of [0, 2.1, 4.2]) { const cx = 2.7 + Math.cos(a) * 1.05, cz = -6 + Math.sin(a) * 1.05; box(.45, .07, .45, OF("#F2A9C4"), cx, .48, cz); box(.45, .5, .06, OF("#F2A9C4"), cx + Math.cos(a) * .2, .75, cz + Math.sin(a) * .2).rotation.y = -a; }
+box(.015, 1.6, .015, OF("#CDB494"), 2.7, 3.7, -6.0); const pend = new THREE.Mesh(new THREE.ConeGeometry(.32, .3, 24, 1, true), OF("#F7E3D3", { side: THREE.DoubleSide })); pend.position.set(2.7, 2.85, -6.0); scene.add(pend);
+const pl2 = new THREE.PointLight("#FFE6C8", 1.2, 3.5, 2); pl2.position.set(2.7, 2.6, -6.0); scene.add(pl2);
+const rug2Tex = tex((g, w, h) => { g.fillStyle = "#F3DDE3"; g.fillRect(0, 0, w, h); g.strokeStyle = "#FFFFFF"; g.lineWidth = 10; for (let i = 1; i < 6; i++) { g.beginPath(); g.moveTo(0, i * h / 6); g.lineTo(w, i * h / 6); g.stroke(); } });
+const rug2 = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2.4), M("#fff", { map: rug2Tex })); rug2.rotation.x = -Math.PI / 2; rug2.position.set(2.7, .012, -6.0); scene.add(rug2);
+// mid-ground open shelving (left): books, binders, plants, coffee-bag samples
+const SH = new THREE.Group(); SH.position.set(-1.55, 0, -4.4); scene.add(SH);
+for (const x of [-1.0, 0, 1.0]) box(.05, 2.4, .42, OF("#C9A47C"), x, 1.2, 0, SH);
+for (const y of [.05, .62, 1.2, 1.78, 2.36]) box(2.05, .04, .42, OF("#C9A47C"), 0, y, 0, SH);
+const muted = ["#B39A84", "#C4A9C0", "#9DB5A8", "#D9B98E", "#B8A795", "#DDA6B9"];
+[[.62, -.9], [1.2, .1], [1.78, -.9], [.05, .15]].forEach(([y, x0], r) => { let x = x0; for (let i = 0; i < 7; i++) { const w = .06 + (i % 3) * .015, hh = .34 + ((i * 7 + r) % 4) * .04; box(w, hh, .26, OF(muted[(i + r) % 6]), x, y + hh / 2 + .02, 0, SH); x += w + .02; } });
+[[-.55, 1.2], [.55, 1.78], [.6, .05]].forEach(([x, y]) => { const pot = new THREE.Mesh(new THREE.CylinderGeometry(.11, .09, .2, 14), OF("#F2E8DA")); pot.position.set(x, y + .12, 0); SH.add(pot);
+  for (let i = 0; i < 5; i++) { const lf = new THREE.Mesh(new THREE.SphereGeometry(.09, 8, 6), OF("#7FAE7A")); lf.scale.set(.6, 1.4, .6); lf.position.set(x + Math.cos(i * 1.3) * .07, y + .32 + (i % 2) * .06, Math.sin(i * 1.3) * .07); lf.rotation.z = Math.cos(i) * .5; SH.add(lf); } });
+[["#8C6A4E", .45], ["#5E8A6E", .6], ["#C8784A", .75]].forEach(([c, x]) => { const bag = box(.12, .26, .08, OF(c), x, .62 + .15, .05, SH); box(.08, .06, .005, OF("#F4EDE4"), x, .62 + .17, .095, SH); });
+[["#B9C9C0", .3], ["#E9C2CF", .38], ["#D7C3D4", .46]].forEach(([c, x]) => box(.07, .32, .28, OF(c), x - .7, 2.36 + .18, 0, SH));
+// second desk with a monitor (right, mid-ground)
+const D2 = new THREE.Group(); D2.position.set(2.35, 0, -4.6); scene.add(D2);
+box(1.7, .06, .75, OF("#E3C9A6"), 0, .76, 0, D2); for (const [x, z] of [[-.8, -.32], [.8, -.32], [-.8, .32], [.8, .32]]) box(.05, .76, .05, OF("#CDB494"), x, .38, z, D2);
+const scr2 = new THREE.TextureLoader().load("guest.png"); scr2.colorSpace = THREE.SRGBColorSpace;
+box(.95, .6, .04, OF("#4A4A52"), 0, 1.22, -.2, D2); const s2 = new THREE.Mesh(new THREE.PlaneGeometry(.9, .55), new THREE.MeshBasicMaterial({ map: scr2, fog: true })); s2.position.set(0, 1.22, -.175); D2.add(s2);
+box(.05, .2, .05, OF("#4A4A52"), 0, .88, -.2, D2); box(.45, .02, .16, OF("#E9E3DC"), 0, .8, .1, D2);
+const ch2 = box(.5, .07, .5, OF("#F2A9C4"), -.1, .5, .55, D2); box(.5, .55, .06, OF("#F2A9C4"), -.1, .8, .8, D2);
+const pot3 = new THREE.Mesh(new THREE.CylinderGeometry(.2, .16, .5, 16), OF("#F2E8DA")); pot3.position.set(3.4, .25, -4.2); scene.add(pot3);
+for (let i = 0; i < 8; i++) { const lf = new THREE.Mesh(new THREE.SphereGeometry(.22, 8, 6), OF("#7FAE7A")); lf.scale.set(.45, 1.6, .45); lf.position.set(3.4 + Math.cos(i) * .15, .9 + (i % 3) * .18, -4.2 + Math.sin(i) * .15); lf.rotation.z = Math.cos(i) * .6; scene.add(lf); }
+
+// desk, monitor, desk lamp, mug
+const wood = M("#D8B98F"); box(3.2, .08, 1.3, wood, 1.9, 1.3, -1.7); for (const [x, z] of [[.4, -2.25], [3.4, -2.25], [.4, -1.15], [3.4, -1.15]]) box(.07, 1.3, .07, M("#3A2E28"), x, .65, z);
+const scr = new THREE.TextureLoader().load("board.png"); scr.colorSpace = THREE.SRGBColorSpace;
+box(1.75, 1.05, .06, M("#22252B", { roughness: .5 }), 2.2, 2.05, -2.1); const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.65, .86), new THREE.MeshBasicMaterial({ map: scr })); screen.position.set(2.2, 2.05, -2.065); scene.add(screen);
+box(.08, .45, .08, M("#22252B"), 2.2, 1.55, -2.15);
+const lampG = new THREE.Group(); lampG.position.set(.75, 1.34, -1.75); scene.add(lampG);
+const lb = new THREE.Mesh(new THREE.CylinderGeometry(.1, .12, .04, 16), M("#F2E8DA")); lampG.add(lb); const la = box(.025, .5, .025, M("#F2E8DA"), 0, .26, 0, lampG); la.rotation.z = .2;
+const shade = new THREE.Mesh(new THREE.ConeGeometry(.16, .2, 20, 1, true), M("#D0176F", { side: THREE.DoubleSide })); shade.position.set(-.06, .52, 0); lampG.add(shade);
+const lamp = new THREE.PointLight("#FFC27A", 4, 4, 2); lamp.position.set(.7, 1.75, -1.6); scene.add(lamp);
+const mug = new THREE.Mesh(new THREE.CylinderGeometry(.07, .07, .16, 20), M("#F2E8DA")); mug.position.set(3.0, 1.42, -1.4); mug.castShadow = true; scene.add(mug);
+// chair
+const chair = new THREE.Group(); chair.position.set(-.2, 0, -.5); scene.add(chair);
+box(.9, .12, .85, M("#E9DCCB"), 0, .95, 0, chair); const back = box(.95, 1.1, .14, M("#F2A9C4", { roughness: .7 }), 0, 1.65, -.42, chair); back.rotation.x = -.12;
+box(.07, .55, .07, M("#2B2E36"), 0, .62, 0, chair);
+// the owner
+const skin = M("#9A6343"), sweater = M("#2F6F73", { roughness: .95 }), navy = M("#2A2D3A"), dark = M("#1A1311");
+const man = new THREE.Group(); man.position.set(-.2, 0, -.45); man.rotation.y = .5; scene.add(man);
+const hips = new THREE.Group(); hips.position.set(0, 1.08, 0); man.add(hips);
+box(.62, .24, .42, navy, 0, 0, 0, hips); for (const s of [-1, 1]) { box(.24, .22, .62, navy, s * .16, 0, .3, hips); box(.22, .62, .22, navy, s * .16, -.4, .58, hips); box(.26, .12, .38, dark, s * .16, -.72, .66, hips); }
+const torso = new THREE.Group(); torso.position.set(0, .12, 0); hips.add(torso);
+const body = new THREE.Mesh(new THREE.CylinderGeometry(.34, .36, .78, 8), sweater); body.position.y = .42; body.castShadow = true; torso.add(body);
+box(.2, .05, .02, M("#E9DFC9"), 0, .78, .3, torso);
+const head = new THREE.Group(); head.position.set(0, .95, 0); torso.add(head);
+box(.14, .14, .14, skin, 0, -.08, 0, head); box(.42, .46, .42, skin, 0, .2, 0, head);
+box(.44, .14, .44, dark, 0, .47, -.01, head); box(.44, .18, .1, dark, 0, .36, -.18, head);
+box(.44, .16, .12, dark, 0, 0, .17, head); for (const sd of [-1, 1]) box(.06, .22, .3, dark, sd * .2, .12, .04, head); box(.2, .04, .03, dark, 0, .11, .225, head);
+const eyeW = M("#F7F3EE"), eyeK = M("#16120F"); const eyes = [], brows = [];
+for (const s of [-1, 1]) { const e = new THREE.Group(); e.position.set(s * .1, .24, .215); head.add(e); box(.09, .07, .01, eyeW, 0, 0, 0, e); box(.045, .05, .012, eyeK, s * -.005, -.005, .003, e); eyes.push(e);
+  const br = box(.12, .03, .02, dark, s * .1, .32, .215, head); br.rotation.z = s * -.12; brows.push({ br, s }); }
+const mouth = box(.1, .03, .02, M("#5A2418"), 0, .065, .238, head);
+const arms = []; for (const s of [-1, 1]) { const sh = new THREE.Group(); sh.position.set(s * .4, .74, 0); torso.add(sh);
+  const up = new THREE.Mesh(new THREE.CylinderGeometry(.09, .1, .46, 6), sweater); up.position.y = -.23; up.castShadow = true; sh.add(up);
+  const el = new THREE.Group(); el.position.y = -.46; sh.add(el); const lo = new THREE.Mesh(new THREE.CylinderGeometry(.08, .09, .42, 6), sweater); lo.position.y = -.21; lo.castShadow = true; el.add(lo);
+  box(.13, .13, .13, skin, 0, -.46, 0, el); arms.push({ sh, el, s }); }
+// Nod
+const nod = new THREE.Group(); scene.add(nod);
+const pinMat = M("#D1176F", { roughness: .38, metalness: .05, flatShading: true });
+const prof = [new THREE.Vector2(0, -.78)];
+for (let i = 1; i <= 8; i++) { const u = i / 8; prof.push(new THREE.Vector2(.3 * Math.pow(u, .8), -.78 + u * .56)); }
+for (let i = 0; i <= 20; i++) { const a = Math.PI * (.68 - .68 * i / 20); prof.push(new THREE.Vector2(Math.sin(a) * .38, Math.cos(a) * .38)); }
+const pinBody = new THREE.Mesh(new THREE.LatheGeometry(prof, 24), pinMat); pinBody.castShadow = true; nod.add(pinBody);
+const face = new THREE.Mesh(new THREE.SphereGeometry(.24, 32, 16), M("#FFF7FA", { roughness: .5 })); face.scale.set(1, .92, .5); face.position.set(0, .05, .3); nod.add(face);
+const ink = M("#1A1216", { roughness: .4 }); const neyes = [];
+for (const s of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(.04, 16, 12), ink); e.scale.set(1, 1.25, .5); e.position.set(s * .085, .09, .42); nod.add(e); neyes.push(e);
+  const sp = new THREE.Mesh(new THREE.SphereGeometry(.012, 8, 6), new THREE.MeshBasicMaterial({ color: "#fff" })); sp.position.set(s * .085 + .014, .11, .44); nod.add(sp);
+  const ck = new THREE.Mesh(new THREE.SphereGeometry(.035, 12, 8), M("#F6A7C6")); ck.scale.set(1, .6, .3); ck.position.set(s * .15, -.01, .4); nod.add(ck); }
+const lids = neyes.map((e) => { const l = new THREE.Mesh(new THREE.SphereGeometry(.046, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), M("#FFF7FA", { roughness: .5 })); l.position.copy(e.position); l.position.z += .005; l.scale.set(1, 1.25, .6); nod.add(l); return l; });
+const smile = new THREE.Mesh(new THREE.TorusGeometry(.055, .013, 6, 20, Math.PI), ink); smile.rotation.z = Math.PI; smile.position.set(0, 0, .43); nod.add(smile);
+const omouth = new THREE.Mesh(new THREE.SphereGeometry(.04, 16, 10), M("#5A1A30")); omouth.scale.set(1, .3, .3); omouth.position.set(0, -.03, .425); nod.add(omouth);
+const hands = []; for (const s of [-1, 1]) { const h = new THREE.Mesh(new THREE.SphereGeometry(.075, 16, 12), pinMat); h.scale.set(1, .85, .85); h.castShadow = true; nod.add(h); hands.push({ h, s }); }
+const nodLight = new THREE.PointLight("#FF5FA2", 1.2, 2.2, 2); nodLight.position.y = -.8; nod.add(nodLight);
+scene.add(new THREE.HemisphereLight("#FFFFFF", "#EADBC9", 1.3));
+const key = new THREE.SpotLight("#FFDDB0", 24, 14, .7, .5, 1.6); key.position.set(2.2, 5.2, 4.5); key.target.position.set(.3, 1.8, -.6); key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -.0004; scene.add(key, key.target);
+const fill = new THREE.PointLight("#FFB0D0", 1.6, 6, 2); fill.position.set(-1.5, 2.6, 2.2); scene.add(fill);
+const cuLight = new THREE.PointLight("#FFE2C4", 0, 3, 2); scene.add(cuLight);
+
+// ---------------- speakers, lip sync
+const LINES = [[0, "Y"], [7, "N"], [10, "Y"], [21, "N"], [47, "Y"], [51, "N"], [64, "Y"], [70, "N"], [72, "Y"], [75, "N"], [91, "Y"], [92, "N"], [107, "Y"], [113, "N"], [121, "Y"], [125, "N"]];
+const WIN = LINES.map(([k, s], i) => [tw(k) - .08, i + 1 < LINES.length ? tw(LINES[i + 1][0]) - .12 : END, s]);
+const speakerAt = (t) => { let s = "Y"; for (const [a, , sp] of WIN) if (t >= a - .05) s = sp; return s; };
+const ampOf = (who, t) => { const f = Math.min(TL.amp.length - 1, Math.floor(t * 30)); return WIN.some(([a, b, sp]) => sp === who && t >= a && t < b) ? (TL.amp[f] || 0) : 0; };
+// close-ups: hard cuts on the punchlines
+const CU = () => [[tw(47) - .04, tw(51) - .06, "Y"], [tw(51) - .04, tw(52) - .1, "N"], [tw(91) - .04, tw(92) - .06, "Y"], [tw(92) - .04, tw(93) - .1, "N"], [tw(121) - .04, tw(125) - .1, "Y"]];
+const cuAt = (t) => CU().find(([a, b]) => t >= a && t < b);
+
+// ---------------- captions (top band)
+const PH = TL.caps.map((c) => ({ t: c.t, text: c.text }));
+function captionTop(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .06) i = k;
+  const ph = PH[i], sp = speakerAt(ph.t + .02), n = sp === "N";
+  if ($("line").dataset.i != i) { $("line").innerHTML = ph.text.replace(/\[(.+?)\]/g, "<b>$1</b>"); $("line").dataset.i = i; $("who").textContent = n ? "NOD" : "YOU"; }
+  $("who").style.color = n ? "#C0145F" : "#1B1C21";
+  const fit = Math.min(1, 1000 / Math.max(1, $("line").scrollWidth)), a = easeOut((t - ph.t + .06) / .18);
+  $("line").style.opacity = a; $("line").style.transform = `translateY(${(1 - a) * 12}px) scale(${fit})`; $("who").style.opacity = 1;
+}
+
+// ---------------- panel content, drawn on a canvas, one beat per spoken line
+const imgs = {}; for (const f of ["guest", "board", "invoice", "side3", "logo"]) { const i = new Image(); i.src = f + ".png"; imgs[f] = i; }
+const CW = 908, CH = 560, g = $("cv").getContext("2d");
+const rr = (x, y, w, h, r, fill, stroke, lw = 3) => { g.beginPath(); g.roundRect(x, y, w, h, r); if (fill) { g.fillStyle = fill; g.fill(); } if (stroke) { g.strokeStyle = stroke; g.lineWidth = lw; g.stroke(); } };
+const tx = (s, x, y, size, wt = 600, col = "#1B1C21", al = "left", fam = "Inter") => { g.font = `${wt} ${size}px ${fam}`; g.fillStyle = col; g.textAlign = al; g.fillText(s, x, y); };
+const btn = (x, y, w, h, label, fill, col = "#fff", pressed = 0) => { g.save(); const s = 1 - .05 * pressed; g.translate(x + w / 2, y + h / 2); g.scale(s, s); g.translate(-(x + w / 2), -(y + h / 2)); rr(x, y, w, h, 16, fill); tx(label, x + w / 2, y + h / 2 + 12, 30, 700, col, "center"); g.restore(); };
+const ringR = (x, y, w, h, q, col = "#D0176F") => { if (q <= 0) return; const pad = 8 + (1 - q) * 26; g.globalAlpha = q; g.strokeStyle = col; g.lineWidth = 7; g.beginPath(); g.roundRect(x - pad, y - pad, w + 2 * pad, h + 2 * pad, 16); g.stroke(); g.globalAlpha = 1; };
+function cursor(x, y, press = 0) { g.save(); g.translate(x, y); g.scale(1.6 - .2 * press, 1.6 - .2 * press); g.fillStyle = "#1B1C21"; g.strokeStyle = "#fff"; g.lineWidth = 1.6; g.lineJoin = "round";
+  g.beginPath(); g.moveTo(0, 0); g.lineTo(0, 17); g.lineTo(4.5, 12.8); g.lineTo(7.5, 19.4); g.lineTo(10.5, 18); g.lineTo(7.5, 11.6); g.lineTo(14, 11.6); g.closePath(); g.fill(); g.stroke();
+  if (press > 0) { g.globalAlpha = press * .5; g.strokeStyle = "#D0176F"; g.lineWidth = 2.5; g.beginPath(); g.arc(0, 0, 14 + 10 * (1 - press), 0, 7); g.stroke(); } g.restore(); }
+const lerp = (a, b, p) => a + (b - a) * p;
+// cursor path: list of [time, x, y]; press flashes at click times
+function curAt(t, path, clicks = []) { if (t < path[0][0]) return null; let x = path[0][1], y = path[0][2];
+  for (let i = 1; i < path.length; i++) { const [t1, x1, y1] = path[i], [t0, x0, y0] = path[i - 1]; if (t >= t0) { const p = easeInOut((t - t0) / Math.max(.01, t1 - t0)); x = lerp(x0, x1, p); y = lerp(y0, y1, p); } }
+  const pr = Math.max(0, ...clicks.map((c) => t >= c && t < c + .35 ? 1 - (t - c) / .35 : 0)); return [x, y, pr]; }
+function img(name, [sx, sy, sw, sh], t, t0, bg = "#F6F3EE") {   // returns a mapper from image px to canvas px
+  const im = imgs[name]; g.fillStyle = bg; g.fillRect(0, 0, CW, CH);
+  const sc = Math.min(CW / sw, CH / sh), dw = sw * sc, dh = sh * sc, dx = (CW - dw) / 2, dy = (CH - dh) / 2, kb = 1 + .035 * clamp((t - t0) / 4);
+  g.save(); g.translate(CW / 2, CH / 2); g.scale(kb, kb); g.translate(-CW / 2, -CH / 2); g.drawImage(im, sx, sy, sw, sh, dx, dy, dw, dh); g.restore();
+  return (px, py) => [CW / 2 + (dx + (px - sx) * sc - CW / 2) * kb, CH / 2 + (dy + (py - sy) * sc - CH / 2) * kb, sc * kb];
+}
+function ringImg(map, x0, y0, x1, y1, q, col) { const [a, b, s] = map(x0, y0), [c, d] = map(x1, y1); ringR(a, b, c - a, d - b, q, col); }
+const stamp = (label, x, y, q, col = "#1F7A4A", rot = -8) => { if (q <= 0) return; g.save(); g.translate(x, y); g.rotate(rot * Math.PI / 180); const s = q < 1 ? 1.8 - .8 * easeOut(q) : 1; g.scale(s, s); g.globalAlpha = Math.min(1, q * 2);
+  g.font = "800 46px Archivo"; const w = g.measureText(label).width + 56; rr(-w / 2, -40, w, 80, 14, "rgba(255,255,255,.88)", col, 7); tx(label, 0, 16, 46, 800, col, "center", "Archivo"); g.restore(); };
+const appear = (t, t0) => easeOut((t - t0) / .3);
+
+function drawIntro(t) { g.fillStyle = "#FBF6EE"; g.fillRect(0, 0, CW, CH); const a = appear(t, W.nodstage - .1), lg = imgs.logo;
+  g.save(); g.globalAlpha = a; g.translate(CW / 2, 230); const s = .9 + .1 * spring((t - W.nodstage + .1) / .6); g.scale(s, s); rr(-300, -95, 600, 190, 34, "#fff"); g.drawImage(lg, -250, -59, 500, 118); g.restore();
+  g.globalAlpha = appear(t, W.nodstage + .3); tx("Booking · proposals · proofs · change orders · invoices", CW / 2, 410, 28, 600, "#7A7178", "center"); tx("for creative studios", CW / 2, 455, 28, 600, "#B8326E", "center"); g.globalAlpha = 1; }
+function drawBooking(t) { g.fillStyle = "#F4EFE9"; g.fillRect(0, 0, CW, CH); rr(36, 24, 836, 512, 26, "#fff");
+  rr(72, 54, 58, 58, 14, "#1B1C21"); tx("NS", 101, 92, 24, 800, "#fff", "center"); tx("Northbeam Studio", 146, 93, 30, 700); tx("Booking page", 836, 93, 24, 600, "#9A8F97", "right");
+  tx("Book a discovery call", 72, 168, 44, 800, "#1B1C21", "left", "Archivo"); tx("30 min · video call", 72, 206, 26, 500, "#7A7178");
+  const thu = t >= W.call + .05, ten = t >= W.booking + .05, done = t >= W.booking + .6;
+  [["MON", 6], ["TUE", 7], ["WED", 8], ["THU", 9], ["FRI", 10]].forEach(([d, n], i) => { const x = 72 + i * 156, on = thu && i === 3; rr(x, 232, 140, 106, 18, on ? "#D0176F" : "#F6F2EE", on ? null : "#E4DCD4");
+    tx(d, x + 70, 266, 22, 700, on ? "#fff" : "#8A8189", "center"); tx(String(n), x + 70, 320, 46, 800, on ? "#fff" : "#1B1C21", "center", "Archivo"); });
+  ["9:00", "10:00", "11:30", "2:00"].forEach((s, i) => { const x = 72 + i * 194, on = ten && i === 1; rr(x, 356, 180, 70, 16, on ? "#FBE3EE" : "#fff", on ? "#D0176F" : "#E4DCD4", on ? 4 : 3); tx(s, x + 90, 402, 30, 700, on ? "#D0176F" : "#1B1C21", "center"); });
+  if (!done) btn(72, 446, 764, 70, "Confirm booking", "#D0176F", "#fff", 0); else { const q = spring((t - W.booking - .6) / .5); g.save(); g.translate(454, 481); g.scale(.9 + .1 * q, .9 + .1 * q); rr(-382, -35, 764, 70, 16, "#E3F2E9"); tx("✓ Call booked · Thu, Oct 9 · 10:00", 0, 11, 30, 800, "#1F7A4A", "center"); g.restore(); }
+  const c = curAt(t, [[W.lead, 780, 520], [W.call, 614, 300], [W.booking - .1, 360, 400], [W.booking + .45, 470, 486]], [W.call, W.booking, W.booking + .5]); if (c) cursor(...c); }
+function drawProposal(t) { g.fillStyle = "#F4EFE9"; g.fillRect(0, 0, CW, CH); rr(36, 24, 836, 512, 26, "#fff");
+  rr(72, 54, 150, 44, 22, "#FBE3EE"); tx("Proposal", 147, 85, 24, 800, "#D0176F", "center"); tx("for Fernhill Coffee Co. · Hannah Brooks", 238, 85, 24, 600, "#8A8189");
+  tx("Website refresh", 72, 160, 52, 800, "#1B1C21", "left", "Archivo");
+  [["Discovery and moodboard", "$800"], ["Design: homepage and shop", "$2,400"], ["Build: Shopify theme", "$3,600"]].forEach(([a, b], i) => { const y = 214 + i * 58, q = appear(t, W.sendp + .1 + i * .12);
+    g.globalAlpha = q; tx(a, 72, y, 30, 500); tx(b, 836, y, 30, 700, "#1B1C21", "right"); g.fillStyle = "#EEE7E1"; g.fillRect(72, y + 18, 764, 2); g.globalAlpha = 1; });
+  tx("Total", 72, 404, 34, 800); tx("$6,800", 836, 410, 50, 800, "#1B1C21", "right", "Archivo");
+  const acc = t >= W.accepts + .05; if (!acc) btn(72, 446, 764, 70, "Accept proposal", "#D0176F", "#fff", 0);
+  else { rr(72, 446, 764, 70, 16, "#E3F2E9"); tx("✓ Accepted online by Hannah Brooks", 454, 492, 30, 800, "#1F7A4A", "center"); stamp("ACCEPTED", 650, 310, (t - W.accepts) / .18); }
+  const c = curAt(t, [[W.accepts - .7, 800, 300], [W.accepts - .05, 520, 482]], [W.accepts]); if (c) cursor(...c); }
+function drawPortal(t) { const t0 = W.share - .15, m = img("guest", [0, 0, 1600, 870], t, t0, "#fff");
+  ringImg(m, 0, 0, 1210, 62, appear(t, W.portal - .15), "#D0176F"); }
+function drawComments(t) { const t0 = W.comments - .5, m = img("guest", [140, 170, 1460, 690], t, t0, "#fff");
+  ringImg(m, 455, 312, 505, 362, appear(t, W.comments - .05), "#D0176F");
+  ringImg(m, 1236, 533, 1590, 615, appear(t, W.design - .15), "#D0176F");
+  ringImg(m, 1236, 425, 1380, 512, appear(t, W.anymore - .05), "#1F7A4A"); }
+function drawScope(t) { const t0 = W.round5 - .15, m = img("side3", [0, 320, 675, 270], t, t0, "#fff");
+  ringImg(m, 132, 500, 362, 548, appear(t, W.beyond - .1), "#E0A100"); }
+function drawCO(t) { g.fillStyle = "#F4EFE9"; g.fillRect(0, 0, CW, CH); rr(36, 24, 836, 512, 26, "#fff");
+  rr(72, 54, 200, 44, 22, "#FBE3EE"); tx("Change order", 172, 85, 24, 800, "#D0176F", "center"); rr(286, 54, 260, 44, 22, "#FFF1C2"); tx("Outside the scope", 416, 85, 24, 800, "#8A5A00", "center");
+  tx("Subscribe button", 72, 166, 50, 800, "#1B1C21", "left", "Archivo"); tx("under each bag", 72, 222, 50, 800, "#1B1C21", "left", "Archivo");
+  rr(72, 262, 56, 56, 28, "#DDEFE3"); tx("HB", 100, 299, 22, 800, "#1F7A4A", "center"); tx("Requested by Hannah · 3h", 144, 300, 28, 600, "#7A7178");
+  tx("+$270", 836, 300, 64, 800, "#D0176F", "right", "Archivo");
+  const sent = t >= W.changeorder + .55, ok = t >= W.approves + .05;
+  if (!sent) btn(72, 350, 764, 70, "Send to Hannah", "#D0176F");
+  else if (!ok) { rr(72, 350, 764, 70, 16, "#F2EEEA"); tx("Sent · waiting for Hannah", 454, 396, 30, 700, "#7A7178", "center"); }
+  else { rr(72, 350, 764, 70, 16, "#E3F2E9"); tx("✓ Approved by Hannah", 454, 396, 30, 800, "#1F7A4A", "center"); }
+  if (t >= W.billed - .05) { const q = spring((t - W.billed + .05) / .5); g.save(); g.translate(454, 476); g.scale(.85 + .15 * q, .85 + .15 * q); rr(-250, -34, 500, 68, 34, "#1B1C21"); tx("$270 · billed ✓", 0, 12, 32, 800, "#fff", "center"); g.restore(); }
+  const c = curAt(t, [[W.changeorder - .1, 780, 520], [W.changeorder + .5, 520, 388]], [W.changeorder + .5]); if (c && t < W.approves - .2) cursor(...c); }
+function drawInvoice(t) { const t0 = W.invoice - .2, m = img("invoice", [60, 40, 840, 320], t, t0, "#fff");
+  ringImg(m, 112, 112, 316, 194, appear(t, W.goes - .1), "#D0176F"); ringImg(m, 112, 250, 760, 330, appear(t, W.same - .15), "#D0176F"); }
+function drawTesti(t) { g.fillStyle = "#F4EFE9"; g.fillRect(0, 0, CW, CH); rr(36, 24, 836, 512, 26, "#fff");
+  rr(72, 54, 64, 64, 32, "#DDEFE3"); tx("HB", 104, 96, 24, 800, "#1F7A4A", "center"); tx("Hannah Brooks", 152, 82, 30, 700); tx("Fernhill Coffee Co.", 152, 114, 24, 500, "#8A8189");
+  tx("Ask for a testimonial", 72, 192, 48, 800, "#1B1C21", "left", "Archivo");
+  rr(72, 220, 764, 150, 18, "#FBF8F5", "#E4DCD4"); tx("Hi Hannah, it was great working on the refresh.", 98, 278, 28, 500, "#3A3D45"); tx("Would you share a few words about it?", 98, 324, 28, 500, "#3A3D45");
+  const sent = t >= W.testimonial + .2; if (!sent) btn(72, 400, 764, 76, "Send request", "#D0176F"); else { rr(72, 400, 764, 76, 16, "#E3F2E9"); tx("✓ Request sent to Hannah", 454, 450, 30, 800, "#1F7A4A", "center"); }
+  const c = curAt(t, [[W.ask + .2, 800, 520], [W.testimonial + .15, 520, 440]], [W.testimonial + .2]); if (c) cursor(...c); }
+const FEAT = ["Booking", "Proposals", "Proofs", "Change orders", "Invoices", "Testimonials"];
+function drawRecap(t) { const m = img("board", [0, 0, 1600, 640], t, W.so - .2, "#fff");
+  g.fillStyle = "rgba(251,246,238,.0)"; const step = .25;
+  FEAT.forEach((f, i) => { const t0 = W.so + i * step, q = spring((t - t0) / .45); if (t < t0) return; const col = i % 3, row = Math.floor(i / 3), x = 64 + col * 268, y = 372 + row * 82;
+    const lit = t >= W.from + i * ((W.payment - W.from) / 5); g.save(); g.translate(x + 124, y + 30); g.scale(.7 + .3 * q, .7 + .3 * q); rr(-124, -32, 248, 64, 32, lit ? "#D0176F" : "#1B1C21"); tx((lit ? "✓ " : "") + f, 0, 10, 26, 800, "#fff", "center"); g.restore(); });
+}
+const SEG = () => [
+  [W.nodstage - .15, S[2] - .1, "NODSTAGE", "Meet Nodstage", "Nodstage", drawIntro, -1],
+  [S[2] - .1, W.sendp - .15, "STEP 1/4", "Book + propose", "Nodstage · booking page", drawBooking, 0],
+  [W.sendp - .15, S[3] - .1, "STEP 1/4", "Book + propose", "Nodstage · proposal", drawProposal, 0],
+  [S[3] - .1, W.comments - .5, "STEP 2/4", "Feedback on the work", "Nodstage · client portal", drawPortal, 1],
+  [W.comments - .5, S[4] - .1, "STEP 2/4", "Feedback on the work", "Nodstage · client portal", drawComments, 1],
+  [S[4] - .1, W.changeorder - .25, "STEP 3/4", "Extras get paid", "Nodstage · project", drawScope, 2],
+  [W.changeorder - .25, S[5] - .1, "STEP 3/4", "Extras get paid", "Nodstage · change order", drawCO, 2],
+  [S[5] - .1, W.ask - .15, "STEP 4/4", "Invoice + testimonial", "Nodstage · invoice", drawInvoice, 3],
+  [W.ask - .15, S[6] - .1, "STEP 4/4", "Invoice + testimonial", "Nodstage · testimonials", drawTesti, 3],
+  [S[6] - .1, S[7] - .1, "ALL 4", "The whole studio", "Nodstage · one workspace", drawRecap, 4]];
+let segKey = -1;
+function panel(t, onCU) {
+  const L = SEG(), i = L.findIndex(([a, b]) => t >= a && t < b);
+  if (i < 0 || onCU) { hide("dw"); return false; }
+  const [a, , chip, ttl, url, fn, step] = L[i];
+  if (segKey !== i) { $("chip").textContent = chip; $("ttl").textContent = ttl; $("url").textContent = url; segKey = i; }
+  for (let k = 0; k < 4; k++) $("g" + k).className = step >= 4 ? "on" : k < step ? "done" : k === step ? "on" : "";
+  const first = L[0][0]; pop("dw", t, first, {}); $("dw").style.transform += "";
+  if (t > first + .6) set("dw", { o: 1, s: 1 + .012 * Math.max(0, 1 - (t - a) / .25) });
+  fn(t); return true;
+}
+
+// ---------------- stickers
+function stickers(t, panelUp) {
+  for (const id of ["s1", "s2", "s3", "s4", "s5", "s6"]) hide(id);
+  if (t < W.nodstage + .3) { [["s1", W.five - .05, -6], ["s2", W.logo - .1, 4], ["s3", W.spreadsheet - .1, 3], ["s4", W.whole - .1, -4]].forEach(([id, t0, r], i) => { slam(id, t, t0, { r, y: Math.sin(t * 1.6 + i) * 5 });
+    if (t > W.nodstage - .2) { const a = easeInOut((t - W.nodstage + .2) / .35); $(id).style.opacity = 1 - a; $(id).style.transform += ` translate(${(i % 2 ? 1 : -1) * 500 * a}px,${-80 * a}px)`; } }); }
+  if (panelUp && inWin(t, W.email - .1, S[4] - .15)) { slam("s5", t, W.email - .1, { r: -4 }); const q = easeOut((t - W.anymore + .05) / .25); $("s5x").style.transform = `scaleX(${t >= W.anymore - .05 ? q : 0})`; out("s5", t, S[4] - .45); }
+  if (panelUp && inWin(t, W.round5 - .1, W.beyond + .3)) { slam("s6", t, W.round5 - .1, { r: 6 }); out("s6", t, W.beyond - .1); }
+}
+
+// ---------------- render
+const env = (t, a, b, r = .25) => clamp(Math.min((t - a) / r, (b - t) / r));
+const hp = new THREE.Vector3();
+window.render = function (t) {
+  const cu = cuAt(t), sp = speakerAt(t), aY = ampOf("Y", t), aN = ampOf("N", t), talkY = sp === "Y", talkN = sp === "N", end = t >= S[7] - .1;
+  // owner: looks at Nod when Nod speaks, at camera when he talks; gestures while talking
+  let hy = talkN ? .55 : .05, hx = 0; if (cu && cu[2] === "Y") { hy = 0; hx = .02; }
+  head.rotation.y = hy + Math.sin(t * .7) * .04; head.rotation.x = hx + Math.sin(t * 1.3) * .02;
+  const shock = env(t, tw(47) - .1, tw(51), .15) + env(t, tw(91) - .1, tw(92), .15), hope = env(t, tw(121) - .1, tw(125), .2), five = env(t, tw(0), tw(7), .3);
+  torso.rotation.x = .04 + Math.sin(t * 1.6) * .015 + (talkY ? .06 : 0) - shock * .05;
+  const gst = talkY ? (Math.sin(t * 2.6) * .5 + .5) : 0;
+  arms.forEach(({ sh, el, s }, i) => { const gi = (i ? gst : gst * .4);
+    sh.rotation.x = -.35 - gi * .45 - shock * .35 - hope * .45 - five * .35; sh.rotation.z = s * (.1 + gi * .18 + shock * .6 + hope * .35 + five * .25); el.rotation.x = -1.0 - gi * .45 - shock * .55 - five * .5; el.rotation.z = s * -(gi * .3 + shock * .2); });
+  mouth.scale.y = 1 + aY * 3.5 + shock * .8; mouth.scale.x = 1 + shock * .3;
+  brows.forEach(({ br, s }) => { br.position.y = .32 + shock * .04 + hope * .02; br.rotation.z = s * (-.12 + shock * .25); });
+  const bl = (t % 3.3) < .12 ? .1 : 1; eyes.forEach((e) => { e.scale.y = bl * (1 + shock * .35); e.scale.x = 1 + shock * .15; });
+  // Nod: floats next to him, hand up to the panel while explaining, deadpan lids on "None." and "Billed."
+  const dead = env(t, tw(51) - .1, tw(52), .12) + env(t, tw(92) - .1, tw(93), .12);
+  nod.position.set(1.0 + Math.sin(t * .6) * .03, 2.3 + Math.sin(t * 1.9) * .05, -.6);
+  nod.rotation.y = (cu && cu[2] === "N") ? -.05 : talkN ? -.25 : -.55 + Math.sin(t * .8) * .05; nod.rotation.z = Math.sin(t * 1.1) * .04 + (talkY && !cu ? .1 : 0); nod.rotation.x = 0;
+  smile.visible = aN < .08; omouth.visible = !smile.visible; omouth.scale.set(1, .3 + aN * 1.1, .3);
+  const nb = (t % 2.9) < .12 ? .15 : 1; neyes.forEach((e) => e.scale.y = 1.25 * nb); lids.forEach((l) => { l.visible = dead > .01; l.scale.y = 1.25 * dead; });
+  const pointUp = talkN && !cu && t >= W.nodstage && !end;
+  hands.forEach(({ h, s }) => { const up = pointUp && s < 0 ? 1 : 0, g2 = talkN ? Math.sin(t * 3 + s) * .5 + .5 : 0;
+    h.position.set(s * (.5 + g2 * .05) + up * .05, -.12 + Math.sin(t * 2.1 + s) * .04 + g2 * .1 + up * .62, .12 + up * .12); });
+  bulbs.forEach((b, i) => b.material.color.setScalar(.85 + .15 * Math.sin(t * 2 + i)));
+  // camera: medium two-shot under the panel; hard-cut close-ups on the punchlines
+  if (cu && cu[2] === "Y") { head.getWorldPosition(hp); hp.y += .18; const lt = t - cu[0];
+    cam.position.set(hp.x + 1.0, hp.y + .1, hp.z + 1.85 - lt * .06); cam.lookAt(hp.x, hp.y - .12, hp.z); }
+  else if (cu && cu[2] === "N") { const lt = t - cu[0]; cam.position.set(nod.position.x - .15, nod.position.y + .1, nod.position.z + 2.7 - lt * .06); cam.lookAt(nod.position.x, nod.position.y - .12, nod.position.z); }
+  else { const pushIn = t < W.nodstage ? .25 * (1 - clamp(t / 3)) : 0; cam.position.set(.4 + Math.sin(t * .2) * .03, 2.5, 6.4 - pushIn); cam.lookAt(.4, 3.05, -.7); }
+  cuLight.intensity = cu ? 2.2 : 0; cuLight.position.copy(cam.position); cuLight.position.y += .2;
+  R.render(scene, cam);
+  // overlays
+  const up = panel(t, !!cu || end); stickers(t, up);
+  const e = easeOut((t - S[7] + .1) / .5); $("endc").style.opacity = e; $("endc").style.transform = `scale(${1.04 - .04 * e})`;
+  captionTop(t);
+};
+window.ready = new Promise((res) => { THREE.DefaultLoadingManager.onLoad = () => Promise.all(Object.values(imgs).map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready).then(res); setTimeout(res, 5000); });
+</script></body></html>
