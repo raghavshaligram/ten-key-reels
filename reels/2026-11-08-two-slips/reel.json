@@ -1,0 +1,204 @@
+{
+ "title": "Two wrong entries in a 1-minute test (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Two wrong entries is all it takes to fall under ninety-five percent on a one-minute ten-key test.",
+   0.45
+  ],
+  [
+   "A minute is only about thirty entries, so each wrong one takes off about three percent.",
+   0.4
+  ],
+  [
+   "Here's a real minute with two typed wrong on purpose.",
+   0.4
+  ],
+  [
+   "It fell under ninety-five percent.",
+   0.35
+  ],
+  [
+   "The site says employers usually want ninety-five or more.",
+   0.45
+  ],
+  [
+   "Check each number before you press Enter.",
+   0.45
+  ],
+  [
+   "Practice for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Two wrong entries is all it takes",
+  [
+   5,
+   "to fall [under 95%]"
+  ],
+  "on a [1-minute] 10-key test.",
+  "A minute is only about [30 entries,]",
+  [
+   8,
+   "so each [wrong one] takes off about [3%.]"
+  ],
+  "Here's a [real minute]",
+  "with two typed [wrong] on purpose.",
+  "It fell [under 95%.]",
+  "The site says employers usually want [95% or more.]",
+  "[Check each number]",
+  "before you press [Enter.]",
+  "Practice [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  17,
+  32,
+  42,
+  55,
+  62
+ ],
+ "marks": {
+  "two0": 0,
+  "wrong0": 1,
+  "under0": 9,
+  "minute": 18,
+  "thirty": 22,
+  "each": 25,
+  "wrong1": 26,
+  "three": 31,
+  "real": 34,
+  "two": 37,
+  "wrong": 39,
+  "purpose": 41,
+  "fell": 43,
+  "under": 44,
+  "site": 47,
+  "employers": 49,
+  "want": 51,
+  "check": 55,
+  "enter": 61,
+  "free": 64,
+  "at": 65
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Whole numbers",
+  "gap": 300,
+  "slips": [
+   4,
+   12
+  ],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "wrong0",
+   "pop",
+   300
+  ],
+  [
+   "under0",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "thirty-0.1",
+   "ticks",
+   0.8
+  ],
+  [
+   "wrong1",
+   "pop",
+   300
+  ],
+  [
+   "three",
+   "pop",
+   850
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "real",
+   "clicks",
+   0.9
+  ],
+  [
+   "two",
+   "ticks",
+   1.0
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "under",
+   "pop",
+   300
+  ],
+  [
+   "site-0.2",
+   "scribble",
+   0.45
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "check",
+   "clicks",
+   0.8
+  ],
+  [
+   "enter",
+   "pop",
+   800
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
