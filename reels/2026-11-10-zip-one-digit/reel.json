@@ -1,0 +1,177 @@
+{
+ "title": "Type a 9-digit ZIP code in two chunks (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Stop racing through nine-digit ZIP codes. Type them in two chunks instead.",
+   0.45
+  ],
+  [
+   "A long one is five digits, a dash, then four more.",
+   0.4
+  ],
+  [
+   "Get one digit wrong anywhere and you lose the whole code.",
+   0.4
+  ],
+  [
+   "Here's a real minute with one code typed wrong on purpose. Watch the accuracy.",
+   0.4
+  ],
+  [
+   "So read the first five, type them, then read the last four.",
+   0.45
+  ],
+  [
+   "Practice ZIP codes for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop racing through [9-digit] ZIP codes.",
+  "Type them in [two chunks] instead.",
+  "A long one is [5 digits,]",
+  "a dash, then [4 more.]",
+  "Get [one digit] wrong anywhere",
+  "and you lose the [whole code.]",
+  "Here's a [real minute]",
+  "with one code typed [wrong] on purpose.",
+  "Watch the [accuracy.]",
+  "So read the [first 5,] type them,",
+  "then read the [last 4.]",
+  "Practice ZIP codes [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  12,
+  23,
+  34,
+  48,
+  60
+ ],
+ "marks": {
+  "chunks": 10,
+  "five0": 16,
+  "dash": 19,
+  "four0": 21,
+  "digit": 25,
+  "whole": 32,
+  "real": 36,
+  "wrong": 42,
+  "watch": 45,
+  "acc": 47,
+  "first": 51,
+  "typeit": 53,
+  "last": 58,
+  "free": 64,
+  "at": 65
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "ZIP codes",
+  "gap": 300,
+  "slips": [
+   4
+  ],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "chunks",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "five0",
+   "ticks",
+   0.8
+  ],
+  [
+   "dash",
+   "pop",
+   400
+  ],
+  [
+   "four0",
+   "ticks",
+   0.7
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "digit",
+   "pop",
+   300
+  ],
+  [
+   "whole",
+   "pop",
+   300
+  ],
+  [
+   "real",
+   "clicks",
+   0.9
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "acc",
+   "pop",
+   850
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "first",
+   "clicks",
+   0.7
+  ],
+  [
+   "last",
+   "clicks",
+   0.7
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
