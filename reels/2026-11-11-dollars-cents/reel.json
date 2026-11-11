@@ -1,0 +1,176 @@
+{
+ "title": "One wrong cent makes the whole amount wrong (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "Stop rushing the cents. Type them as carefully as the dollars.",
+   0.45
+  ],
+  [
+   "On a ten-key test, one wrong cent and the whole amount's wrong.",
+   0.4
+  ],
+  [
+   "Here's a real minute. Seventy ninety-three went in as seventy ninety-four, on purpose.",
+   0.4
+  ],
+  [
+   "That's an error. Accuracy drops to ninety-six point four percent.",
+   0.45
+  ],
+  [
+   "When you hit the dot, slow down. The last two digits count as much as the rest.",
+   0.45
+  ],
+  [
+   "Practice dollar amounts for free at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop rushing the [cents.]",
+  "Type them as carefully as the [dollars.]",
+  "On a 10-key test, one [wrong cent]",
+  "and the [whole amount's] wrong.",
+  "Here's a [real minute.]",
+  "[70.93] went in as [70.94,] on purpose.",
+  "That's an [error.]",
+  "Accuracy drops to [96.4%.]",
+  "When you hit the [dot,] slow down.",
+  "The [last two digits]",
+  "count as much as the rest.",
+  "Practice dollar amounts [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  11,
+  23,
+  34,
+  41,
+  58
+ ],
+ "marks": {
+  "cents": 3,
+  "dollars": 10,
+  "test": 14,
+  "wrong": 16,
+  "cent": 17,
+  "whole": 20,
+  "real": 25,
+  "first": 27,
+  "typed": 31,
+  "purpose": 33,
+  "error": 36,
+  "acc": 37,
+  "drop": 40,
+  "dot": 45,
+  "slow": 46,
+  "last": 49,
+  "rest": 57,
+  "free": 62,
+  "at": 63
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Dollar amounts",
+  "gap": 300,
+  "slips": [
+   3
+  ],
+  "slipPos": "last",
+  "frames": 13,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "cents",
+   "pop",
+   900
+  ],
+  [
+   "dollars",
+   "pop",
+   500
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "whole",
+   "pop",
+   300
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "real",
+   "clicks",
+   0.9
+  ],
+  [
+   "typed",
+   "pop",
+   300
+  ],
+  [
+   "error",
+   "pop",
+   300
+  ],
+  [
+   "drop",
+   "pop",
+   850
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "dot",
+   "clicks",
+   0.6
+  ],
+  [
+   "last",
+   "clicks",
+   0.7
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}

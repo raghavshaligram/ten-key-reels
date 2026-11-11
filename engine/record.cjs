@@ -2,6 +2,7 @@
 // Usage: node engine/record.cjs <outDir> '<json options>'
 //   options: { mode: "Mixed" | "Whole numbers" | "Dollar amounts" | "ZIP codes", gap: 322 (ms per key),
 //              slips: [23] (entry numbers that get one wrong digit), slipEvery: 0 (or N: every Nth entry),
+//              slipPos: "second" (default: the digit after the first one) | "last" (the last digit, e.g. the last cent),
 //              frames: 9 (seconds of frames to capture from the start, 0 = none),
 //              finishClean: false (true = stop before an entry the clock would cut off, so it isn't scored as a miss) }
 // Writes: frames/f0000.jpg..., run.json ({clip, frames:[{t,f}]}), result.jpg, result.json (parsed numbers).
@@ -35,7 +36,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       while (await tl.isVisible().catch(() => false)) await sleep(200); break; }
     if (!tStart) tStart = Date.now();
     n++; const slipHere = O.slips.includes(n) || (O.slipEvery > 0 && n % O.slipEvery === 0);
-    const slipAt = slipHere ? Math.max(0, [...target].findIndex((c) => /\d/.test(c)) + 1) : -1;
+    const slipAt = !slipHere ? -1 : O.slipPos === "last" ? [...target].map((c) => /\d/.test(c)).lastIndexOf(true) : Math.max(0, [...target].findIndex((c) => /\d/.test(c)) + 1);
     for (let i = 0; i < target.length; i++) {
       let ch = target[i]; if (i === slipAt && /\d/.test(ch)) ch = String((+ch + 1) % 10);
       const k = /\d/.test(ch) ? "Numpad" + ch : ch === "." ? "NumpadDecimal" : ch === "-" ? "NumpadSubtract" : null;
