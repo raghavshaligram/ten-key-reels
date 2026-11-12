@@ -1,0 +1,181 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-800-normal.woff2)}
+@font-face{font-family:Serif;font-style:italic;src:url(../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#F3F0EA;--ink:#191714;--grey:#CDC6BB;--red:#E0342C;--green:#2F7A4F;--muted:#8D867B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 40%,#f8f6f1 0%,#f3f0ea 55%,#ece7df 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--red);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:600 78px/1.1 Inter;letter-spacing:-.025em}
+#cap span{display:inline-block;margin-right:.24em;transition:none}
+#cap .acc{font-family:Serif;font-style:italic;font-weight:400;color:var(--red);font-size:1.12em;letter-spacing:-.01em}
+.stk{background:#fff;border-radius:34px;padding:14px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.win{background:#16181a;border-radius:24px;overflow:hidden}
+.bar{height:58px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#202326;color:#9aa19c;font:600 24px Mono}
+.bar i{width:16px;height:16px;border-radius:50%;background:#3b3f43;display:inline-block}
+.bar .t{margin-left:14px}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:#111;color:#fff;font:800 66px/104px Inter;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25);border:5px solid #fff}
+.stamp{font:800 64px/1 Inter;letter-spacing:.06em;color:var(--red);border:8px solid var(--red);border-radius:18px;padding:14px 26px 12px;background:rgba(255,255,255,.88);text-transform:uppercase;white-space:nowrap}
+.key{width:250px;height:230px;border-radius:40px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 14px 0 #cfc8bd,0 30px 50px rgba(40,30,20,.2);font:800 92px/210px Inter;text-align:center;color:#2a2622}
+.row{display:flex;align-items:center;gap:26px;font:600 50px/1 Inter;padding:30px 40px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14)}
+.row .v{margin-left:auto;font:800 84px/1 Inter;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.row .n{width:64px;height:64px;border-radius:50%;background:#111;color:#fff;font:800 36px/64px Inter;text-align:center}
+.ck{display:flex;align-items:center;gap:24px;font:600 56px/1 Inter;padding:20px 0}
+.ck .b{width:62px;height:62px;border-radius:16px;border:5px solid #2F7A4F;display:flex;align-items:center;justify-content:center;color:#fff;font:800 40px Inter}
+.ck .b.on{background:#2F7A4F}
+.chip{font:600 64px/1 Inter;padding:34px 46px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14);white-space:nowrap}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+.ents{display:flex;gap:18px}.ent{flex:1;height:120px;border-radius:22px;display:flex;align-items:center;justify-content:center;font:800 64px Inter;color:#fff}
+#wipe{position:absolute;inset:0;pointer-events:none}
+</style></head><body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .55 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: the real result screen: gross circled, then net -->
+  <div class="el stk" id="p0" style="left:90px;top:590px;width:900px"><div class="win"><div class="bar"><i style="background:#2F7A4F"></i><span class="t">your result · live test</span></div><canvas id="k0" width="872" height="440"></canvas></div></div>
+  <svg class="el draw" id="c0a" width="300" height="160"><ellipse cx="150" cy="80" rx="135" ry="66" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+  <svg class="el draw" id="c0b" width="420" height="190"><ellipse cx="210" cy="95" rx="195" ry="80" stroke="#2F7A4F" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el stamp" id="s0" style="left:110px;top:1080px;font-size:58px">skip gross</div>
+  <div class="el chip" id="h0" style="left:600px;top:1085px;font-size:58px;padding:24px 36px">read <b style="color:var(--green)">net</b></div>
+
+  <!-- b1: gross counts every entry, net only the right ones -->
+  <div class="el stk" id="p1a" style="left:90px;top:580px;width:900px;padding:34px 40px">
+    <div class="lab" style="font-size:34px;margin-bottom:22px;color:var(--ink)">GROSS · every key</div><div class="ents" id="ga"></div></div>
+  <div class="el stk" id="p1b" style="left:90px;top:880px;width:900px;padding:34px 40px">
+    <div class="lab" style="font-size:34px;margin-bottom:22px;color:var(--green)">NET · right ones only</div><div class="ents" id="na"></div></div>
+  <div class="el stamp" id="s1" style="left:600px;top:540px;font-size:50px;padding:10px 22px 8px">bigger</div>
+
+  <!-- b2: the real slip being typed, circled -->
+  <div class="el stk" id="p2" style="left:90px;top:590px;width:900px"><div class="win"><div class="bar"><i style="background:#E0342C"></i><span class="t">entry 005 · live</span></div><canvas id="k2" width="872" height="290"></canvas></div></div>
+  <svg class="el draw" id="c2" width="340" height="150"><ellipse cx="170" cy="75" rx="150" ry="58" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el chip" id="h2" style="left:110px;top:1060px;font-size:56px;padding:24px 36px">1 digit off, <b style="color:var(--red)">on purpose</b></div>
+
+  <!-- b3: the real gross and net -->
+  <div class="el row" id="r3a" style="left:90px;top:600px;width:900px;padding:50px 40px;font-size:60px"><span class="n" style="background:#8D867B">G</span>Gross KPH<span class="v" id="v3a" style="font-size:130px;color:#8D867B">0</span></div>
+  <div class="el row" id="r3b" style="left:90px;top:880px;width:900px;padding:50px 40px;font-size:60px"><span class="n" style="background:var(--green)">N</span>Net KPH<span class="v" id="v3b" style="font-size:130px;color:var(--green)">0</span></div>
+
+  <!-- b4: the gap -->
+  <div class="el stk" id="p4" style="left:90px;top:570px;width:900px;padding:40px 44px">
+    <div class="lab" style="font-size:32px;margin-bottom:16px">the gap · gross minus net</div>
+    <div style="display:flex;align-items:baseline;gap:20px"><span id="v4" style="font:800 200px/1 Inter;letter-spacing:-.04em;color:var(--red)">0</span><span style="font:600 64px Inter">KPH</span></div>
+    <div style="margin-top:30px;height:70px;border-radius:18px;background:#e6e1d8;position:relative;overflow:hidden"><div id="bg" style="position:absolute;left:0;top:0;bottom:0;background:#8D867B"></div><div id="bn" style="position:absolute;left:0;top:0;bottom:0;background:var(--green)"></div></div>
+    <div style="display:flex;justify-content:space-between;font:600 34px Mono;color:var(--muted);margin-top:14px"><span>net</span><span>gross</span></div></div>
+  <div class="el stamp" id="s4" style="left:120px;top:1060px;font-size:60px"></div>
+
+  <!-- b5: the site -->
+  <div class="el stk" id="p7" style="left:90px;top:610px;width:900px"><div class="win" style="background:#fff">
+    <div class="bar" style="background:#efebe4;color:#3a3631;height:76px;font-size:30px"><i style="background:#e0a39e"></i><i style="background:#e8cf8c"></i><i style="background:#9fcfa8"></i>
+      <span class="t" style="flex:1;background:#fff;border-radius:16px;padding:10px 20px;margin-left:16px"><span id="url"></span><span id="caret" style="color:var(--red)">|</span></span></div>
+    <canvas id="k7" width="872" height="470"></canvas></div></div>
+  <div class="el stamp" id="s7" style="left:560px;top:1030px">free</div>
+  <div class="el chip" id="h7" style="left:110px;top:1050px;font-size:56px;padding:24px 36px">watch the <b style="color:var(--green)">net</b></div>
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="tara" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../engine/lib.js"></script>
+<script src="../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end, R = TL.result;
+const book = frameBook(RUN); const tara = Tara("tara"); const res = new Image(); res.src = "assets/result.jpg";
+// frames: 9.71 entry 5 waiting; typed with one digit off (run.slips [5]) through 12.9, the last captured frame
+const F0 = 9.71, F1 = 12.91;
+const [RIGHT, TOTAL] = R.right.split("/").map((x) => +x.trim()), WRONG = TOTAL - RIGHT, GAP = R.gross - R.net;
+const fmt = (v) => v.toLocaleString("en-US");
+const POSES = [[0, "point"], [W.net - .2, "present"], [S[1] + .1, "think"], [W.every - .1, "present"], [W.rw - .1, "oops"], [W.netonly - .1, "point"],
+  [W.right - .1, "thumbs"], [S[2] + .1, "point"], [W.typed - .1, "oops"], [S[3] + .1, "present"], [W.nv - .1, "point"], [S[4] + .1, "think"],
+  [W.single - .1, "oops"], [S[5] + .1, "present"], [W.free - .1, "wave"], [W.at - .1, "point"], [W.watch - .1, "rest"]];
+const CH = [["// 01 · your score", "two <b>speeds</b>"], ["// 02 · gross vs net", "net counts <b>right ones</b>"], ["// 03 · a real minute", `wrong <b>${WRONG} entry</b>`],
+  ["// 04 · the result", `correct <b>${RIGHT} / ${TOTAL}</b>`], ["// 05 · the gap", `lost <b>${fmt(GAP)} KPH</b>`], ["// 06 · practice", "cost <b>$0</b>"]];
+const IDS = ["p0","c0a","c0b","s0","h0","p1a","p1b","s1","p2","c2","h2","r3a","r3b","p4","s4","p7","s7","h7","badge"];
+const ENT = (i) => `<div class="ent" id="e${i}">✓</div>`;
+$("ga").innerHTML = [0, 1, 2, 3, 4].map((i) => ENT("g" + i)).join(""); $("na").innerHTML = [0, 1, 2, 3, 4].map((i) => ENT("n" + i)).join("");
+$("s4").textContent = `${WRONG} wrong entry`;
+const CROP = [.04, .19, .68, .36], RCROP = [.12, .03, .76, .40];   // live test: queue, target, input; result: net and the stats row
+const pt = (cv, im, c, fx, fy) => { const Wd = im.naturalWidth, H = im.naturalHeight, k = Math.min(cv.width / (Wd * c[2]), cv.height / (H * c[3]));
+  return [(cv.width - Wd * c[2] * k) / 2 + (fx - c[0]) * Wd * k, (cv.height - H * c[3] * k) / 2 + (fy - c[1]) * H * k]; };
+const place = (id, cid, im, c, fx, fy, left, top) => { if (!im.naturalWidth) return; const [x, y] = pt($(cid), im, c, fx, fy), s = $(id);
+  s.style.left = (left + x - s.width.baseVal.value / 2) + "px"; s.style.top = (top + y - s.height.baseVal.value / 2) + "px"; };
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { k = Math.max(0, TL.wt.findIndex((w) => w[1] === c.t)); const toks = [];   // each phrase starts at its own word ("3%" is two spoken words)
+  let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#111"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // b0: the real result: the gross number circled red, then net green
+  if (t < S[1] - .05 + .3) { W8("k0", res, ...RCROP); pop("p0", t, .05, { r: -1.5, y: fl(t) }); badge(t, 1, .3, 905, 535);
+    place("c0a", "k0", res, RCROP, .207, .375, 104, 662); place("c0b", "k0", res, RCROP, .50, .13, 104, 662);
+    draw("c0a", t, W.gross - .1, .45); if (t >= W.net - .2) draw("c0b", t, W.net - .2, .45);
+    slam("s0", t, W.gross + .2, { r: -5 }); pop("h0", t, W.net - .1, { r: 3, y: fl(t, 2) });
+    for (const id of ["p0", "c0a", "c0b", "s0", "h0", "badge"]) out(id, t, S[1] - .15); }
+  // b1: gross counts every entry, net drops the wrong one
+  if (inWin(t, S[1] - .05, S[2])) { pop("p1a", t, S[1], { r: -1, y: fl(t, 3) }); badge(t, 2, S[1] + .2, 905, 540);
+    for (let i = 0; i < 5; i++) { const g = $("eg" + i), on = t >= W.every + i * .08, bad = i === 2 && t >= W.rw - .1;
+      g.style.background = on ? (bad ? "var(--red)" : "#3a3631") : "#e6e1d8"; g.textContent = bad ? "✗" : "✓"; }
+    slam("s1", t, W.bigger, { r: 6 });
+    if (t >= W.netonly - .2) { pop("p1b", t, W.netonly - .2, { r: 1, y: fl(t, 4) });
+      for (let i = 0; i < 5; i++) { const g = $("en" + i), on = t >= W.right - .2 + i * .08;
+        g.style.background = i === 2 ? "transparent" : on ? "var(--green)" : "#e6e1d8"; g.style.border = i === 2 ? "5px dashed #CDC6BB" : "none"; g.textContent = i === 2 ? "" : "✓"; } }
+    for (const id of ["p1a", "p1b", "s1", "badge"]) out(id, t, S[2] - .15); }
+  // b2: the real slip being typed, circled
+  if (inWin(t, S[2] - .05, S[3])) { const ft = Math.max(F0, Math.min(F1, F0 + (t - S[2] - .4) * 1.55));
+    W8("k2", book.at(ft), ...CROP); pop("p2", t, S[2], { r: -1.5, y: fl(t, 6) }); badge(t, 3, S[2] + .2, 905, 535);
+    const im = book.at(ft); place("c2", "k2", im, CROP, .385, .475, 104, 662);
+    draw("c2", t, W.purpose - .3, .45); pop("h2", t, W.purpose - .2, { r: -2, y: fl(t, 7) });
+    for (const id of ["p2", "c2", "h2", "badge"]) out(id, t, S[3] - .15); }
+  // b3: the real gross and net from the result
+  if (inWin(t, S[3] - .05, S[4])) { pop("r3a", t, S[3], { y: fl(t, 8) * .5 }); badge(t, 4, S[3] + .2, 905, 550);
+    count("v3a", t, W.g2 - .2, .7, R.gross, fmt); pop("r3b", t, W.n2 - .1, { y: fl(t, 9) * .5 }); count("v3b", t, W.nv - .2, .7, R.net, fmt);
+    for (const id of ["r3a", "r3b", "badge"]) out(id, t, S[4] - .15); }
+  // b4: the gap
+  if (inWin(t, S[4] - .05, S[5])) { pop("p4", t, S[4], { r: -1, y: fl(t, 10) * .5 }); badge(t, 5, S[4] + .2, 905, 520);
+    count("v4", t, W.v660 - .2, .6, GAP, (v) => "−" + fmt(v)); $("bg").style.width = "100%"; $("bn").style.width = (100 * R.net / R.gross * clamp((t - S[4]) / .8)) + "%";
+    slam("s4", t, W.single, { r: -6 });
+    for (const id of ["p4", "s4", "badge"]) out(id, t, S[5] - .15); }
+  // b5: the site
+  if (t >= S[5] - .05) { W8("k7", book.at(.2), 0, 0, .75, .62, "#fff"); pop("p7", t, S[5], { r: -1, y: fl(t, 12) });
+    const u = "10keytypingtest.com", n = Math.round(clamp((t - W.at + .1) / .8) * u.length); $("url").textContent = u.slice(0, n);
+    $("caret").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0; slam("s7", t, W.free, { r: -8 }); if (t >= W.watch - .1) { hide("s7"); pop("h7", t, W.watch - .1, { r: -2, y: fl(t, 13) }); } }
+  chapter(t); caption2(t); tara.render(t, POSES, TL.amp); wipe(t, S[2] - .45);
+};
+window.ready = Promise.all([...book.imgs, res].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

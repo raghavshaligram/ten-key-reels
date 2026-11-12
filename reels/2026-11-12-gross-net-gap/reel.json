@@ -1,0 +1,200 @@
+{
+ "title": "Read net, not gross (sticker)",
+ "voice": "af_heart",
+ "speed": 1.03,
+ "lines": [
+  [
+   "Stop reading the gross number on your ten-key score. Read net instead.",
+   0.45
+  ],
+  [
+   "Gross counts every key you press, right or wrong, so it's always the bigger one. Net only counts the right ones.",
+   0.4
+  ],
+  [
+   "Here's a real minute. One entry is wrong, on purpose.",
+   0.4
+  ],
+  [
+   "Gross came out at ten thousand five hundred K P H. Net? Nine thousand eight hundred forty.",
+   0.45
+  ],
+  [
+   "That gap is what one wrong entry cost.",
+   0.45
+  ],
+  [
+   "Practice for free at ten key typing test dot com. Watch the net.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop reading the [gross] number",
+  "on your 10-key score.",
+  "Read [net] instead.",
+  "Gross counts [every key] you press,",
+  "[right or wrong,]",
+  "so it's always the [bigger one.]",
+  "Net only counts the [right ones.]",
+  "Here's a [real minute.]",
+  "One entry is [wrong,] on purpose.",
+  [
+   9,
+   "Gross came out at [10,500 KPH.]"
+  ],
+  [
+   6,
+   "Net? [9,840.]"
+  ],
+  "That [gap] is what",
+  "[one wrong entry] cost.",
+  "Practice [for free]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ],
+  "Watch the [net.]"
+ ],
+ "scenes": [
+  0,
+  12,
+  33,
+  43,
+  58,
+  66
+ ],
+ "marks": {
+  "gross": 3,
+  "net": 10,
+  "every": 14,
+  "rw": 20,
+  "bigger": 25,
+  "netonly": 27,
+  "right": 31,
+  "real": 35,
+  "typed": 40,
+  "purpose": 42,
+  "g2": 47,
+  "n2": 52,
+  "nv": 53,
+  "gap": 59,
+  "v660": 59,
+  "single": 62,
+  "free": 68,
+  "at": 69,
+  "watch": 71
+ },
+ "tail": 0.4,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [
+   5
+  ],
+  "frames": 13,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "gross",
+   "pop",
+   900
+  ],
+  [
+   "net",
+   "pop",
+   500
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "every",
+   "clicks",
+   0.9
+  ],
+  [
+   "rw",
+   "pop",
+   300
+  ],
+  [
+   "netonly",
+   "pop",
+   600
+  ],
+  [
+   "right",
+   "pop",
+   800
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "real",
+   "clicks",
+   0.9
+  ],
+  [
+   "typed",
+   "pop",
+   300
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "g2",
+   "pop",
+   900
+  ],
+  [
+   "nv",
+   "pop",
+   500
+  ],
+  [
+   "S4-0.3",
+   "whoosh",
+   0.7
+  ],
+  [
+   "v660",
+   "pop",
+   300
+  ],
+  [
+   "single",
+   "pop",
+   800
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "free",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
