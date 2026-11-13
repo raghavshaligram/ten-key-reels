@@ -1,0 +1,162 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-800-normal.woff2)}
+@font-face{font-family:Serif;font-style:italic;src:url(../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#F3F0EA;--ink:#191714;--grey:#CDC6BB;--red:#E0342C;--green:#2F7A4F;--muted:#8D867B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 40%,#f8f6f1 0%,#f3f0ea 55%,#ece7df 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--red);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:600 78px/1.1 Inter;letter-spacing:-.025em}
+#cap span{display:inline-block;margin-right:.24em;transition:none}
+#cap .acc{font-family:Serif;font-style:italic;font-weight:400;color:var(--red);font-size:1.12em;letter-spacing:-.01em}
+.stk{background:#fff;border-radius:34px;padding:14px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.win{background:#16181a;border-radius:24px;overflow:hidden}
+.bar{height:58px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#202326;color:#9aa19c;font:600 24px Mono}
+.bar i{width:16px;height:16px;border-radius:50%;background:#3b3f43;display:inline-block}
+.bar .t{margin-left:14px}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:#111;color:#fff;font:800 66px/104px Inter;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25);border:5px solid #fff}
+.stamp{font:800 64px/1 Inter;letter-spacing:.06em;color:var(--red);border:8px solid var(--red);border-radius:18px;padding:14px 26px 12px;background:rgba(255,255,255,.88);text-transform:uppercase;white-space:nowrap}
+.key{width:250px;height:230px;border-radius:40px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 14px 0 #cfc8bd,0 30px 50px rgba(40,30,20,.2);font:800 92px/210px Inter;text-align:center;color:#2a2622}
+.chip{font:600 64px/1 Inter;padding:34px 46px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14);white-space:nowrap}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+</style></head><body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .55 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: three tries, keep the middle -->
+  <div class="el stk" id="p0" style="left:90px;top:600px;width:900px;padding:44px 34px 50px">
+    <div class="lab" style="font-size:36px;text-align:center">three 1-minute tries</div>
+    <div style="display:flex;gap:26px;margin-top:30px">
+      <div id="t0a" style="flex:1;height:300px;border-radius:28px;background:#efebe4;text-align:center"><div class="lab" style="font-size:30px;padding-top:34px">try 1</div><div style="font:800 170px/1 Inter;color:#b3aa9d;margin-top:16px">?</div></div>
+      <div id="t0b" style="flex:1;height:300px;border-radius:28px;background:#efebe4;text-align:center"><div class="lab" style="font-size:30px;padding-top:34px">try 2</div><div style="font:800 170px/1 Inter;color:#b3aa9d;margin-top:16px">?</div></div>
+      <div id="t0c" style="flex:1;height:300px;border-radius:28px;background:#efebe4;text-align:center"><div class="lab" style="font-size:30px;padding-top:34px">try 3</div><div style="font:800 170px/1 Inter;color:#b3aa9d;margin-top:16px">?</div></div>
+    </div>
+  </div>
+  <svg class="el draw" id="c0" width="330" height="400" style="left:375px;top:735px"><ellipse cx="165" cy="200" rx="150" ry="180" stroke="#E0342C" stroke-width="11" pathLength="1" stroke-dasharray="1" transform="rotate(-4 165 200)"/></svg>
+  <div class="el stamp" id="s0" style="left:290px;top:1090px">keep the middle</div>
+
+  <!-- b1: a minute is easy to sprint -->
+  <div class="el stk" id="p1" style="left:110px;top:600px;width:860px;padding:50px 60px 60px;text-align:center">
+    <div class="lab" style="font-size:36px">one try</div>
+    <div style="font:800 230px/1 Inter;letter-spacing:-.05em;margin-top:16px">60<span style="font-size:110px;letter-spacing:-.02em"> sec</span></div>
+    <div style="font:600 64px/1 Inter;margin-top:26px;color:#5b554d">easy to sprint</div>
+  </div>
+  <div class="el stamp" id="s1" style="left:200px;top:1060px">flatters you</div>
+
+  <!-- b2: typing, live -->
+  <div class="el stk" id="p2" style="left:90px;top:580px;width:900px"><div class="win"><div class="bar"><i style="background:#E0342C"></i><span class="t">live · 60 seconds</span></div><canvas id="k2" width="872" height="500"></canvas></div></div>
+  <div class="el stamp" id="s2" style="left:330px;top:1050px">try 1</div>
+
+  <!-- b3: the real result, three numbers circled in turn -->
+  <div class="el stk" id="p3" style="left:70px;top:600px;width:940px"><div class="win"><canvas id="k3" width="912" height="380"></canvas></div></div>
+  <svg class="el draw" id="c3a" width="520" height="190" style="left:281px;top:607px"><ellipse cx="260" cy="95" rx="235" ry="72" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1" transform="rotate(-3 260 95)"/></svg>
+  <svg class="el draw" id="c3b" width="270" height="170" style="left:283px;top:846px"><ellipse cx="135" cy="85" rx="118" ry="66" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1" transform="rotate(-4 135 85)"/></svg>
+  <svg class="el draw" id="c3c" width="290" height="170" style="left:515px;top:846px"><ellipse cx="145" cy="85" rx="128" ry="66" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1" transform="rotate(-4 145 85)"/></svg>
+
+  <!-- b4: try 1 is real, tries 2 and 3 are yours -->
+  <div class="el stk" id="p4" style="left:90px;top:590px;width:900px;padding:40px 46px 44px">
+    <div class="lab" style="font-size:32px">net KPH, three tries</div>
+    <div style="display:flex;align-items:center;gap:30px;height:130px;margin-top:22px"><div class="lab" style="font-size:34px;width:150px">try 1</div><div id="n4a" style="font:800 110px/1 Inter;letter-spacing:-.04em;color:var(--green)">0</div></div>
+    <div id="r4b" style="display:flex;align-items:center;gap:30px;height:105px;margin-top:8px"><div class="lab" style="font-size:34px;width:150px">try 2</div><div style="width:460px;height:14px;border-radius:7px;background:#c9c1b5"></div></div>
+    <div id="r4c" style="display:flex;align-items:center;gap:30px;height:105px;margin-top:8px"><div class="lab" style="font-size:34px;width:150px">try 3</div><div style="width:460px;height:14px;border-radius:7px;background:#c9c1b5"></div></div>
+  </div>
+  <div class="el stamp" id="s4" style="left:200px;top:1110px">middle, not best</div>
+
+  <!-- b5: the site -->
+  <div class="el stk" id="p5" style="left:90px;top:590px;width:900px"><div class="win" style="background:#fff">
+    <div class="bar" style="background:#efebe4;color:#3a3631;height:76px;font-size:30px"><i style="background:#e0a39e"></i><i style="background:#e8cf8c"></i><i style="background:#9fcfa8"></i>
+      <span class="t" style="flex:1;background:#fff;border-radius:16px;padding:10px 20px;margin-left:16px"><span id="url"></span><span id="caret" style="color:var(--red)">|</span></span></div>
+    <canvas id="k5" width="872" height="480"></canvas></div></div>
+  <div class="el stamp" id="s5" style="left:330px;top:1060px">practice here</div>
+
+  <div class="el badge" id="badge" style="left:900px;top:510px">1</div>
+  <svg class="el" id="tara" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../engine/lib.js"></script>
+<script src="../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end, R = TL.result;
+const book = frameBook(RUN); const res = new Image(); res.src = "assets/result.jpg";
+const tara = Tara("tara");
+// her poses, keyed to the voice
+const POSES = [[0, "point"], [W.middle - .1, "present"], [S[1] + .05, "think"], [W.flatter - .1, "oops"], [S[2] + .1, "present"],
+  [S[3] + .05, "present"], [W.entries - .05, "thumbs"], [S[4] + .1, "point"], [W.best - .1, "think"], [S[5] + .1, "present"], [W.at + .4, "rest"]];
+const fmt = (v) => Math.round(v).toLocaleString("en-US");
+const CH = [["// 01 · three tries", "keep <b>the middle</b>"], ["// 02 · one minute", "time <b>60 sec</b>"], ["// 03 · try 1, live", "try <b>1 of 3</b>"],
+  ["// 04 · the result", `net <b>${fmt(R.net)}</b>`], ["// 05 · two more", "try <b>2 &amp; 3</b>"], ["// 06 · practice", "keep <b>the middle</b>"]];
+const IDS = ["p0","c0","s0","p1","s1","p2","s2","p3","c3a","c3b","c3c","p4","s4","p5","s5","badge"];
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+const [rOk, rAll] = (R.right || "0 / 0").split("/").map((x) => +x.trim());
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { const toks = []; let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#111"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // b0: three tries, the middle one circled
+  if (t < S[1] + .3) { pop("p0", t, .05, { r: -1.5, y: fl(t) }); draw("c0", t, W.middle - .05, .45); slam("s0", t, W.middle + .25, { r: -6 });
+    $("t0b").style.background = t >= W.middle - .05 ? "#fde9e6" : "#efebe4";
+    for (const id of ["p0", "c0", "s0"]) out(id, t, S[1] - .15); }
+  // b1: a minute is easy to sprint
+  if (inWin(t, S[1] - .05, S[2])) { pop("p1", t, S[1] + .05, { r: 1.5, y: fl(t, 1) }); slam("s1", t, W.flatter - .05, { r: -7 }); badge(t, 1, S[1] + .25, 880, 500);
+    for (const id of ["p1", "s1", "badge"]) out(id, t, S[2] - .2); }
+  // b2: the real minute, live
+  if (inWin(t, S[2] - .05, S[3])) { W8("k2", book.at(1.6 + (t - S[2]) * 1.0), .02, .16, .62, .42); pop("p2", t, S[2], { r: -1, y: fl(t, 2) }); badge(t, 2, S[2] + .2, 880, 500);
+    slam("s2", t, W.live + .1, { r: -7 });
+    for (const id of ["p2", "s2", "badge"]) out(id, t, S[3] - .2); }
+  // b3: the result screen, real, circled as each number is named
+  if (inWin(t, S[3] - .05, S[4])) { if (res.naturalWidth) W8("k3", res, .13, .03, .74, .40); pop("p3", t, S[3], { r: 1, y: fl(t, 8) * 0 });
+    draw("c3a", t, W.net - .1, .45); draw("c3b", t, W.acc - .1, .45); draw("c3c", t, W.entries - .1, .45);
+    badge(t, 3, S[3] + .2, 900, 500);
+    for (const id of ["p3", "c3a", "c3b", "c3c", "badge"]) out(id, t, S[4] - .15); }
+  // b4: try 1 from the run, tries 2 and 3 still to do
+  if (inWin(t, S[4] - .05, S[5])) { pop("p4", t, S[4], { r: -1, y: fl(t, 5) }); badge(t, 4, S[4] + .2, 880, 500);
+    $("n4a").textContent = fmt(t < S[4] + .15 ? 0 : R.net * easeOut((t - S[4] - .15) / .7));
+    for (const [id, t0] of [["r4b", W.two], ["r4c", W.two + .15]]) { const a = easeOut((t - t0) / .3); $(id).style.opacity = t < t0 ? .25 : .25 + .75 * a; }
+    slam("s4", t, W.mid - .05, { r: -6 });
+    for (const id of ["p4", "s4", "badge"]) out(id, t, S[5] - .2); }
+  // b5: the site
+  if (t >= S[5] - .05) { W8("k5", book.at(.2), 0, 0, .75, .62, "#fff"); pop("p5", t, S[5], { r: -1, y: fl(t, 9) });
+    const u = "10keytypingtest.com", n = Math.round(clamp((t - W.at + .1) / .8) * u.length); $("url").textContent = u.slice(0, n);
+    $("caret").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0; slam("s5", t, W.prac + .2, { r: -6 }); }
+  chapter(t); caption2(t); tara.render(t, POSES, TL.amp); wipe(t, S[1] - .45);
+};
+window.ready = Promise.all([...book.imgs, res].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

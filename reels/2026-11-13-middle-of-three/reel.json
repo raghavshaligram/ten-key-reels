@@ -1,0 +1,197 @@
+{
+ "title": "Take three 1-minute tests, keep the middle (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Stop trusting your first one-minute ten-key score. Take three and keep the middle one.",
+   0.5
+  ],
+  [
+   "A minute is easy to sprint, so one score on its own tends to flatter you a little.",
+   0.45
+  ],
+  [
+   "Here's one minute on the live test.",
+   0.45
+  ],
+  [
+   "At the end you get your net K P H, accuracy, and correct entries.",
+   0.5
+  ],
+  [
+   "That's one. Do two more, and write down the middle result, not the best one.",
+   0.5
+  ],
+  [
+   "Practice from that middle number at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop trusting your first",
+  "[1-minute] [10-key] score.",
+  "Take [3] and keep the [middle one.]",
+  "A minute is easy to [sprint,]",
+  "so one score on its own",
+  "tends to [flatter you] a little.",
+  "Here's [1 minute] on the live test.",
+  "At the end you get",
+  "your [net KPH,]",
+  "[accuracy,]",
+  "and [correct entries.]",
+  "That's [one.]",
+  "Do [two more,]",
+  "and write down the [middle result,]",
+  "not the [best one.]",
+  "Practice from that [middle number]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  14,
+  32,
+  39,
+  51,
+  66
+ ],
+ "marks": {
+  "first": 3,
+  "middle": 12,
+  "sprint": 19,
+  "flatter": 28,
+  "live": 37,
+  "net": 45,
+  "acc": 47,
+  "entries": 50,
+  "one": 52,
+  "two": 54,
+  "write": 57,
+  "mid": 60,
+  "best": 64,
+  "prac": 66,
+  "at": 71
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "first",
+   "buzz"
+  ],
+  [
+   "middle",
+   "pop",
+   800
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.05",
+   "pop",
+   700
+  ],
+  [
+   "sprint",
+   "ticks",
+   0.8
+  ],
+  [
+   "flatter-0.05",
+   "buzz"
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S2+0.1",
+   "pop",
+   600
+  ],
+  [
+   "live",
+   "clicks",
+   2.0
+  ],
+  [
+   "S3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.1",
+   "pop",
+   700
+  ],
+  [
+   "net-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "acc-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "entries-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "two",
+   "pop",
+   600
+  ],
+  [
+   "mid-0.05",
+   "scribble",
+   0.45
+  ],
+  [
+   "best",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "prac+0.2",
+   "pop",
+   600
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
