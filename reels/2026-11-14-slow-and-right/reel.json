@@ -1,0 +1,188 @@
+{
+ "title": "Get every entry right first (sticker)",
+ "voice": "af_heart",
+ "speed": 1.05,
+ "lines": [
+  [
+   "Stop rushing your ten-key test. Get every entry right first, then speed up.",
+   0.35
+  ],
+  [
+   "A slow entry still counts toward your score. A wrong one doesn't count at all.",
+   0.35
+  ],
+  [
+   "So here's one real minute on the live test, typed at an easy, steady pace, with no rushing.",
+   0.35
+  ],
+  [
+   "Twenty-three entries. All twenty-three right.",
+   0.35
+  ],
+  [
+   "That's eight thousand nine hundred forty net K P H, and the site rates it job-ready, level three.",
+   0.35
+  ],
+  [
+   "Practice at ten key typing test dot com, and keep every entry right.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop [rushing] your 10-key test.",
+  "Get [every entry right] first,",
+  "then speed up.",
+  "A [slow] entry still counts",
+  "toward your score.",
+  "A [wrong one] doesn't count [at all.]",
+  "So here's [1 real minute]",
+  "on the live test,",
+  "typed at an [easy, steady pace,]",
+  "with [no rushing.]",
+  "[23 entries.]",
+  "All [23 right.]",
+  "That's [8,940 net KPH,]",
+  "and the site rates it",
+  "[job-ready, level 3.]",
+  [
+   3,
+   "Practice at [10keytypingtest.com,]"
+  ],
+  "and keep [every entry right.]"
+ ],
+ "scenes": [
+  0,
+  13,
+  28,
+  46,
+  51,
+  63
+ ],
+ "marks": {
+  "rush": 1,
+  "every": 6,
+  "speed": 11,
+  "slow": 14,
+  "wrong": 22,
+  "all": 26,
+  "live": 35,
+  "easy": 40,
+  "n23": 46,
+  "all23": 48,
+  "net": 52,
+  "site": 57,
+  "job": 60,
+  "prac": 63,
+  "at": 64,
+  "keep": 67
+ },
+ "tail": 0.6,
+ "run": {
+  "mode": "Mixed",
+  "gap": 380,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "rush",
+   "buzz"
+  ],
+  [
+   "every",
+   "pop",
+   800
+  ],
+  [
+   "speed",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "slow",
+   "pop",
+   700
+  ],
+  [
+   "wrong",
+   "buzz"
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S2+0.1",
+   "pop",
+   600
+  ],
+  [
+   "live",
+   "clicks",
+   2.0
+  ],
+  [
+   "easy",
+   "pop",
+   600
+  ],
+  [
+   "S3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "n23",
+   "pop",
+   700
+  ],
+  [
+   "all23",
+   "pop",
+   900
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "net-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "job-0.1",
+   "scribble",
+   0.45
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "prac+0.2",
+   "pop",
+   600
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
