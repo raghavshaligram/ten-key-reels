@@ -1,0 +1,154 @@
+{
+ "title": "Two numbers on a 10-key score (sticker)",
+ "voice": "af_heart",
+ "speed": 1.05,
+ "lines": [
+  [
+   "You're reading your ten-key score wrong, and it's not your fault, because there are two numbers on it.",
+   0.35
+  ],
+  [
+   "A ten-key test checks how fast you enter numbers, and how many you get right.",
+   0.35
+  ],
+  [
+   "Here's one real minute on the live test.",
+   0.35
+  ],
+  [
+   "Speed comes out as net K P H. Ten thousand nine hundred eighty here.",
+   0.35
+  ],
+  [
+   "Accuracy is the other one. All twenty-five entries right.",
+   0.35
+  ],
+  [
+   "You can check both of yours at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "You're reading your [10-key score] wrong,",
+  "and it's not your fault,",
+  "because there are [two numbers] on it.",
+  "A 10-key test checks",
+  "how [fast] you enter numbers,",
+  "and how many you [get right.]",
+  "Here's [1 real minute]",
+  "on the [live test.]",
+  "[Speed] comes out as [net KPH.]",
+  "[10,980] here.",
+  "[Accuracy] is the other one.",
+  "All [25 entries right.]",
+  "You can check [both of yours]",
+  "at [10keytypingtest.com.]"
+ ],
+ "scenes": [
+  0,
+  18,
+  33,
+  41,
+  49,
+  58
+ ],
+ "marks": {
+  "two": 14,
+  "fast": 23,
+  "right": 31,
+  "live": 39,
+  "speed": 41,
+  "net": 45,
+  "num": 47,
+  "acc": 49,
+  "all": 54,
+  "both": 61,
+  "at": 64
+ },
+ "tail": 0.6,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "two",
+   "pop",
+   800
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "fast",
+   "pop",
+   700
+  ],
+  [
+   "right",
+   "pop",
+   900
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "live",
+   "clicks",
+   2.0
+  ],
+  [
+   "S3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "net-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "num",
+   "pop",
+   900
+  ],
+  [
+   "S4",
+   "whoosh",
+   0.6
+  ],
+  [
+   "all",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "both",
+   "pop",
+   600
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
