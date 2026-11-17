@@ -1,0 +1,191 @@
+{
+ "title": "Practice a minute before the job test (sticker)",
+ "voice": "af_heart",
+ "speed": 0.97,
+ "lines": [
+  [
+   "Don't let the job test be your first sixty seconds on the ten-key.",
+   0.45
+  ],
+  [
+   "Practice first.",
+   0.45
+  ],
+  [
+   "Here's a real minute on the live test, typed one number at a time, with enter after each one, from the first second to the last.",
+   0.5
+  ],
+  [
+   "At the end you see your net K P H and your accuracy.",
+   0.5
+  ],
+  [
+   "Now the job test won't be your first.",
+   0.5
+  ],
+  [
+   "You can practice a minute at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Don't let the [job test]",
+  "be your first [60 seconds]",
+  [
+   4,
+   "on the [10-key.]"
+  ],
+  "[Practice] first.",
+  "Here's a [real minute]",
+  "on the [live test,]",
+  "typed [one number] at a time,",
+  "with [Enter] after each one,",
+  "from the first second to the last.",
+  "At the end you see",
+  "your [net KPH]",
+  "and your [accuracy.]",
+  "Now the [job test]",
+  "won't be your [first.]",
+  "You can practice a minute",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  14,
+  16,
+  42,
+  53,
+  61
+ ],
+ "marks": {
+  "job": 3,
+  "sixty": 8,
+  "key": 13,
+  "practice": 14,
+  "real": 18,
+  "live": 22,
+  "one": 25,
+  "enter": 31,
+  "last": 41,
+  "end": 44,
+  "net": 48,
+  "acc": 52,
+  "now": 53,
+  "first": 60,
+  "try": 63,
+  "at": 66
+ },
+ "tail": 0.8,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "job",
+   "buzz"
+  ],
+  [
+   "sixty-0.1",
+   "ticks",
+   1.2
+  ],
+  [
+   "key+0.2",
+   "pop",
+   400
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.05",
+   "pop",
+   700
+  ],
+  [
+   "practice+0.3",
+   "scribble",
+   0.45
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S2+0.1",
+   "pop",
+   600
+  ],
+  [
+   "one",
+   "clicks",
+   2.0
+  ],
+  [
+   "enter+0.1",
+   "pop",
+   700
+  ],
+  [
+   "S3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.1",
+   "pop",
+   700
+  ],
+  [
+   "net-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "acc-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "first+0.1",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "try+0.2",
+   "pop",
+   600
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
