@@ -1,0 +1,172 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-800-normal.woff2)}
+@font-face{font-family:Serif;font-style:italic;src:url(../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#F3F0EA;--ink:#191714;--grey:#CDC6BB;--red:#E0342C;--green:#2F7A4F;--muted:#8D867B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 40%,#f8f6f1 0%,#f3f0ea 55%,#ece7df 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--red);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:600 78px/1.1 Inter;letter-spacing:-.025em}
+#cap span{display:inline-block;margin-right:.24em;transition:none}
+#cap .acc{font-family:Serif;font-style:italic;font-weight:400;color:var(--red);font-size:1.12em;letter-spacing:-.01em}
+.stk{background:#fff;border-radius:34px;padding:14px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.win{background:#16181a;border-radius:24px;overflow:hidden}
+.bar{height:58px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#202326;color:#9aa19c;font:600 24px Mono}
+.bar i{width:16px;height:16px;border-radius:50%;background:#3b3f43;display:inline-block}
+.bar .t{margin-left:14px}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:#111;color:#fff;font:800 66px/104px Inter;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25);border:5px solid #fff}
+.stamp{font:800 64px/1 Inter;letter-spacing:.06em;color:var(--red);border:8px solid var(--red);border-radius:18px;padding:14px 26px 12px;background:rgba(255,255,255,.88);text-transform:uppercase;white-space:nowrap}
+.key{width:250px;height:230px;border-radius:40px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 14px 0 #cfc8bd,0 30px 50px rgba(40,30,20,.2);font:800 92px/210px Inter;text-align:center;color:#2a2622}
+.row{display:flex;align-items:center;gap:26px;font:600 50px/1 Inter;padding:30px 40px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14)}
+.row .v{margin-left:auto;font:800 84px/1 Inter;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.row .n{width:64px;height:64px;border-radius:50%;background:#111;color:#fff;font:800 36px/64px Inter;text-align:center}
+.ck{display:flex;align-items:center;gap:24px;font:600 56px/1 Inter;padding:20px 0}
+.ck .b{width:62px;height:62px;border-radius:16px;border:5px solid #2F7A4F;display:flex;align-items:center;justify-content:center;color:#fff;font:800 40px Inter}
+.ck .b.on{background:#2F7A4F}
+.chip{font:600 64px/1 Inter;padding:34px 46px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14);white-space:nowrap}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+#wipe{position:absolute;inset:0;pointer-events:none}
+</style></head><body>
+<body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .55 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: one minute as 60 ticks, the last 10 in red -->
+  <div class="el stk" id="p0" style="left:100px;top:610px;width:880px;padding:40px 40px 36px">
+    <div class="lab" style="font-size:32px;margin-bottom:26px">one minute · 60 seconds</div>
+    <div id="ticks" style="display:grid;grid-template-columns:repeat(10,1fr);gap:12px"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:22px;font:600 34px/1 Mono;color:var(--muted)"><span>1:00</span><span style="color:var(--red)">last 10 s</span><span>0:00</span></div></div>
+  <div class="el stamp" id="s0" style="left:330px;top:1080px;font-size:84px">don't rush</div>
+
+  <!-- b1: one tile per entry of the real run, one goes red -->
+  <div class="el stk" id="p1" style="left:100px;top:600px;width:880px;padding:40px">
+    <div class="lab" style="font-size:32px;margin-bottom:26px">a couple dozen entries in one minute</div>
+    <div id="grid" style="display:grid;grid-template-columns:repeat(8,1fr);gap:16px"></div></div>
+  <div class="el row" id="r1" style="left:100px;top:1010px;width:880px;padding:30px 40px;font-size:54px;white-space:nowrap"><span class="n" style="background:var(--red)">✕</span>One slip<span class="v" style="font-size:96px;color:var(--red)">−3 to 4%</span></div>
+  <div class="el chip" id="h1" style="left:150px;top:1040px;font-size:60px;padding:28px 40px">🔒 can't win it back</div>
+
+  <!-- b2: the real slip near the end: 900.87 typed as 910.87, with the clock -->
+  <div class="el stk" id="p2" style="left:100px;top:600px;width:880px"><div class="win"><div class="bar"><i style="background:#E0342C"></i><span class="t">a real minute · live</span></div><canvas id="k2" width="852" height="275"></canvas></div></div>
+  <svg class="el draw" id="c2" width="300" height="150"><ellipse cx="150" cy="75" rx="130" ry="58" stroke="#E0342C" stroke-width="10" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el chip" id="h2" style="left:110px;top:990px;font-size:52px;padding:24px 34px">typed wrong on purpose</div>
+  <div class="el stk" id="p2t" style="left:110px;top:990px;padding:10px"><div class="win"><canvas id="k2t" width="400" height="106"></canvas></div></div>
+  <div class="el stamp" id="s2" style="left:430px;top:1075px;font-size:50px">near the end</div>
+
+  <!-- b3: the real result: one wrong entry, not 100% -->
+  <div class="el stk" id="p3" style="left:90px;top:600px;width:900px"><div class="win"><canvas id="k3" width="872" height="250"></canvas>
+    <div class="lab" style="padding:0 40px 30px;color:#8a938d">the site's result for this minute</div></div></div>
+  <div class="el row" id="r3" style="left:100px;top:930px;width:880px;padding:34px 40px;font-size:56px;white-space:nowrap"><span class="n" style="background:var(--red)">✕</span>Wrong entries<span class="v" id="v3" style="font-size:110px;color:var(--red)"></span></div>
+  <div class="el stamp" id="s3" style="left:290px;top:1110px;font-size:70px">not 100%</div>
+
+  <!-- b4: keep your pace -->
+  <div class="el stk" id="p4" style="left:100px;top:640px;width:880px;padding:50px 46px">
+    <div style="font:800 96px/1.05 Inter;letter-spacing:-.03em">Same pace,</div>
+    <div style="font:400 112px/1.05 Serif;font-style:italic;color:var(--red)">right to 0:00</div>
+    <div id="beat" style="display:flex;gap:18px;margin-top:40px"></div></div>
+
+  <!-- b5: the site -->
+  <div class="el stk" id="p5" style="left:90px;top:610px;width:900px"><div class="win" style="background:#fff">
+    <div class="bar" style="background:#efebe4;color:#3a3631;height:76px;font-size:30px"><i style="background:#e0a39e"></i><i style="background:#e8cf8c"></i><i style="background:#9fcfa8"></i>
+      <span class="t" style="flex:1;background:#fff;border-radius:16px;padding:10px 20px;margin-left:16px"><span id="url"></span><span id="caret" style="color:var(--red)">|</span></span></div>
+    <canvas id="k5" width="872" height="470"></canvas></div></div>
+  <div class="el stamp" id="s5" style="left:520px;top:1030px">1 minute</div>
+  <div class="el badge" id="badge" style="left:900px;top:560px">1</div>
+  <svg class="el" id="tara" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../engine/lib.js"></script>
+<script src="../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end, R = TL.result;
+const book = frameBook(RUN); const tara = Tara("tara"); const res = new Image(); res.src = "assets/result.jpg";
+const SLIPS = [23], SLIPF = 54.5;   // entry typed wrong on purpose (run.slips); frame time showing 900.87 typed as 910.87 with 0:07 left
+const [RIGHT, TOTAL] = R.right.split("/").map((x) => +x.trim()), WRONG = TOTAL - RIGHT;
+const POSES = [[0, "wave"], [W.rush - .1, "point"], [W.seconds + .2, "present"], [S[1] + .1, "think"], [W.slip - .1, "oops"], [W.win - .1, "present"],
+  [S[2] + .1, "point"], [W.wrong - .1, "oops"], [W.near - .05, "point"], [S[3] + .05, "present"], [W.hundred - .15, "think"],
+  [S[4] + .05, "thumbs"], [S[5] + .1, "present"], [W.at - .1, "point"], [W.at + 1.0, "rest"]];
+const CH = [["// 01 · the last seconds", "left <b>0:10</b>"], ["// 02 · per entry", `entries <b>${TOTAL}</b>`], ["// 03 · a real minute", `slip <b>entry ${SLIPS[0]}</b>`],
+  ["// 04 · the result", `accuracy <b>${R.acc}%</b>`], ["// 05 · the fix", "same <b>pace</b>"], ["// 06 · practice", "test <b>1 min</b>"]];
+const IDS = ["p0","s0","p1","r1","h1","p2","c2","h2","p2t","s2","p3","r3","s3","p4","p5","s5","badge"];
+$("v3").textContent = WRONG; $("s3").style.display = R.acc < 100 ? "" : "none";
+$("ticks").innerHTML = Array.from({ length: 60 }, (_, i) => `<div id="tk${i}" style="height:36px;border-radius:8px;background:#e6e1d8"></div>`).join("");
+$("grid").innerHTML = Array.from({ length: TOTAL }, (_, i) => `<div id="g${i}" style="height:96px;border-radius:14px;background:#e6e1d8"></div>`).join("");
+$("beat").innerHTML = Array.from({ length: 9 }, (_, i) => `<div id="bt${i}" style="flex:1;height:70px;border-radius:16px;background:#e6e1d8"></div>`).join("");
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { k = Math.max(0, TL.wt.findIndex((w) => w[1] === c.t)); const toks = [];   // each phrase starts at its own word ("3%" is two spoken words)
+  let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#111"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  // b0: sixty ticks fill in, the last ten go red
+  if (t < S[1] + .3) { pop("p0", t, .05, { r: -1, y: fl(t) * .5 }); badge(t, 1, .25, 905, 560);
+    for (let i = 0; i < 60; i++) { const ti = .2 + i * .012 + (i >= 50 ? W.last - .45 : 0), g = $("tk" + i);
+      g.style.background = t < ti ? "#e6e1d8" : (i >= 50 ? "var(--red)" : "#bdb5a8"); g.style.transform = i >= 50 && t >= ti ? `scale(${1 + .25 * Math.exp(-(t - ti) * 5)})` : ""; }
+    slam("s0", t, W.rush, { r: -6 }); for (const id of ["p0", "s0", "badge"]) out(id, t, S[1] - .15); }
+  // b1: one tile per real entry, one goes red, about 3 to 4%, can't win it back
+  if (inWin(t, S[1] - .05, S[2])) { pop("p1", t, S[1], { r: -1, y: fl(t, 2) * .6 }); badge(t, 2, S[1] + .2, 905, 560);
+    for (let i = 0; i < TOTAL; i++) { const ti = W.couple - .3 + i * .025, g = $("g" + i), bad = SLIPS.includes(i + 1) && t >= W.slip;
+      g.style.background = t < ti ? "#e6e1d8" : (bad ? "var(--red)" : "var(--green)"); g.style.transform = bad ? `scale(${1 + .3 * Math.exp(-(t - W.slip) * 4)})` : ""; }
+    if (t < W.win - .1) pop("r1", t, W.slip, { y: fl(t, 3) * .5 }); else pop("h1", t, W.win - .05, { r: -2, y: fl(t, 3) * .5 });
+    for (const id of ["p1", "r1", "h1", "badge"]) out(id, t, S[2] - .15); }
+  // b2: the real slip, circled, then the clock from the same frame
+  if (inWin(t, S[2] - .05, S[3])) { const im = book.at(SLIPF);
+    W8("k2", im, .02, .15, .64, .39); W8("k2t", im, .8, 0, .2, .1);
+    pop("p2", t, S[2], { r: -1.5, y: fl(t, 2) }); badge(t, 3, S[2] + .2, 905, 560);
+    const c = $("c2"); c.style.left = (100 + 14 + 480 - 150) + "px"; c.style.top = (600 + 14 + 58 + 226 - 75) + "px"; draw("c2", t, W.wrong - .05, .45);
+    if (t < W.near - .15) pop("h2", t, W.wrong + .1, { r: -2, y: fl(t, 3) * .5 }); pop("p2t", t, W.near - .1, { r: 2, y: fl(t, 5) * .5 }); slam("s2", t, W.near + .15, { r: -5 });
+    for (const id of ["p2", "c2", "h2", "p2t", "s2", "badge"]) out(id, t, S[3] - .15); }
+  // b3: the site's own result for this run
+  if (inWin(t, S[3] - .05, S[4])) { if (res.naturalWidth) drawCrop("k3", res, 545 / 1772, 430 / 1354, 690 / 1772, 140 / 1354, "#16181a");
+    pop("p3", t, S[3], { r: -1, y: fl(t, 7) * .5 }); badge(t, 4, S[3] + .2, 905, 550); pop("r3", t, W.only - .1, { y: fl(t, 8) * .5 }); slam("s3", t, W.hundred, { r: -6 });
+    for (const id of ["p3", "r3", "s3", "badge"]) out(id, t, S[4] - .15); }
+  // b4: same pace, an even beat
+  if (inWin(t, S[4] - .05, S[5])) { pop("p4", t, S[4], { r: 1, y: fl(t, 10) * .5 }); badge(t, 5, S[4] + .15, 905, 590);
+    for (let i = 0; i < 9; i++) { const ti = S[4] + .1 + i * .16, g = $("bt" + i); g.style.background = t >= ti ? "var(--green)" : "#e6e1d8"; g.style.transform = t >= ti ? `scale(${1 + .2 * Math.exp(-(t - ti) * 8)})` : ""; }
+    for (const id of ["p4", "badge"]) out(id, t, S[5] - .15); }
+  // b5: the site
+  if (t >= S[5] - .05) { W8("k5", book.at(.2), 0, 0, .75, .62, "#fff"); pop("p5", t, S[5], { r: -1, y: fl(t, 12) }); badge(t, 6, S[5] + .2, 905, 560);
+    const u = "10keytypingtest.com", n = Math.round(clamp((t - W.at + .1) / .8) * u.length); $("url").textContent = u.slice(0, n);
+    $("caret").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0; slam("s5", t, S[5] + .5, { r: -8 }); }
+  chapter(t); caption2(t); tara.render(t, POSES, TL.amp); wipe(t, S[2] - .45);
+};
+window.ready = Promise.all([...book.imgs, res].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>

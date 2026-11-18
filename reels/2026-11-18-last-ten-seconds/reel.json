@@ -1,0 +1,62 @@
+{
+ "title": "Don't rush the last ten seconds (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  ["Don't rush the last ten seconds of a one-minute ten-key test.", 0.45],
+  ["A minute is only a couple dozen entries, so one slip costs you three or four percent, and you can't win it back.", 0.4],
+  ["Here's a real minute.", 0.25],
+  ["One entry typed wrong on purpose, near the end.", 0.4],
+  ["That's the only thing between it and a hundred percent.", 0.45],
+  ["Keep your pace.", 0.5],
+  ["Practice a minute at ten key typing test dot com.", 0.2]
+ ],
+ "phrases": [
+  "Don't [rush] the [last 10 seconds]",
+  "of a [1-minute] 10-key test.",
+  "A minute is only a couple dozen entries,",
+  [9, "so one slip costs you [3 or 4%,]"],
+  "and you [can't win it back.]",
+  "Here's a [real minute.]",
+  "One entry typed [wrong] on purpose,",
+  "[near the end.]",
+  "That's the only thing between it",
+  [4, "and [100%.]"],
+  "Keep your [pace.]",
+  "Practice a minute",
+  [2, "at [10keytypingtest.com.]"]
+ ],
+ "scenes": [0, 11, 34, 47, 57, 60],
+ "marks": {
+  "rush": 1, "last": 3, "seconds": 5, "couple": 15, "slip": 21, "three": 24, "win": 31,
+  "real": 36, "wrong": 41, "near": 44, "only": 49, "hundred": 55, "keep": 57, "pace": 59, "at": 63
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [23],
+  "frames": 62,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  ["0.05", "pop", 600],
+  ["rush", "pop", 300],
+  ["seconds", "ticks", 0.8],
+  ["S1-0.45", "whoosh", 0.7],
+  ["couple-0.1", "ticks", 0.8],
+  ["slip", "pop", 300],
+  ["win", "pop", 850],
+  ["S2-0.45", "whoosh", 0.8],
+  ["real", "clicks", 0.9],
+  ["wrong", "pop", 300],
+  ["near", "pop", 700],
+  ["S3", "pop", 600],
+  ["hundred", "pop", 300],
+  ["S4-0.1", "whoosh"],
+  ["pace", "ticks", 0.8],
+  ["S5", "pop", 600],
+  ["at", "clicks", 0.8]
+ ]
+}
