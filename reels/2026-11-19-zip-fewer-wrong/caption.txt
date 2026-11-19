@@ -1,0 +1,11 @@
+Save this if a 10-key test or a data entry test with ZIP codes is coming up for a job.
+
+On a ZIP code test, speed isn't the problem. Wrong codes are. A long ZIP is 5 digits, a dash, then 4 more, and if one digit is off, the whole code counts as wrong.
+
+In the reel you can see a real 1-minute run on our 10-key test in ZIP codes mode, with one code typed wrong on purpose: 61266 went in as 62266. The result was 26 of 27 right, 96.3% accuracy, and 10,560 net KPH against 10,920 gross. Both drops come from that one code.
+
+On long codes, slow down a little and get every digit right.
+
+You can practice ZIP codes on our site.
+
+#10key #dataentry #typingtest #numberpad

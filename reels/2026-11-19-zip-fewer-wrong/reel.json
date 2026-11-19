@@ -1,0 +1,191 @@
+{
+ "title": "On ZIP codes, fewer wrong ones beats more speed (sticker)",
+ "voice": "af_heart",
+ "speed": 1.0,
+ "lines": [
+  [
+   "You don't need more speed for ZIP codes. You need fewer wrong ones.",
+   0.45
+  ],
+  [
+   "A long ZIP is five digits, a dash, then four more. Get one digit wrong and the whole code is wrong.",
+   0.4
+  ],
+  [
+   "Here's a real minute with one code typed wrong on purpose.",
+   0.3
+  ],
+  [
+   "Watch the accuracy, then the net score. Both drop.",
+   0.45
+  ],
+  [
+   "So on long codes, slow down a little and get every digit right.",
+   0.45
+  ],
+  [
+   "You can practice ZIP codes at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "You don't need [more speed]",
+  "for ZIP codes.",
+  "You need [fewer wrong ones.]",
+  "A long ZIP is [5 digits,]",
+  "a dash, then [4 more.]",
+  "Get [1 digit] wrong",
+  "and the [whole code] is wrong.",
+  "Here's a [real minute]",
+  "with one code typed [wrong] on purpose.",
+  "Watch the [accuracy,]",
+  "then the [net score.] Both drop.",
+  "So on long codes, [slow down] a little",
+  "and get [every digit] right.",
+  "You can practice [ZIP codes]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  13,
+  24,
+  34,
+  54,
+  67
+ ],
+ "marks": {
+  "speed": 4,
+  "fewer": 10,
+  "five0": 17,
+  "dash": 20,
+  "four0": 22,
+  "digit": 26,
+  "whole": 30,
+  "real": 36,
+  "wrong": 42,
+  "watch": 45,
+  "acc": 47,
+  "net": 50,
+  "drop": 53,
+  "slow": 58,
+  "every": 64,
+  "practice": 69,
+  "at": 72
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "ZIP codes",
+  "gap": 300,
+  "slips": [
+   4
+  ],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "speed",
+   "pop",
+   400
+  ],
+  [
+   "fewer",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "five0",
+   "ticks",
+   0.8
+  ],
+  [
+   "dash",
+   "pop",
+   400
+  ],
+  [
+   "four0",
+   "ticks",
+   0.7
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "digit",
+   "pop",
+   300
+  ],
+  [
+   "whole",
+   "pop",
+   300
+  ],
+  [
+   "real",
+   "clicks",
+   0.9
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "acc",
+   "pop",
+   850
+  ],
+  [
+   "net",
+   "pop",
+   700
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "slow",
+   "clicks",
+   0.7
+  ],
+  [
+   "every",
+   "pop",
+   700
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "practice",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
