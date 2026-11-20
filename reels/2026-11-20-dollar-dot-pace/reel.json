@@ -1,0 +1,179 @@
+{
+ "title": "Keep the same pace through the dot (sticker)",
+ "voice": "af_heart",
+ "speed": 1.03,
+ "lines": [
+  [
+   "Stop pausing at the dot. Keep the same pace through the cents.",
+   0.35
+  ],
+  [
+   "Every dollar amount has a dot and two digits of cents. Even seventy-seven dollars is seventy-seven point zero zero.",
+   0.35
+  ],
+  [
+   "Here's a real minute. The dot gets the same beat as every other key.",
+   0.35
+  ],
+  [
+   "All twenty-seven right. Eleven thousand four hundred net K P H.",
+   0.4
+  ],
+  [
+   "So treat the dot as one more digit.",
+   0.4
+  ],
+  [
+   "You can practice dollar amounts at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop [pausing] at the [dot.]",
+  "Keep the [same pace] through the cents.",
+  "Every [dollar amount] has a [dot]",
+  "and [two digits] of cents.",
+  "Even [$77] is [77.00.]",
+  "Here's a [real minute.]",
+  "The dot gets the [same beat]",
+  "as every other key.",
+  "All [27] right.",
+  "[11,400] net KPH.",
+  "So treat the dot",
+  "as [one more digit.]",
+  "You can practice [dollar amounts]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  12,
+  27,
+  41,
+  47,
+  55
+ ],
+ "marks": {
+  "pause": 1,
+  "dot0": 4,
+  "same": 7,
+  "cents0": 11,
+  "dollar": 13,
+  "dot1": 17,
+  "cents1": 22,
+  "even": 24,
+  "zeros": 26,
+  "real": 29,
+  "beat": 36,
+  "key": 40,
+  "n27": 42,
+  "net": 44,
+  "treat": 48,
+  "one": 52,
+  "digit": 54,
+  "practice": 57,
+  "at": 60
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Dollar amounts",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 13,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "pause",
+   "pop",
+   300
+  ],
+  [
+   "same",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "dot1",
+   "pop",
+   500
+  ],
+  [
+   "cents1",
+   "ticks",
+   0.6
+  ],
+  [
+   "zeros",
+   "pop",
+   700
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "real",
+   "clicks",
+   1.6
+  ],
+  [
+   "S3",
+   "whoosh"
+  ],
+  [
+   "n27",
+   "pop",
+   850
+  ],
+  [
+   "net",
+   "pop",
+   700
+  ],
+  [
+   "S4",
+   "whoosh"
+  ],
+  [
+   "one",
+   "clicks",
+   0.6
+  ],
+  [
+   "digit",
+   "pop",
+   600
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "practice",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
