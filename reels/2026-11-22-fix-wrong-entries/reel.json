@@ -1,0 +1,198 @@
+{
+ "title": "Read accuracy first (sticker)",
+ "voice": "af_heart",
+ "speed": 1.06,
+ "lines": [
+  [
+   "Stop reading your speed first on a ten-key test. Read accuracy first.",
+   0.4
+  ],
+  [
+   "Speed tells you how fast. Accuracy tells you how many entries were right.",
+   0.35
+  ],
+  [
+   "Here's a real minute, with two entries typed wrong on purpose.",
+   0.35
+  ],
+  [
+   "Net speed, ten thousand four hundred forty K P H. Accuracy, ninety-three point one percent.",
+   0.4
+  ],
+  [
+   "The site says employers usually want ninety-five percent or higher, so this speed doesn't count yet.",
+   0.4
+  ],
+  [
+   "You can check yours at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Stop reading your [speed] first",
+  "on a 10-key test.",
+  "Read [accuracy] first.",
+  "Speed tells you",
+  "how [fast.]",
+  "Accuracy tells you",
+  "how many entries",
+  "were [right.]",
+  "Here's a [real minute,]",
+  "with [two entries]",
+  "typed [wrong] on purpose.",
+  "Net speed, [10,440 KPH.]",
+  [
+   2,
+   "Accuracy, [93.1%.]"
+  ],
+  "The site says",
+  "employers usually want",
+  [
+   4,
+   "[95%] or higher,"
+  ],
+  "so this speed",
+  "[doesn't count] yet.",
+  "You can check yours",
+  "at [10keytypingtest.com.]"
+ ],
+ "scenes": [
+  0,
+  12,
+  25,
+  36,
+  42,
+  58
+ ],
+ "marks": {
+  "speed": 3,
+  "acc": 10,
+  "sp1": 12,
+  "fast": 16,
+  "acc2": 17,
+  "right": 24,
+  "real": 27,
+  "two": 30,
+  "wrong": 33,
+  "purpose": 35,
+  "net": 38,
+  "accv": 41,
+  "site": 43,
+  "want": 47,
+  "v95": 48,
+  "doesnt": 55,
+  "yet": 57,
+  "check": 60,
+  "at": 62,
+  "last": 63
+ },
+ "tail": 0.4,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [
+   3,
+   9
+  ],
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "speed",
+   "pop",
+   900
+  ],
+  [
+   "acc",
+   "pop",
+   500
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "sp1",
+   "clicks",
+   0.9
+  ],
+  [
+   "acc2",
+   "pop",
+   600
+  ],
+  [
+   "right",
+   "pop",
+   800
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "real",
+   "clicks",
+   0.9
+  ],
+  [
+   "wrong",
+   "pop",
+   300
+  ],
+  [
+   "S3",
+   "pop",
+   600
+  ],
+  [
+   "net",
+   "pop",
+   900
+  ],
+  [
+   "accv",
+   "pop",
+   500
+  ],
+  [
+   "S4-0.3",
+   "whoosh",
+   0.7
+  ],
+  [
+   "v95",
+   "pop",
+   300
+  ],
+  [
+   "doesnt",
+   "pop",
+   800
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "check",
+   "pop",
+   300
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
