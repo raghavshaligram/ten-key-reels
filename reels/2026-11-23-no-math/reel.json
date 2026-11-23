@@ -1,0 +1,186 @@
+{
+ "title": "No math on a 10-key test (sticker)",
+ "voice": "af_heart",
+ "speed": 1.06,
+ "lines": [
+  [
+   "Nobody does math on a ten-key test. You copy the numbers you see.",
+   0.4
+  ],
+  [
+   "A number shows up, like eighty-eight point three two.",
+   0.3
+  ],
+  [
+   "You type it, press Enter, and the next one is already waiting, over and over until the minute is up.",
+   0.4
+  ],
+  [
+   "Here's a real one. Twenty-nine entries, none wrong. Eleven thousand six hundred forty net K P H.",
+   0.4
+  ],
+  [
+   "So practice copying fast, with your eyes on the numbers, not the keys.",
+   0.4
+  ],
+  [
+   "You can try a minute at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Nobody does [math]",
+  "on a [10-key] test.",
+  "You [copy] the numbers you see.",
+  "A number shows up,",
+  "like [88.32.]",
+  "You type it, press [Enter,]",
+  "and the next one is already [waiting,]",
+  "over and over",
+  "until the [minute] is up.",
+  "Here's a [real one.]",
+  "[29 entries,] none wrong.",
+  "[11,640] net KPH.",
+  "So practice copying [fast,]",
+  "with your eyes on the [numbers,]",
+  "not the [keys.]",
+  "You can try a minute",
+  "at [10keytypingtest.com.]"
+ ],
+ "scenes": [
+  0,
+  13,
+  19,
+  39,
+  50,
+  63
+ ],
+ "marks": {
+  "math": 2,
+  "tenkey": 5,
+  "copy": 8,
+  "num": 14,
+  "n88": 18,
+  "type": 20,
+  "enter": 23,
+  "next": 26,
+  "waiting": 30,
+  "minute": 36,
+  "real": 41,
+  "e29": 43,
+  "none": 45,
+  "net": 47,
+  "kph": 49,
+  "fast": 53,
+  "eyes": 56,
+  "numbers": 59,
+  "keys": 62,
+  "try": 65,
+  "at": 68,
+  "last": 69
+ },
+ "tail": 0.4,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "frames": 12
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "math",
+   "pop",
+   400
+  ],
+  [
+   "copy",
+   "pop",
+   800
+  ],
+  [
+   "S1-0.3",
+   "whoosh",
+   0.7
+  ],
+  [
+   "n88",
+   "pop",
+   700
+  ],
+  [
+   "S2-0.45",
+   "whoosh",
+   0.8
+  ],
+  [
+   "S2+0.2",
+   "clicks",
+   0.9
+  ],
+  [
+   "enter",
+   "pop",
+   900
+  ],
+  [
+   "minute",
+   "pop",
+   500
+  ],
+  [
+   "S3-0.3",
+   "whoosh",
+   0.7
+  ],
+  [
+   "e29",
+   "pop",
+   800
+  ],
+  [
+   "none",
+   "pop",
+   400
+  ],
+  [
+   "net",
+   "pop",
+   900
+  ],
+  [
+   "S4-0.3",
+   "whoosh",
+   0.7
+  ],
+  [
+   "eyes",
+   "pop",
+   700
+  ],
+  [
+   "keys",
+   "pop",
+   300
+  ],
+  [
+   "S5",
+   "pop",
+   600
+  ],
+  [
+   "try",
+   "pop",
+   500
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
