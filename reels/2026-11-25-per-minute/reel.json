@@ -1,0 +1,215 @@
+{
+ "title": "10,000 KPH is about 167 keys a minute (sticker)",
+ "voice": "af_heart",
+ "speed": 1.03,
+ "lines": [
+  [
+   "Nobody tells you ten thousand K P H is about a hundred and sixty-seven keys a minute.",
+   0.35
+  ],
+  [
+   "K P H means keys per hour.",
+   0.2
+  ],
+  [
+   "So a one-minute test takes the keys you typed in that minute and times them by sixty.",
+   0.35
+  ],
+  [
+   "Here's a real minute on the ten-key test.",
+   0.35
+  ],
+  [
+   "And here's the score.",
+   0.2
+  ],
+  [
+   "Divide it by sixty, and that's how many right keys went in.",
+   0.35
+  ],
+  [
+   "So don't picture ten thousand keys.",
+   0.15
+  ],
+  [
+   "Picture one steady minute.",
+   0.35
+  ],
+  [
+   "You can try your own minute at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Nobody tells you [10,000 KPH]",
+  "is about [167 keys] a minute.",
+  "KPH means [keys per hour.]",
+  "So a one-minute test takes",
+  "the keys you typed in that minute",
+  "and [times them by 60.]",
+  "Here's a [real minute]",
+  "on the [10-key test.]",
+  "And here's the [score.]",
+  "Divide it by [60,]",
+  "and that's how many",
+  "[right keys] went in.",
+  "So don't picture [10,000 keys.]",
+  "Picture [one steady minute.]",
+  "You can try your own minute",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  11,
+  33,
+  41,
+  57,
+  66
+ ],
+ "marks": {
+  "kph": 4,
+  "n167": 7,
+  "hour": 15,
+  "typed": 24,
+  "times": 29,
+  "sixty": 32,
+  "real": 35,
+  "score": 44,
+  "divide": 45,
+  "sixty2": 48,
+  "right": 53,
+  "keys2": 61,
+  "steady": 64,
+  "try": 68,
+  "at": 72
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "slips": [],
+  "slipEvery": 0,
+  "frames": 12,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "0.15",
+   "ticks",
+   1.4
+  ],
+  [
+   "kph-0.1",
+   "scribble",
+   0.5
+  ],
+  [
+   "n167-0.1",
+   "pop",
+   800
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "S1+0.15",
+   "pop",
+   700
+  ],
+  [
+   "hour+0.2",
+   "pop",
+   500
+  ],
+  [
+   "times-0.1",
+   "pop",
+   500
+  ],
+  [
+   "sixty+0.1",
+   "pop",
+   700
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S2+0.2",
+   "clicks",
+   2.0
+  ],
+  [
+   "real+0.1",
+   "pop",
+   600
+  ],
+  [
+   "S3",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.1",
+   "pop",
+   700
+  ],
+  [
+   "score-0.1",
+   "scribble",
+   0.45
+  ],
+  [
+   "score+0.5",
+   "pop",
+   900
+  ],
+  [
+   "divide-0.1",
+   "pop",
+   500
+  ],
+  [
+   "sixty2",
+   "ticks",
+   0.6
+  ],
+  [
+   "S4",
+   "pop",
+   700
+  ],
+  [
+   "keys2-0.1",
+   "scribble",
+   0.4
+  ],
+  [
+   "steady",
+   "pop",
+   600
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
