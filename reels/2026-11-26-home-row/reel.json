@@ -1,0 +1,206 @@
+{
+ "title": "The number pad has a home row: 4, 5, 6 (sticker)",
+ "voice": "af_heart",
+ "speed": 1.03,
+ "lines": [
+  [
+   "Nobody tells you the number pad has a home row. It's four, five, six.",
+   0.35
+  ],
+  [
+   "Index on four, middle on five, ring on six.",
+   0.3
+  ],
+  [
+   "The same fingers reach up for seven, eight, nine and down for one, two, three, and your thumb takes the zero.",
+   0.35
+  ],
+  [
+   "Here's the keypad on the real test. After each number, come back to this middle row.",
+   0.35
+  ],
+  [
+   "On most keypads, five has a bump you can feel.",
+   0.35
+  ],
+  [
+   "The home row is the first free lesson at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Nobody tells you the number pad",
+  "has a [home row.]",
+  "It's [4, 5, 6.]",
+  "Index on [4,]",
+  "middle on [5,]",
+  "ring on [6.]",
+  "The same fingers reach up",
+  "for [7, 8, 9]",
+  "and down for [1, 2, 3,]",
+  "and your thumb takes the [0.]",
+  "Here's the keypad",
+  "on the [real test.]",
+  "After each number,",
+  "come back to this [middle row.]",
+  "On most keypads,",
+  "[5] has a bump you can [feel.]",
+  "The home row is",
+  "the [first free lesson]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  14,
+  23,
+  44,
+  60,
+  70
+ ],
+ "marks": {
+  "home": 8,
+  "n4": 11,
+  "n5": 12,
+  "n6": 13,
+  "idx": 14,
+  "mid": 17,
+  "ring": 20,
+  "up": 27,
+  "n7": 29,
+  "down": 33,
+  "n1": 35,
+  "thumb": 40,
+  "zero": 43,
+  "keypad": 46,
+  "real": 49,
+  "after": 51,
+  "back": 55,
+  "middle": 58,
+  "bump": 66,
+  "feel": 69,
+  "first": 75,
+  "lesson": 77,
+  "at": 78
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "frames": 12
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "home-0.1",
+   "scribble",
+   0.5
+  ],
+  [
+   "n4",
+   "pop",
+   500
+  ],
+  [
+   "n5",
+   "pop",
+   600
+  ],
+  [
+   "n6",
+   "pop",
+   700
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "idx",
+   "pop",
+   500
+  ],
+  [
+   "mid",
+   "pop",
+   600
+  ],
+  [
+   "ring",
+   "pop",
+   700
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "up",
+   "pop",
+   600
+  ],
+  [
+   "down",
+   "pop",
+   600
+  ],
+  [
+   "zero",
+   "pop",
+   800
+  ],
+  [
+   "S3-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.2",
+   "clicks",
+   2.0
+  ],
+  [
+   "middle-0.1",
+   "scribble",
+   0.5
+  ],
+  [
+   "S4-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "bump",
+   "pop",
+   700
+  ],
+  [
+   "feel",
+   "pop",
+   900
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "first",
+   "pop",
+   700
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
