@@ -1,0 +1,179 @@
+{
+ "title": "Eyes on the numbers, not the keys (sticker)",
+ "voice": "af_heart",
+ "speed": 1.04,
+ "lines": [
+  [
+   "Don't look down at the number pad when you type.",
+   0.35
+  ],
+  [
+   "The real test even says it. Eyes on the numbers, not the keys.",
+   0.35
+  ],
+  [
+   "Rest your index, middle and ring fingers on four, five and six, and feel for the little bump on five.",
+   0.35
+  ],
+  [
+   "Here's the live test. Each key you press lights up on its keypad.",
+   0.35
+  ],
+  [
+   "Keep your eyes up.",
+   0.35
+  ],
+  [
+   "You can practice it at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Don't look down",
+  "at the [number pad]",
+  "when you type.",
+  "The [real test] even says it.",
+  "Eyes on the [numbers,]",
+  "not the [keys.]",
+  "Rest your index, middle",
+  "and ring fingers",
+  "on [4, 5] and [6,]",
+  "and feel for",
+  "the little [bump] on [5.]",
+  "Here's the [live test.]",
+  "Each key you press",
+  "[lights up] on its keypad.",
+  "Keep your [eyes up.]",
+  "You can practice it",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  10,
+  23,
+  43,
+  56,
+  60
+ ],
+ "marks": {
+  "down": 2,
+  "pad": 6,
+  "real": 11,
+  "eyes": 16,
+  "keys": 22,
+  "idx": 25,
+  "mid": 26,
+  "ring": 28,
+  "n4": 31,
+  "n6": 34,
+  "feel": 36,
+  "bump": 40,
+  "live": 45,
+  "press": 50,
+  "lights": 51,
+  "eyesup": 58,
+  "practice": 62,
+  "at": 64
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Mixed",
+  "gap": 300,
+  "frames": 12
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "down",
+   "pop",
+   500
+  ],
+  [
+   "pad-0.1",
+   "scribble",
+   0.5
+  ],
+  [
+   "S1-0.45",
+   "whoosh",
+   0.7
+  ],
+  [
+   "eyes",
+   "pop",
+   600
+  ],
+  [
+   "keys",
+   "pop",
+   800
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "idx",
+   "pop",
+   500
+  ],
+  [
+   "mid",
+   "pop",
+   600
+  ],
+  [
+   "ring",
+   "pop",
+   700
+  ],
+  [
+   "bump",
+   "pop",
+   900
+  ],
+  [
+   "S3-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.2",
+   "clicks",
+   2.0
+  ],
+  [
+   "S4-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "eyesup",
+   "pop",
+   800
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "practice",
+   "pop",
+   700
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}

@@ -1,0 +1,172 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Inter;font-weight:600;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(../../node_modules/@fontsource/inter-tight/files/inter-tight-latin-800-normal.woff2)}
+@font-face{font-family:Serif;font-style:italic;src:url(../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Mono;font-weight:600;src:url(../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2)}
+:root{--paper:#F3F0EA;--ink:#191714;--grey:#CDC6BB;--red:#E0342C;--green:#2F7A4F;--muted:#8D867B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(1100px 900px at 50% 40%,#f8f6f1 0%,#f3f0ea 55%,#ece7df 100%)}
+#grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;pointer-events:none}
+.el{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.lab{font:600 26px/1 Mono;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.ctr{font:600 26px/1 Mono;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;text-align:right}
+.ctr b{color:var(--red);font-weight:600}
+#cap{left:90px;top:290px;width:900px;font:600 78px/1.1 Inter;letter-spacing:-.025em}
+#cap span{display:inline-block;margin-right:.24em;transition:none}
+#cap .acc{font-family:Serif;font-style:italic;font-weight:400;color:var(--red);font-size:1.12em;letter-spacing:-.01em}
+.stk{background:#fff;border-radius:34px;padding:14px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.win{background:#16181a;border-radius:24px;overflow:hidden}
+.bar{height:58px;display:flex;align-items:center;gap:12px;padding:0 22px;background:#202326;color:#9aa19c;font:600 24px Mono}
+.bar i{width:16px;height:16px;border-radius:50%;background:#3b3f43;display:inline-block}
+.bar .t{margin-left:14px}
+canvas{display:block}
+.badge{width:104px;height:104px;border-radius:24px;background:#111;color:#fff;font:800 66px/104px Inter;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.25);border:5px solid #fff}
+.stamp{font:800 64px/1 Inter;letter-spacing:.06em;color:var(--red);border:8px solid var(--red);border-radius:18px;padding:14px 26px 12px;background:rgba(255,255,255,.88);text-transform:uppercase;white-space:nowrap}
+.key{width:250px;height:230px;border-radius:40px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 14px 0 #cfc8bd,0 30px 50px rgba(40,30,20,.2);font:800 92px/210px Inter;text-align:center;color:#2a2622}
+.row{display:flex;align-items:center;gap:26px;font:600 50px/1 Inter;padding:30px 40px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14)}
+.row .v{margin-left:auto;font:800 84px/1 Inter;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.row .n{width:64px;height:64px;border-radius:50%;background:#111;color:#fff;font:800 36px/64px Inter;text-align:center}
+.ck{display:flex;align-items:center;gap:24px;font:600 56px/1 Inter;padding:20px 0}
+.ck .b{width:62px;height:62px;border-radius:16px;border:5px solid #2F7A4F;display:flex;align-items:center;justify-content:center;color:#fff;font:800 40px Inter}
+.ck .b.on{background:#2F7A4F}
+.chip{font:600 64px/1 Inter;padding:34px 46px;border-radius:30px;background:#fff;box-shadow:0 24px 50px rgba(40,30,20,.14);white-space:nowrap}
+svg.draw ellipse,svg.draw path{fill:none;stroke-linecap:round}
+.pad{display:grid;grid-template-columns:repeat(3,170px);gap:16px;padding:24px;background:#fff;border-radius:34px;box-shadow:0 34px 70px rgba(40,30,20,.16),0 8px 18px rgba(40,30,20,.10)}
+.pk{height:120px;border-radius:24px;background:linear-gradient(#fff,#ece8e1);box-shadow:0 9px 0 #cfc8bd;font:800 76px/112px Inter;text-align:center;color:#a49c90;transition:none}
+.pk.z{grid-column:span 2}
+.pk.home{color:#fff;background:linear-gradient(#ea4b43,#d22f27);box-shadow:0 9px 0 #9e231d}
+.pk.lit{color:#fff;background:linear-gradient(#3c8d5f,#2F7A4F);box-shadow:0 9px 0 #1f5636}
+.pk.on{color:#2a2622}
+.fk{width:150px;height:130px;border-radius:26px;background:linear-gradient(#ea4b43,#d22f27);box-shadow:0 9px 0 #9e231d;color:#fff;font:800 88px/122px Inter;text-align:center;margin-left:auto}
+#wipe{position:absolute;inset:0;pointer-events:none}
+</style></head><body>
+<div id="stage">
+  <svg id="grain" width="1080" height="1920"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .4  0 0 0 .55 0"/></filter><rect width="1080" height="1920" filter="url(#n)"/></svg>
+
+  <div class="el lab" id="lab" style="left:90px;top:236px"></div>
+  <div class="el ctr" id="ctr" style="left:540px;top:236px;width:450px"></div>
+  <div class="el" id="cap"></div>
+
+  <!-- b0: the number pad, eyes off it -->
+  <div class="el pad" id="p0" style="left:245px;top:600px"></div>
+  <svg class="el draw" id="c0" width="760" height="760" style="left:160px;top:530px"><path d="M60 60 L700 700" stroke="#E0342C" stroke-width="22" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el stamp" id="s0" style="left:200px;top:1090px">don't look down</div>
+
+  <!-- b1: the test's own hint, then the two chips -->
+  <div class="el stk" id="p1" style="left:90px;top:590px;width:900px"><div class="win"><div class="bar"><i style="background:#2F7A4F"></i><span class="t">the test says</span></div><canvas id="k1" width="872" height="102"></canvas></div></div>
+  <div class="el ck" id="h1a" style="left:120px;top:850px;font-size:76px"><span class="b on" style="width:84px;height:84px;font-size:52px">✓</span>the numbers</div>
+  <div class="el ck" id="h1b" style="left:120px;top:1010px;font-size:76px;color:var(--muted)"><span class="b" style="width:84px;height:84px;font-size:52px;border-color:var(--red);background:var(--red)">✗</span><s style="text-decoration-color:var(--red);text-decoration-thickness:6px">the keys</s></div>
+
+  <!-- b2: three fingers on 4 5 6, the bump on 5 -->
+  <div class="el" id="p2" style="left:140px;top:600px;width:800px;height:420px">
+    <div class="key" style="position:absolute;left:0;top:90px;width:220px;height:260px;line-height:240px;color:#2a2622">4</div>
+    <div class="key" style="position:absolute;left:250px;top:0;width:300px;height:380px;font-size:200px;line-height:340px">5
+      <div id="bump" style="position:absolute;left:105px;top:290px;width:90px;height:16px;border-radius:8px;background:#2a2622"></div></div>
+    <div class="key" style="position:absolute;left:580px;top:90px;width:220px;height:260px;line-height:240px;color:#2a2622">6</div>
+  </div>
+  <div class="el chip" id="f2a" style="left:130px;top:960px;font-size:44px;padding:16px 26px">index</div>
+  <div class="el chip" id="f2b" style="left:405px;top:1010px;font-size:44px;padding:16px 26px">middle</div>
+  <div class="el chip" id="f2c" style="left:740px;top:960px;font-size:44px;padding:16px 26px">ring</div>
+  <svg class="el draw" id="c2" width="260" height="120" style="left:410px;top:840px"><ellipse cx="130" cy="60" rx="110" ry="40" stroke="#E0342C" stroke-width="9" pathLength="1" stroke-dasharray="1"/></svg>
+  <div class="el stamp" id="s2" style="left:520px;top:1110px;font-size:54px">feel the bump</div>
+
+  <!-- b3: the keypad on the live test, real frames -->
+  <div class="el stk" id="p3" style="left:256px;top:570px"><div class="win"><canvas id="k3" width="540" height="612"></canvas></div></div>
+  <div class="el stamp" id="s3" style="left:470px;top:1120px;font-size:54px">lights up</div>
+
+  <!-- b4: the number on the live test, eyes here -->
+  <div class="el stk" id="p4" style="left:90px;top:600px;width:900px"><div class="win"><div class="bar"><i style="background:#2F7A4F"></i><span class="t">live test</span></div><canvas id="k4" width="872" height="300"></canvas></div></div>
+  <div class="el stamp" id="s4" style="left:470px;top:1000px">eyes here ↑</div>
+
+  <!-- b5: the site -->
+  <div class="el stk" id="p5" style="left:90px;top:610px;width:900px"><div class="win" style="background:#fff">
+    <div class="bar" style="background:#efebe4;color:#3a3631;height:76px;font-size:30px"><i style="background:#e0a39e"></i><i style="background:#e8cf8c"></i><i style="background:#9fcfa8"></i>
+      <span class="t" style="flex:1;background:#fff;border-radius:16px;padding:10px 20px;margin-left:16px"><span id="url"></span><span id="caret" style="color:var(--red)">|</span></span></div>
+    <canvas id="k5" width="872" height="470"></canvas></div></div>
+  <div class="el stamp" id="s5" style="left:430px;top:1060px">practice free</div>
+
+  <div class="el badge" id="badge" style="left:60px;top:540px">1</div>
+  <svg class="el" id="tara" viewBox="0 0 1000 1000" width="1000" height="1000" style="left:40px;top:1100px"></svg>
+  <canvas id="wipe" width="1080" height="1920"></canvas>
+</div>
+<script src="../../engine/lib.js"></script>
+<script src="../../engine/character.js"></script>
+<script>
+const TL = __TIMELINE__, RUN = __RUN__; const S = TL.scenes, W = TL.words, END = TL.end;
+const book = frameBook(RUN); const tara = Tara("tara"); const IDLE = .2;
+// frames: 0-1.4 idle; from 1.5 the first entry is typed and each key on the site's keypad lights as it is pressed
+const POSES = [[0, "wave"], [W.down - .1, "oops"], [W.pad + .4, "point"], [S[1] + .1, "present"], [W.eyes - .1, "point"], [W.keys + .2, "thumbs"],
+  [S[2] + .1, "think"], [W.idx - .1, "point"], [W.feel - .1, "present"], [W.bump - .1, "point"], [S[3] + .05, "present"], [W.lights - .1, "point"],
+  [S[4] + .05, "thumbs"], [S[5] + .1, "present"], [W.at + .3, "rest"]];
+const CH = [["// 01 · the habit", "eyes <b>up</b>"], ["// 02 · the test says", "<b>numbers</b>, not keys"], ["// 03 · home row", "keys <b>4 5 6</b>"],
+  ["// 04 · the real test", "live <b>keypad</b>"], ["// 05 · where to look", "the <b>number</b>"], ["// 06 · practice", "<b>free</b>"]];
+const IDS = ["p0","c0","s0","p1","h1a","h1b","p2","f2a","f2b","f2c","c2","s2","p3","s3","p4","s4","p5","s5","badge"];
+const KP = [.774, .15, .215, .46], HINT = [.008, .54, .24, .05], C1 = [.22, .19, .32, .21];
+const KEYS = ["7","8","9","4","5","6","1","2","3","0","."];
+$("p0").innerHTML = KEYS.map((k) => `<div class="pk${k === "0" ? " z" : ""}" data-k="${k}">${k}</div>`).join("");
+const pt = (cv, im, c, fx, fy) => { const Wd = im.naturalWidth, H = im.naturalHeight, k = Math.min(cv.width / (Wd * c[2]), cv.height / (H * c[3]));
+  return [(cv.width - Wd * c[2] * k) / 2 + (fx - c[0]) * Wd * k, (cv.height - H * c[3] * k) / 2 + (fy - c[1]) * H * k]; };
+const place = (id, cid, im, c, fx, fy, left, top) => { if (!im.naturalWidth) return; const [x, y] = pt($(cid), im, c, fx, fy), s = $(id);
+  s.style.left = (left + x - s.width.baseVal.value / 2) + "px"; s.style.top = (top + y - s.height.baseVal.value / 2) + "px"; };
+const draw = (id, t, t0, dur = .5) => { $(id).querySelectorAll("ellipse,path").forEach((p) => p.setAttribute("stroke-dashoffset", (1 - easeInOut((t - t0) / dur)).toFixed(3))); $(id).style.opacity = t >= t0 ? 1 : 0; $(id).style.transform = ""; };
+const fl = (t, k = 0) => Math.sin(t * 1.7 + k) * 6;                    // gentle float
+const W8 = (id, im, fx, fy, fw, fh, bg = "#16181a") => im && im.naturalWidth && drawCrop(id, im, fx, fy, fw, fh, bg);
+
+// caption: the sentence shows in grey, each word turns dark as it is spoken; [words] in red serif
+const PH = (() => { let k = 0; return TL.caps.map((c) => { k = Math.max(0, TL.wt.findIndex((w) => w[1] === c.t)); const toks = [];
+  let acc = false;
+  for (const raw of c.text.split(/\s+/)) { let w = raw; const open = w.startsWith("["), close = w.endsWith("]") || /\][.,?!]?$/.test(w);
+    if (open) acc = true; w = w.replace(/[\[\]]/g, ""); toks.push({ w, acc, t: TL.wt[k] ? TL.wt[k][1] : 0 }); k++; if (close) acc = false; }
+  return { t: c.t, toks }; }); })();
+let capKey = -1;
+function caption2(t) {
+  let i = 0; for (let k = 0; k < PH.length; k++) if (t >= PH[k].t - .05) i = k;
+  const el = $("cap"), ph = PH[i];
+  if (capKey !== i) { el.innerHTML = ph.toks.map((x) => `<span class="${x.acc ? "acc" : ""}">${x.w}</span>`).join(""); capKey = i; }
+  [...el.children].forEach((sp, j) => { const x = ph.toks[j], a = easeOut((t - x.t) / .18);
+    sp.style.color = t >= x.t - .02 ? (x.acc ? "var(--red)" : "var(--ink)") : "var(--grey)"; sp.style.transform = `translateY(${(1 - a) * 8}px)`; });
+  el.style.opacity = t > END - .25 ? 0 : 1;
+}
+function chapter(t) { let i = 0; for (let k = 0; k < S.length; k++) if (t >= S[k] - .05) i = k;
+  if ($("lab").dataset.i != i) { $("lab").textContent = CH[i][0]; $("ctr").innerHTML = CH[i][1]; $("lab").dataset.i = i; }
+  const a = easeOut((t - S[i]) / .3); for (const id of ["lab", "ctr"]) { $(id).style.opacity = a; $(id).style.transform = `translateY(${(1 - a) * -10}px)`; } }
+function badge(t, n, t0, x, y) { if (t < t0) return; $("badge").textContent = n; $("badge").style.left = x + "px"; $("badge").style.top = y + "px"; slam("badge", t, t0, { r: -8 }); }
+function wipe(t, t0) {   // halftone dots sweep across and clear
+  const c = $("wipe"), g = c.getContext("2d"); g.clearRect(0, 0, 1080, 1920); const p = (t - t0) / .75; if (p <= 0 || p >= 1) return;
+  g.fillStyle = "#111"; for (let y = 0; y < 1920 + 40; y += 42) for (let x = (y / 42) % 2 ? 21 : 0; x < 1080 + 40; x += 42) {
+    const ph = p * 2.2 - (x / 1080) * .5 - (y / 1920) * .7, v = Math.sin(clamp(ph) * Math.PI); if (v > .02) { g.beginPath(); g.arc(x, y, v * 31, 0, 6.29); g.fill(); } } }
+
+window.render = function (t) {
+  for (const id of IDS) hide(id);
+  const idle = book.at(IDLE);
+  // b0: the pad, struck through: eyes off it
+  if (t < S[1] - .05 + .3) { pop("p0", t, .05, { r: -1.5, y: fl(t) }); badge(t, 1, .3, 150, 540);
+    draw("c0", t, W.pad - .1, .45); slam("s0", t, W.down, { r: -6 });
+    for (const id of ["p0", "c0", "s0", "badge"]) out(id, t, S[1] - .15); }
+  // b1: the hint the live test shows while you type
+  if (inWin(t, S[1] - .05, S[2])) { W8("k1", book.at(2.0), ...HINT); pop("p1", t, S[1], { r: -1, y: fl(t, 10) * .5 }); badge(t, 2, S[1] + .2, 905, 535);
+    pop("h1a", t, W.eyes - .2, { r: -1, y: fl(t, 11) * .5 }); pop("h1b", t, W.keys - .2, { r: 1, y: fl(t, 12) * .5 });
+    for (const id of ["p1", "h1a", "h1b", "badge"]) out(id, t, S[2] - .15); }
+  // b2: three fingers on 4 5 6, the bump on 5
+  if (inWin(t, S[2] - .05, S[3])) { pop("p2", t, S[2], { y: fl(t, 5) * .5 }); badge(t, 3, S[2] + .2, 60, 540);
+    pop("f2a", t, W.idx - .1, { r: -4 }); pop("f2b", t, W.mid - .1, { r: 2 }); pop("f2c", t, W.ring - .1, { r: 4 });
+    draw("c2", t, W.bump - .1, .45); slam("s2", t, W.bump + .4, { r: -6 });
+    for (const id of ["p2", "f2a", "f2b", "f2c", "c2", "s2", "badge"]) out(id, t, S[3] - .15); }
+  // b3: real frames of the live test's keypad, keys lighting as an entry is typed
+  if (inWin(t, S[3] - .05, S[4])) { const im = book.at(Math.min(11.9, 1.3 + (t - S[3]))); W8("k3", im, ...KP);
+    pop("p3", t, S[3], { r: -1, y: 0 }); badge(t, 4, S[3] + .2, 120, 540); slam("s3", t, W.lights, { r: -5 });
+    for (const id of ["p3", "s3", "badge"]) out(id, t, S[4] - .15); }
+  // b4: the number on the live test
+  if (inWin(t, S[4] - .05, S[5])) { W8("k4", idle, ...C1); pop("p4", t, S[4], { r: 1, y: fl(t, 3) }); badge(t, 5, S[4] + .2, 905, 545);
+    slam("s4", t, W.eyesup, { r: -6 }); for (const id of ["p4", "s4", "badge"]) out(id, t, S[5] - .15); }
+  // b5: the site
+  if (t >= S[5] - .05) { W8("k5", idle, 0, 0, .75, .62, "#fff"); pop("p5", t, S[5], { r: -1, y: fl(t, 12) }); badge(t, 6, S[5] + .2, 60, 545);
+    const u = "10keytypingtest.com", n = Math.round(clamp((t - W.at + .1) / .8) * u.length); $("url").textContent = u.slice(0, n);
+    $("caret").style.opacity = Math.sin(t * 8) > 0 ? 1 : 0; slam("s5", t, W.practice, { r: -8 }); }
+  chapter(t); caption2(t); tara.render(t, POSES, TL.amp); wipe(t, S[3] - .45);
+};
+window.ready = Promise.all([...book.imgs].map((i) => i.decode().catch(() => {}))).then(() => document.fonts.ready);
+</script></body></html>
