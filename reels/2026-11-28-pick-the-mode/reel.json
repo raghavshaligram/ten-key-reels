@@ -1,0 +1,188 @@
+{
+ "title": "Practice the numbers the job uses (sticker)",
+ "voice": "af_heart",
+ "speed": 1.04,
+ "lines": [
+  [
+   "Nobody tells you that you can practice ten-key on four kinds of numbers.",
+   0.35
+  ],
+  [
+   "Mixed, whole numbers, dollar amounts, and ZIP codes.",
+   0.35
+  ],
+  [
+   "Typing invoices at work? Then practice dollar amounts.",
+   0.35
+  ],
+  [
+   "Here's a real minute of them. Every entry ends with a dot and two digits of cents.",
+   0.35
+  ],
+  [
+   "All twenty-five came out right.",
+   0.3
+  ],
+  [
+   "So practice the numbers your job will give you.",
+   0.35
+  ],
+  [
+   "You can try all four at ten key typing test dot com.",
+   0.2
+  ]
+ ],
+ "phrases": [
+  "Nobody tells you",
+  "that you can practice",
+  "[10-key] on [4 kinds]",
+  "of numbers.",
+  "[Mixed,] [whole numbers,]",
+  "[dollar amounts,]",
+  "and [ZIP codes.]",
+  "Typing [invoices] at work?",
+  "Then practice",
+  "[dollar amounts.]",
+  "Here's a [real minute] of them.",
+  "Every entry ends",
+  "with a [dot]",
+  "and [2 digits] of cents.",
+  "All [25] came out [right.]",
+  "So practice the numbers",
+  "your [job] will give you.",
+  "You can try all [4]",
+  [
+   2,
+   "at [10keytypingtest.com.]"
+  ]
+ ],
+ "scenes": [
+  0,
+  13,
+  21,
+  29,
+  46,
+  60
+ ],
+ "marks": {
+  "four": 9,
+  "mixed": 13,
+  "whole": 14,
+  "dollar": 16,
+  "zip": 19,
+  "invoices": 22,
+  "dollar2": 27,
+  "real": 31,
+  "entry": 35,
+  "dot": 40,
+  "cents": 45,
+  "right": 50,
+  "job": 56,
+  "try": 62,
+  "at": 65
+ },
+ "tail": 0.7,
+ "run": {
+  "mode": "Dollar amounts",
+  "gap": 300,
+  "frames": 10,
+  "finishClean": true
+ },
+ "pointer": null,
+ "sfx": [
+  [
+   "0.05",
+   "pop",
+   600
+  ],
+  [
+   "four",
+   "pop",
+   900
+  ],
+  [
+   "S1-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "mixed",
+   "pop",
+   500
+  ],
+  [
+   "whole",
+   "pop",
+   600
+  ],
+  [
+   "dollar",
+   "pop",
+   700
+  ],
+  [
+   "zip",
+   "pop",
+   800
+  ],
+  [
+   "S2-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "invoices",
+   "scribble",
+   0.5
+  ],
+  [
+   "dollar2",
+   "pop",
+   800
+  ],
+  [
+   "S3-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "S3+0.2",
+   "clicks",
+   2.0
+  ],
+  [
+   "dot",
+   "pop",
+   900
+  ],
+  [
+   "S4-0.05",
+   "whoosh",
+   0.6
+  ],
+  [
+   "right",
+   "pop",
+   800
+  ],
+  [
+   "job",
+   "pop",
+   700
+  ],
+  [
+   "S5",
+   "whoosh"
+  ],
+  [
+   "try",
+   "pop",
+   700
+  ],
+  [
+   "at",
+   "clicks",
+   0.8
+  ]
+ ]
+}
